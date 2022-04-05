@@ -24,3 +24,7 @@ export const login = (formData, navigate) => async (dispatch) => {
         console.log(error);
     }
 };
+
+export const edit = (formData, navigate) => async (dispatch) => {
+    
+};

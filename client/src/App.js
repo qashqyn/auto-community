@@ -15,6 +15,7 @@ import Home from "./components/Home/Home";
 import Login from "./components/Login/Login";
 import FooTer from "./components/FooTer/FooTer";
 import SignUp from "./components/SignUp/SignUp";
+import Profile from "./components/Profile/Profile";
 
 library.add(far, fas);
 
@@ -29,6 +30,7 @@ const App = () => {
                         <Route path="/news" exact element={<News />} />
                         <Route path="/login" exact element={<Login />} />
                         <Route path="/signup" exact element={<SignUp />} />
+                        <Route path="/profile" exact element={<Profile />} />
                     {/* </Container> */}
                 </Route>
             </Routes>

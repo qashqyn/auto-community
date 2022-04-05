@@ -7,10 +7,10 @@ import Input from "../SignUp/Input";
 
 import {Button, Container, Form} from "react-bootstrap";
 
-import { signup } from "../../actions/auth";
+import { login } from "../../actions/auth";
 import { LinkContainer } from "react-router-bootstrap";
 
-const initialState = {email: '', password: '', remember: false};
+const initialState = {email: '', password: ''};
 
 const Login = () => {
     const navigate = useNavigate();
@@ -20,7 +20,7 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        dispatch(signup(formData, navigate));
+        dispatch(login(formData, navigate));
     }
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -32,7 +32,7 @@ const Login = () => {
             <Form onSubmit={handleSubmit}>
                 <Input name="email" label="Электронная почта" type="email" handleChange={handleChange}/>                        
                 <Input name="password" label="Пароль" type="password" handleChange={handleChange}/>
-                <Input name="remember" label="Запомнить меня" type="checkbox" handleChange={handleChange}/>
+                <Input name="remember" label="Запомнить меня" type="checkbox"/>
                 <div>Забыли пароль?</div>
                 <Button type="submit">Войти</Button>
                 <p>У вас нет аккаунта?

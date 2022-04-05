@@ -10,3 +10,5 @@ export const likeNews = (id) => API.patch(`/news/${id}/likeNews`);
 
 export const login = (formData) => API.post('/user/login', formData);
 export const signup = (formData) => API.post('/user/signup', formData);
+
+export const fetchUser = (id) => API.get(`/user/${id}`);

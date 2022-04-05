@@ -10,6 +10,7 @@ const userSchema = mongoose.Schema({
     city: {type: String, required: true},
     car: {type: String, required: true},
     id: { type: String},
+    is_admin: {type: Boolean, default: false},
 });
 
 export default mongoose.model('User', userSchema);
