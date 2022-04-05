@@ -10,7 +10,7 @@
 .mainPage *{
     color: #FFF!important;
 }
-.btn{
+.navbar .btn{
     background: none!important;
     border: 1px solid #000!important;
     padding: 10px 30px!important;

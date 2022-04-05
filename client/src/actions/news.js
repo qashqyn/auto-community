@@ -2,7 +2,7 @@ import { FETCH_ALL, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionType
 import * as api from '../api';
 
 // Action Creators
-export const getNews = () => async(dispatch) => {
+export const getNews = () => async(dispatch) => { 
     try {
         const { data } = await api.fetchNews();
         

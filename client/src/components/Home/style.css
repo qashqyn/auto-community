@@ -166,6 +166,10 @@ body{
     object-position: center;
 }
 
+/* Video */
+.video{
+    padding: 64px 0;
+}
 /* Market block */
 .market{
     padding: 64px 0;
