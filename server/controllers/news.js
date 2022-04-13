@@ -1,4 +1,5 @@
 import NewsMessage from "../models/newsMessage.js";
+import NewsComment from "../models/newsComment.js";
 
 export const getNews = async (req, res) => {
     try {
@@ -10,6 +11,21 @@ export const getNews = async (req, res) => {
     }
 };
 
+export const getSingleNews = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const data = await NewsMessage.findById(id)
+            .populate({
+                path: 'comments',
+                populate: {path: 'user'}
+            });
+        res.status(200).json(data);
+    } catch (error) {
+        res.status(404).json({message: error.message});      
+    }
+};
+
+
 export const likeNews = async (req, res) => {
     const { id: _id } = req.params;
 
@@ -20,15 +36,15 @@ export const likeNews = async (req, res) => {
  
     const news = await NewsMessage.findById(_id);
   
-    const index = post.likes.findIndex((id) => id === String(req.userId));
+    const index = news.likes.findIndex((id) => id === String(req.userId));
 
     if(index === -1){
-        post.likes.push(req.userId);
+        news.likes.push(req.userId);
     }else{
-        post.likes = post.likes.filter((id) => id !== String(req.userId));
+        news.likes = news.likes.filter((id) => id !== String(req.userId));
     }
 
-    const updatedNews = await NewsMessage.findByIdAndUpdate(_id, post, {new: true});
+    const updatedNews = await NewsMessage.findByIdAndUpdate(_id, news, {new: true});
 
     res.json(updatedNews);
 }

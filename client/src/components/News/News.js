@@ -1,25 +1,28 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Row, Col, Spinner } from "react-bootstrap";
+import { Row, Col, Spinner, Container } from "react-bootstrap";
 
 import { getNews } from '../../actions/news';
 
 import SingleNews from "./SingleNews/SingleNews";
+import Breadcrumbs from "../Breadcrumbs";
 
 const News = () => {
+    const { news, isLoading } = useSelector((state) => state.news);
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getNews());
     }, [dispatch]);
 
-    const news = useSelector((state) => state.news);
+    if(!news.length && isLoading) return "No news";
     
     return (
-        <>
+        <Container>
+            <Breadcrumbs currentPage="Новости" />
             <h1>Новости</h1>
-            {!news.length ? (
+            {isLoading ? (
             <Spinner animation="border" role="status">
                 <span className="visually-hidden">Загрузка...</span>
             </Spinner>
@@ -32,7 +35,7 @@ const News = () => {
                     ))}
                 </Row>
             )}
-        </>
+        </Container>
     );
 }
 

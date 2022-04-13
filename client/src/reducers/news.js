@@ -1,17 +1,23 @@
-import { CREATE, DELETE, FETCH_ALL, LIKE, UPDATE } from "../constants/actionTypes";
+import { CREATE, DELETE, FETCH_ALL, LIKE, UPDATE, FETCH_SINGLE_NEWS, START_LOADING, END_LOADING } from "../constants/actionTypes";
 
-export default (news = [], action) => {
+export default (state = { isLoading: true, news: [] }, action) => {
     switch (action.type) {
+        case START_LOADING:
+            return { ...state, isLoading: true};
+        case END_LOADING:
+            return { ...state, isLoading: false};
         case FETCH_ALL:
-            return action.payload;
+            return { ...state, news: action.payload};
+        case FETCH_SINGLE_NEWS:
+            return { ...state, singleNews: action.payload };
         case CREATE:
-            return [...news, action.payload];
+            return {...state, news: [ ...state.news, action.payload] };
         case UPDATE:
         case LIKE:
-            return news.map((singleNews) => singleNews._id === action.payload._id ? action.payload : singleNews);
+            return { ...state, news: state.news.map((singleNews) => singleNews._id === action.payload._id ? action.payload : singleNews)};
         case DELETE:
-            return news.filter((singleNews) => singleNews._id !== action.payload._id);
+            return { ...state, news : state.news.filter((singleNews) => singleNews._id !== action.payload._id)};
         default:
-            return news;
+            return state;
     }
 }

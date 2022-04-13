@@ -10,6 +10,7 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import News from "./components/News/News";
+import NewsDetails from "./components/NewsDetails/NewsDetails";
 import NavBar from "./components/NavBar/NavBar";
 import Home from "./components/Home/Home";
 import Login from "./components/Login/Login";
@@ -28,11 +29,14 @@ const App = () => {
                 <Route path="">
                     {/* <Container> */}
                         <Route path="/news" exact element={<News />} />
+                        <Route path="/news/search" exact element={<News />} />
+                        <Route path="/news/:id" element={<NewsDetails />} />
                         <Route path="/login" exact element={<Login />} />
                         <Route path="/signup" exact element={<SignUp />} />
                         <Route path="/profile" exact element={<Profile />} />
                     {/* </Container> */}
                 </Route>
+                <Route path="*" element={<Home />} />
             </Routes>
             <FooTer />
         </BrowserRouter>

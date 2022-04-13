@@ -2,6 +2,14 @@ import axios from 'axios';
 
 const API = axios.create({ baseURL: 'http://localhost:5000/' });
 
+API.interceptors.request.use((req) => {
+    if(localStorage.getItem('profile')) {
+        req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem('profile')).token}`;
+    }
+    return req;
+});
+
+export const fetchSingleNews = (id) => API.get(`/news/${id}`);
 export const fetchNews = () => API.get(`/news`);
 export const createNews = (newNews) => API.post(`/admin/news`, newNews);
 export const updateNews = (id, updatedNews) => API.patch(`/admin/news/${id}`, updatedNews);

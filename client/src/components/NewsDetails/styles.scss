@@ -1,0 +1,43 @@
+.news{
+    .top-moment{
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 20px;
+
+        text-align: center;
+
+        color: #6363;
+    }
+    .heading{
+        font-weight: 600;
+        font-size: 32px;
+        line-height: 32px;
+
+        text-align: center;
+
+        color: #112D4E;
+    }
+    .subheading{
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 20px;
+
+        text-align: center;
+
+        color: #333;
+    }
+
+    .img{
+        img{
+            width: 100%;
+            border-radius: 4px;
+        }
+    }
+    .paragraph{
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 32px;
+        
+        color: #000;
+    }
+}

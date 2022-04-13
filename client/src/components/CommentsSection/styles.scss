@@ -1,0 +1,83 @@
+.comments{
+    .h4{
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 30px;
+        color: #000000;
+        .count{
+            font-feature-settings: 'pnum' on, 'lnum' on;
+            color: #8E8E8E;
+        }
+    }
+    .guest{
+        padding: 16px;
+        border: 1px solid #8E8E8E;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 22px;
+        font-feature-settings: 'pnum' on, 'lnum' on;
+        color: #000000;
+        margin-bottom: 40px;
+        .btn{
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 20px;
+            text-align: center;
+            padding: 10px 30px;
+        }
+        .login{
+            color: #457B9D;
+            border: 1px solid #457B9D;
+            background: none;
+            margin-right: 24px;
+        }
+        .register{
+            color: #FFFFFF;
+            background: #457B9D;
+        }
+    }
+    .comment{
+        margin-bottom: 32px;
+        .comment-heading{
+            margin-bottom: 16px;
+            display: flex;
+            .avatar{
+                margin-right: 16px;
+                img{
+                    width: 64px;
+                    height: 64px;
+                    border-radius: 50%;
+                }
+            }
+            .username{
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 20px;
+                color: #000000;
+                margin-bottom: 8px;
+                cursor: pointer;
+            }
+            .car{
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 20px;
+                font-feature-settings: 'pnum' on, 'lnum' on;
+                color: #636363;
+            }
+        }
+        .comment-message{
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 22px;
+            color: #000000;
+        }
+        .answer{
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 20px;
+            color: #D7D7D7;
+            margin-top: 4px;
+            cursor: pointer;
+        }
+    }
+}

@@ -1,12 +1,26 @@
-import { FETCH_ALL, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
+import { FETCH_ALL, CREATE, UPDATE, DELETE, LIKE, FETCH_SINGLE_NEWS, START_LOADING, END_LOADING } from '../constants/actionTypes';
 import * as api from '../api';
 
 // Action Creators
 export const getNews = () => async(dispatch) => { 
     try {
+        dispatch({ type: START_LOADING });
         const { data } = await api.fetchNews();
         
         dispatch({ type: FETCH_ALL, payload: data });
+        dispatch({ type: END_LOADING});
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const getSingleNews = (id) => async(dispatch) => { 
+    try {
+        dispatch({ type: START_LOADING });
+        const { data } = await api.fetchSingleNews(id);
+        
+        dispatch({ type: FETCH_SINGLE_NEWS, payload: data });
+        dispatch({ type: END_LOADING});
     } catch (error) {
         console.log(error);
     }
