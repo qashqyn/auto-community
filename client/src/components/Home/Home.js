@@ -17,18 +17,19 @@ import Video from "../Videos/Video/Video";
 
 const Home = () => {
     const dispatch = useDispatch();
+    
+    const {posts: news} = useSelector((state) => state.posts);
 
     useEffect(() => {
         dispatch(getNews());
     }, [dispatch]);
 
-    const news = useSelector((state) => state.news);
+    const videos = useSelector((state) => state.videos);
 
     useEffect(() => {
         dispatch(getVideos());
     }, [dispatch]);
 
-    const videos = useSelector((state) => state.videos);
 
     return (
         <>

@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 
-import { Card, Button} from "react-bootstrap";
+import { Card } from "react-bootstrap";
 
 import './style.css';
 import { LinkContainer } from "react-router-bootstrap";
@@ -13,10 +13,10 @@ const SingleNews = ({ news }) => {
                 <Card.Img variant="top" src={news.selectedFile} />
                 <Card.Subtitle>{news.tags[0]}&emsp;{moment(news.createdAt).format("DD/MM/YYYY")}</Card.Subtitle>
                 <Card.Title>{news.title}</Card.Title>
-                <Card.Text>{news.message}</Card.Text>
-                {/* <LinkContainer> */}
+                <Card.Text>{news.description}</Card.Text>
+                <LinkContainer to={`/news/${news._id}`}>
                     <Card.Link>Читать больше</Card.Link>
-                {/* </LinkContainer> */}
+                </LinkContainer>
             </Card.Body>
         </Card>
     );
