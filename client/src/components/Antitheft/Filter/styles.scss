@@ -1,0 +1,48 @@
+#antitheftFilter{
+    margin-top: 56px;
+    display: flex;
+    width: 100%;
+    border-radius: 2px;
+    overflow: hidden;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.08);
+    border-radius: 2px;
+    &>div{
+        flex-grow: 1;
+        box-sizing: border-box;
+        margin: 8px 0;
+        padding: 0 16px;
+        height: 100%;
+        border-right: 0.5px solid #8E8E8E;
+        &:last-of-type{
+            border-right: none;
+        }
+        label{
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 16px;
+            color: #77838F;
+        }
+        select, input{
+            padding: 0;
+            font-weight: 500;
+            font-size: 18px;
+            color: #000000;
+            border: none;
+            &:focus{
+                box-shadow: none;
+            }
+            &::placeholder{
+                color: #000000;
+            }
+        }
+        
+    }
+    .btn{
+        background: #94C6C8;
+        padding: 20px 50px;
+        &:focus{
+            box-shadow: none;
+        }
+    }
+}

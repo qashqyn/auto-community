@@ -1,0 +1,25 @@
+#profile{
+    .profile-top{
+        padding: 40px 0 32px;
+        margin-bottom: 32px;
+        display: flex;
+        border-bottom: 1px solid #EBF5F7;
+        .wrap{
+            margin: auto 0;
+            width: 100%;
+            .h1{
+                font-weight: 500;
+                font-size: 24px;
+                line-height: 24px;
+                color: #000000;
+            }
+            .h5{
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 20px;
+                font-feature-settings: 'pnum' on, 'lnum' on;
+                color: #8E8E8E;
+            }
+        }
+    }
+}

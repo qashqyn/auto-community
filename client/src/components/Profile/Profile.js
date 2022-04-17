@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import decode from 'jwt-decode';
+import FileBase from 'react-file-base64';
 
-import { Row, Col, Form, Container, Tab, Nav, Button } from "react-bootstrap";
+import { Row, Col, Form, Container, Tab, Nav, Button, Card, Image } from "react-bootstrap";
 
 // import { getUser } from '../../actions/user';
 import { useNavigate } from "react-router-dom";
@@ -12,16 +13,19 @@ import { edit } from "../../actions/auth";
 import { LOGOUT } from "../../constants/actionTypes";
 import NewsForm from "./NewsForm/NewsForm";
 
+import './styles.scss';
 
-const initialState = {firstname: '', lastname: '', email: '', password: '', tel: '', country: '', city: '', car: ''};
+
 
 const Profile = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [ formData, setFormData ] = useState(initialState);
-
+    
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
-
+    
+    const initialState = user.result;
+    const [ formData, setFormData ] = useState(initialState);
+    
     useEffect(() => {
         const token = user?.token;
         if (token) {
@@ -38,9 +42,9 @@ const Profile = () => {
         e.preventDefault();
 
         dispatch(edit(formData, navigate));
+        
     }
     const handleChange = (e) => {
-        console.log(e.target.value);
         setFormData({ ...formData, [e.target.name]: e.target.value });
     }
 
@@ -53,10 +57,17 @@ const Profile = () => {
       };
 
     return (
-        <Container className="profile">
-            <div>
-                <div className="h1">{user.result.firstname} {user.result.lastname}</div>
-                <div className="h5">{user.result._id}</div>
+        <Container className="profile" id="profile">
+            <div className="profile-top">
+                <div className="avatar avatar-lg">
+                    <Image src={user.result.avatar}/>
+                </div>
+                <div className="ml-40px wrapper">
+                    <div className="wrap">
+                        <div className="h1">{user.result.firstname} {user.result.lastname}</div>
+                        <div className="h5">{user.result._id}</div>
+                    </div>
+                </div>
             </div>
             <Tab.Container id="left-tabs-example" defaultActiveKey="first">
                 <Row>
@@ -107,18 +118,28 @@ const Profile = () => {
                                 <div>
                                     <div className="h3">Информация</div>
                                     <Form onSubmit={handleSubmit}>
-                                        <Input name="firstname" type="text" handleChange={handleChange} value={user.result.firstname}/>
-                                        <Input name="lastname" type="text" handleChange={handleChange} value={user.result.lastname}/>
+                                        <div>
+                                            <div className="avatar avatar-sm">
+                                                <Image src={formData.avatar} />
+                                            </div>
+                                            <FileBase 
+                                                type="file"
+                                                multiple={false}
+                                                onDone={({base64}) => setFormData({ ...formData, avatar: base64 })}
+                                            />
+                                        </div>
+                                        <Input name="firstname" type="text" handleChange={handleChange} value={formData.firstname}/>
+                                        <Input name="lastname" type="text" handleChange={handleChange} value={formData.lastname}/>
                                         <Row xs={2}>
                                             <Col><Input name="id" type="text" disabled={true} value={user.result._id}/></Col>
-                                            <Col><Input name="tel" type="text" handleChange={handleChange} value={user.result.tel}/></Col>
+                                            <Col><Input name="tel" type="text" handleChange={handleChange} value={formData.tel}/></Col>
                                         </Row>
-                                        <Input name="email" type="email" handleChange={handleChange} value={user.result.email}/>
+                                        <Input name="email" type="email" handleChange={handleChange} value={formData.email}/>
                                         <Row xs={2}>
-                                            <Col><Input name="country" type="text" handleChange={handleChange} value={user.result.country}/></Col>
-                                            <Col><Input name="city" type="text" handleChange={handleChange} value={user.result.city}/></Col>
+                                            <Col><Input name="country" type="text" handleChange={handleChange} value={formData.country}/></Col>
+                                            <Col><Input name="city" type="text" handleChange={handleChange} value={formData.city}/></Col>
                                         </Row>
-                                        <Input name="car" type="text" handleChange={handleChange} value={user.result.car}/>
+                                        <Input name="car" type="text" handleChange={handleChange} value={formData.car}/>
                                         <Button type="submit">Сохранить</Button>
                                     </Form>
                                 </div>

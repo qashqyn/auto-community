@@ -4,6 +4,7 @@
         font-size: 24px;
         line-height: 30px;
         color: #000000;
+        margin-bottom: 32px;
         .count{
             font-feature-settings: 'pnum' on, 'lnum' on;
             color: #8E8E8E;
@@ -26,6 +27,7 @@
             padding: 10px 30px;
         }
         .login{
+            display: inline-block;
             color: #457B9D;
             border: 1px solid #457B9D;
             background: none;
@@ -34,6 +36,23 @@
         .register{
             color: #FFFFFF;
             background: #457B9D;
+        }
+    }
+    .form{
+        margin-left: 16px;
+        margin-bottom: 32px;
+        .textarea{
+            margin-bottom: 16px;
+        }
+        .btn{
+            margin-left: auto;
+            padding: 10px 35px;
+            background: #94C6C8;
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 20px;
+            text-align: center;
+            color: #FFFFFF;
         }
     }
     .comment{

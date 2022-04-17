@@ -25,7 +25,7 @@ const SignUp = () => {
         dispatch(signup(formData, navigate));
     }
     const handleChange = (e) => {
-        console.log(e.target.value);
+        // console.log(e.target.value);
         setFormData({ ...formData, [e.target.name]: e.target.value });
     }
     return (

@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 
 import adminRoutes from './routes/admin.js';
 import newsRoutes from './routes/news.js';
+import antitheftRoutes from './routes/antitheft.js';
 import userRoutes from './routes/user.js';
 
 const app = express();
@@ -17,6 +18,7 @@ app.use(cors());
 
 app.use('/admin', adminRoutes);
 app.use('/news', newsRoutes);
+app.use('/antitheft', antitheftRoutes);
 app.use('/user', userRoutes);
 
 app.get('/', (req, res) => {

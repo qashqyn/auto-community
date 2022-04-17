@@ -9,14 +9,23 @@ API.interceptors.request.use((req) => {
     return req;
 });
 
+// NEWS
 export const fetchSingleNews = (id) => API.get(`/news/${id}`);
-export const fetchNews = () => API.get(`/news`);
+export const fetchNews = (tags) => API.get(`/news?tags=${tags.join()}`);
 export const createNews = (newNews) => API.post(`/admin/news`, newNews);
 export const updateNews = (id, updatedNews) => API.patch(`/admin/news/${id}`, updatedNews);
 export const deleteNews = (id) => API.delete(`/admin/news/${id}`);
 export const likeNews = (id) => API.patch(`/news/${id}/likeNews`);
+// ANTITHEFT
+export const fetchAntitheftPost = (id) => API.get(`/antitheft/${id}`);
+export const fetchAntitheftPosts = (filter) => API.get(`/antitheft/?city=${filter.city}&sort=${filter.sort}&amount=${filter.amount}`);
+export const createAntitheftPost = (newPost) => API.post(`/antitheft`, newPost);
+export const updateAntitheftPost = (id, updatedPost) => API.patch(`/antitheft/${id}`, updatedPost);
+export const deleteAntitheftPost = (id) => API.delete(`/antitheft/${id}`);
+export const likeAntitheftPost = (id) => API.patch(`/antitheft/${id}/like`);
 
 export const login = (formData) => API.post('/user/login', formData);
 export const signup = (formData) => API.post('/user/signup', formData);
+export const editUserInfo = (formData) => API.patch('/user/edit', formData);
 
 export const fetchUser = (id) => API.get(`/user/${id}`);

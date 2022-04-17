@@ -1,4 +1,4 @@
-import { AUTH } from '../constants/actionTypes';
+import { AUTH, UPDATE_USER } from '../constants/actionTypes';
 import * as api from '../api';
 
 export const signup = (formData, navigate) => async (dispatch) => {
@@ -26,5 +26,13 @@ export const login = (formData, navigate) => async (dispatch) => {
 };
 
 export const edit = (formData, navigate) => async (dispatch) => {
-    
+    try {
+        const { data } = await api.editUserInfo(formData);
+
+        dispatch({type: UPDATE_USER, data});
+
+        navigate('/profile');
+    } catch (error) {
+        console.log(error);
+    }
 };

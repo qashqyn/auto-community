@@ -1,0 +1,61 @@
+#antitheft{
+    .background{
+        padding-top: 40px;
+        padding-bottom: 142px;
+        background-image: url('../../images/antitheft-background.png');
+        width: 100%;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        .left-blur{
+            position: absolute;
+            top:0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(158.9deg, rgba(255, 255, 255, 0.16) 7.19%, rgba(255, 255, 255, 0.04) 88.21%);
+            backdrop-filter: blur(5px);
+        }
+        .container{
+            position: relative;
+            color: #fff;
+            h1{
+                margin-top: 152px;
+                margin-bottom: 8px;
+                padding: 0;
+            }
+            p{
+                margin-bottom: 72px;
+            }
+        }
+        .breadcrumb-item{
+            color: #8E8E8E;
+            &.active{
+                color: #D7D7D7;
+            }
+        }
+    }
+    .cards{
+        display: flex;
+        flex-direction: column;
+        gap: 32px
+    }
+    .posts{
+        padding-top: 40px;
+        padding-bottom: 72px;
+        
+        .spinner{
+            display: flex;
+            margin-top: 64px;
+            margin-bottom: 96px;
+            &>*{
+                margin: auto;
+            }
+        }
+        .nothing{
+            text-align: center;
+            margin-top: 64px;
+            margin-bottom: 96px;
+        }
+    }
+}

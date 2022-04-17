@@ -14,18 +14,20 @@ const CommentsSection = ({comments}) => {
             {!user?.result ? (
                 <div className="guest">
                     <p>Участвовать в обсуждениях могут только зарегистрированные пользователи.</p>
-                    <LinkContainer to="/login"><Button className="login">Войти</Button></LinkContainer>
-                    <LinkContainer to="/signup"><Button className="registr">Регистрироваться</Button></LinkContainer>
+                    <div>
+                        <LinkContainer to="/login"><Button className="login">Войти</Button></LinkContainer>
+                        <LinkContainer to="/signup"><Button className="registr">Регистрироваться</Button></LinkContainer>
+                    </div>
                 </div>
             ) : (
                 <div className="d-flex">
                     <div className="avatar-md"><Image  /></div>
-                    <Form className="w-100">
-                        <Form.Group>
-                            <Form.Control as="textarea" rows={3}></Form.Control>
+                    <Form className="w-100 form">
+                        <Form.Group className="textarea">
+                            <Form.Control as="textarea" rows={3} placeholder="Написать комментарии"></Form.Control>
                         </Form.Group>
                         <div className="d-flex">
-                            <Button className="ml-auto" type="submit">Отправить</Button>
+                            <Button type="submit">Отправить</Button>
                         </div>
                     </Form>
                 </div>

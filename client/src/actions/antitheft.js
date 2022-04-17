@@ -2,10 +2,10 @@ import { START_LOADING, END_LOADING, FETCH_ALL, FETCH_ONE, CREATE, UPDATE, DELET
 import * as api from '../api';
 
 // Action Creators
-export const getNews = (tags) => async(dispatch) => { 
+export const getAntitheftPosts = (filter) => async(dispatch) => { 
     try {
         dispatch({ type: START_LOADING });
-        const { data } = await api.fetchNews(tags);
+        const { data } = await api.fetchAntitheftPosts(filter);
         
         dispatch({ type: FETCH_ALL, payload: data });
         dispatch({ type: END_LOADING});
@@ -14,10 +14,10 @@ export const getNews = (tags) => async(dispatch) => {
     }
 }
 
-export const getSingleNews = (id) => async(dispatch) => { 
+export const getAntitheftPost = (id) => async(dispatch) => { 
     try {
         dispatch({ type: START_LOADING });
-        const { data } = await api.fetchSingleNews(id);
+        const { data } = await api.fetchAntitheftPost(id);
         
         dispatch({ type: FETCH_ONE, payload: data });
         dispatch({ type: END_LOADING});
@@ -26,9 +26,10 @@ export const getSingleNews = (id) => async(dispatch) => {
     }
 }
 
-export const createNews = (news) => async(dispatch) => {
+export const createAntitheftPost = (post) => async(dispatch) => {
     try {
-        const { data } = await api.createNews(news);
+        console.log(post);
+        const { data } = await api.createAntitheftPost(post);
         
         dispatch({ type: CREATE, payload: data });
     } catch (error) {
@@ -36,9 +37,9 @@ export const createNews = (news) => async(dispatch) => {
     }
 }
 
-export const updateNews = (id, news) => async(dispatch) => {
+export const updateAntitheftPost = (id, post) => async(dispatch) => {
     try {
-        const { data } = await api.updateNews(id, news);
+        const { data } = await api.updateAntitheftPost(id, post);
         
         dispatch({ type: UPDATE, payload: data });
     } catch (error) {
@@ -46,9 +47,9 @@ export const updateNews = (id, news) => async(dispatch) => {
     }
 }
 
-export const deleteNews = (id) => async(dispatch) => {
+export const deleteAntitheftPost = (id) => async(dispatch) => {
     try {
-        await api.deleteNews(id);
+        await api.deleteAntitheftPost(id);
         
         dispatch({ type: DELETE, payload: id });
     } catch (error) {
@@ -56,9 +57,9 @@ export const deleteNews = (id) => async(dispatch) => {
     }
 }
 
-export const likeNews = (id, news) => async(dispatch) => {
+export const likeAntitheftPost = (id) => async(dispatch) => {
     try {
-        const { data } = await api.likeNews(id);
+        const { data } = await api.likeAntitheftPost(id);
         
         dispatch({ type: LIKE, payload: data });
     } catch (error) {

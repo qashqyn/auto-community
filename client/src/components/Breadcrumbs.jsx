@@ -10,7 +10,7 @@ const Breadcrumbs = ({currentPage, links}) => {
             </LinkContainer>
             {links && 
                 links.map((el) => (
-                    <LinkContainer to={el.link}>
+                    <LinkContainer to={el.link} key={el.link}>
                         <Breadcrumb.Item>{el.name}</Breadcrumb.Item>
                     </LinkContainer>                                        
                 ))
