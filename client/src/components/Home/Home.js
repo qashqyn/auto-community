@@ -21,7 +21,7 @@ const Home = () => {
     const {posts: news} = useSelector((state) => state.posts);
 
     useEffect(() => {
-        dispatch(getNews());
+        dispatch(getNews([], 1));
     }, [dispatch]);
 
     const videos = useSelector((state) => state.videos);

@@ -2,10 +2,10 @@ import { START_LOADING, END_LOADING, FETCH_ALL, FETCH_ONE, CREATE, UPDATE, DELET
 import * as api from '../api';
 
 // Action Creators
-export const getAntitheftPosts = (filter) => async(dispatch) => { 
+export const getAntitheftPosts = (filter, page) => async(dispatch) => { 
     try {
         dispatch({ type: START_LOADING });
-        const { data } = await api.fetchAntitheftPosts(filter);
+        const { data } = await api.fetchAntitheftPosts(filter, page);
         
         dispatch({ type: FETCH_ALL, payload: data });
         dispatch({ type: END_LOADING});
