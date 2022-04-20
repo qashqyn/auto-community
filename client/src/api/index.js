@@ -23,6 +23,10 @@ export const createAntitheftPost = (newPost) => API.post(`/antitheft`, newPost);
 export const updateAntitheftPost = (id, updatedPost) => API.patch(`/antitheft/${id}`, updatedPost);
 export const deleteAntitheftPost = (id) => API.delete(`/antitheft/${id}`);
 export const likeAntitheftPost = (id) => API.patch(`/antitheft/${id}/like`);
+// VIDEOS
+export const fetchVideos = (tags, page) => API.get(`/video?tags=${tags.join()}&page=${page}`);
+export const fetchVideo = (id) => API.get(`/video/${id}`);
+export const createVideo = (newVideo) => API.post(`/admin/video`, newVideo);
 
 export const login = (formData) => API.post('/user/login', formData);
 export const signup = (formData) => API.post('/user/signup', formData);

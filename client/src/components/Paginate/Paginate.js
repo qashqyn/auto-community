@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import { Pagination } from 'react-bootstrap';
 import {useDispatch, useSelector} from 'react-redux';
+
 import { getNews } from '../../actions/news';
 import { getAntitheftPosts } from '../../actions/antitheft';
+import { getVideos } from '../../actions/videos';
 
 import './styles.scss';
 
@@ -16,7 +18,9 @@ const Paginate = ({tags, page, type, filter}) => {
                 dispatch(getNews(tags, page));
             else if(type === 'antitheft')
                 dispatch(getAntitheftPosts(filter, page));
-            }
+            else if(type === 'video')
+                dispatch(getVideos(tags, page));
+        }
     },[dispatch, tags, page, filter, type]);
 
     return (

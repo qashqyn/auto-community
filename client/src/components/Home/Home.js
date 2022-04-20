@@ -24,10 +24,10 @@ const Home = () => {
         dispatch(getNews([], 1));
     }, [dispatch]);
 
-    const videos = useSelector((state) => state.videos);
+    const {videos} = useSelector((state) => state.videos);
 
     useEffect(() => {
-        dispatch(getVideos());
+        dispatch(getVideos([], 1));
     }, [dispatch]);
 
 
@@ -111,7 +111,7 @@ const Home = () => {
                         </div>
                     ) : (
                         <Row xs={1} md={2} lg={3}>
-                            {news.map((singleNews) => (
+                            {news.slice(0, 3).map((singleNews) => (
                                 <Col key={singleNews._id}>
                                     <SingleNews news={singleNews} />
                                 </Col>
@@ -149,21 +149,23 @@ const Home = () => {
                 <div className="block video">
                     <div className="heading">Видео</div>
                         <div className="sub-heading">Тест-драйвы, обзоры, ASMR и рекламные ролики</div>
-                        {/* {!videos.length ? ( */}
+                        {!videos.length ? (
                             <div className="text-center p-5">
                                 <Spinner animation="border" role="status">
                                     <span className="visually-hidden">Загрузка...</span>
                                 </Spinner>
                             </div>
-                        {/* ) : (
+                         ) : (
                             <Row xs={1} lg={2}>
-                                {videos.map((video) => (
-                                    <Col key={video._id}>
-                                        <Video video={video} />
+                                {videos.slice(0, 4).map((video) => (
+                                    <Col key={video._id} style={{marginBottom: 20 +"px"}}>
+                                        <LinkContainer to={`/video/${video._id}`}>
+                                            <Card.Img src={`https://i.ytimg.com/vi/${video.videoID}/maxresdefault.jpg`} />
+                                        </LinkContainer>
                                     </Col>
                                 ))}
                             </Row>
-                        )} */}
+                        )} 
 
                         <div className="btn-wrapper">
                         <LinkContainer to="/news">

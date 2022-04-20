@@ -21,7 +21,7 @@ const CommentsSection = ({comments}) => {
                 </div>
             ) : (
                 <div className="d-flex">
-                    <div className="avatar-md"><Image  /></div>
+                    <div className="avatar avatar-md"><Image src={user.result.avatar} /></div>
                     <Form className="w-100 form">
                         <Form.Group className="textarea">
                             <Form.Control as="textarea" rows={3} placeholder="Написать комментарии"></Form.Control>
@@ -35,8 +35,8 @@ const CommentsSection = ({comments}) => {
             {comments.map((comment) => (
                 <div className="comment" key={comment._id}>
                     <div className="comment-heading">
-                        <div className="avatar">
-                            <Image />
+                        <div className="avatar avatar-sm">
+                            <Image src={comment.author.avatar} />
                         </div>
                         <div>
                             <div className="username">{comment.user.firstname + " " + comment.user.lastname}</div>

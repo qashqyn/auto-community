@@ -8,9 +8,9 @@ import { getNews } from '../../actions/news';
 
 import SingleNews from "./SingleNews/SingleNews";
 import Breadcrumbs from "../Breadcrumbs";
+import Paginate from "../Paginate/Paginate";
 
 import './styles.scss';
-import Paginate from "../Paginate/Paginate";
 
 const tagsArray = ["Тест-драйвы", "Путешествия", "Ремонт", "Покупка машины", "История", "Фотосессии", "Новые модели", "Спорткары", "Электромобили", "Безопасность", "Обучение", "Шины и диски"];
 
@@ -30,12 +30,12 @@ const News = () => {
     const addTag = async (tag) => {
         if(!tags.includes(tag)){
             setTags((prevState) => [...prevState, tag]);
-            dispatch(getNews(tags));
+            dispatch(getNews(tags,1));
         }
     }
     const removeTag = async (tag) => {
         setTags(tags.filter(item => item !== tag));
-        dispatch(getNews(tags));
+        dispatch(getNews(tags,1));
     }
 
     return (

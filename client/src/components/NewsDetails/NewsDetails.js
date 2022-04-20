@@ -3,7 +3,7 @@ import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { Container, Form, Image, Spinner } from "react-bootstrap";
+import { Container, Image, Spinner } from "react-bootstrap";
 
 import { getSingleNews } from "../../actions/news";
 import Breadcrumbs from "../Breadcrumbs";
@@ -51,7 +51,7 @@ const NewsDetails = () => {
                 <div>
                     <p className="top-moment">{moment(post.createdAt).format("DD MMMM YYYY")}</p>
                     <div className="heading">{post.title}</div>
-                    <div className="subheading">{post.title}</div>
+                    <div className="subheading">{post.subtitle}</div>
                     <div className="img">
                         <Image src={post.selectedFile} />
                     </div>

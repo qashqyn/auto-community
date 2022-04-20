@@ -8,6 +8,7 @@ import adminRoutes from './routes/admin.js';
 import newsRoutes from './routes/news.js';
 import antitheftRoutes from './routes/antitheft.js';
 import userRoutes from './routes/user.js';
+import videoRoutes from './routes/video.js';
 
 const app = express();
 dotenv.config();
@@ -20,6 +21,7 @@ app.use('/admin', adminRoutes);
 app.use('/news', newsRoutes);
 app.use('/antitheft', antitheftRoutes);
 app.use('/user', userRoutes);
+app.use('/video', videoRoutes);
 
 app.get('/', (req, res) => {
     res.send("APP is running");

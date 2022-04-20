@@ -21,6 +21,8 @@ import Antitheft from "./components/Antitheft/Antitheft";
 import AntitheftDetails from "./components/AntitheftDetails/AntitheftDetails";
 import AntitheftForm from "./components/Antitheft/AntitheftForm/AntitheftForm";
 import Page404 from "./components/Page404";
+import Videos from "./components/Videos/Videos";
+import VideoDetails from "./components/VideoDetails/VideoDetails";
 
 library.add(far, fas);
 
@@ -33,14 +35,20 @@ const App = () => {
                     <Route path="/" exact element={<Home />} />
                     <Route path="">
                         {/* <Container> */}
+                            <Route path="/login" exact element={<Login />} />
+                            <Route path="/signup" exact element={<SignUp />} />
+                            
                             <Route path="/news/:id" element={<NewsDetails />} />
                             <Route path="/news" exact element={<News />} />
                             <Route path="/news/search" exact element={<News />} />
+                            
                             <Route path="/antitheft/:id" element={<AntitheftDetails /> } />
                             <Route path="/antitheft" exact element={<Antitheft /> } />
                             <Route path="/antitheft/form" exact element={<AntitheftForm /> } />
-                            <Route path="/login" exact element={<Login />} />
-                            <Route path="/signup" exact element={<SignUp />} />
+                            
+                            <Route path="/video/:id" element = {<VideoDetails /> } />
+                            <Route path="/video" exact element = {<Videos />} />
+                            
                             <Route path="/profile" exact element={<Profile />} />
                         {/* </Container> */}
                     </Route>

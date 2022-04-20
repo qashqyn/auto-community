@@ -1,0 +1,54 @@
+.video{
+    #videoPlayer{
+        position: relative;
+        padding-bottom: 56.25%; /* 16:9 */
+        height: 0;
+        iframe{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .heading{
+        margin: 24px 0;
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 30px;
+        /* or 125% */
+
+        display: flex;
+        align-items: center;
+        font-feature-settings: 'pnum' on, 'lnum' on;
+        color: #000000;
+    }
+
+    .actions{
+        display: flex;
+        gap: 40px;
+        margin-bottom: 72px;
+        .action{
+            display: flex;
+            gap: 6px;
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 22px;
+            font-feature-settings: 'pnum' on, 'lnum' on;
+            color: #333333;
+            align-items: center;
+            .icon-container{
+                width: 40px;
+                height: 40px;
+                display: flex;
+                svg{
+                    fill: none;
+                    margin: auto;
+                    max-width: 40px;
+                    max-height: 40px;
+                }
+            }
+
+        }
+    }
+}

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import decode from 'jwt-decode';
 import FileBase from 'react-file-base64';
 
-import { Row, Col, Form, Container, Tab, Nav, Button, Card, Image } from "react-bootstrap";
+import { Row, Col, Form, Container, Tab, Nav, Button, Image } from "react-bootstrap";
 
 // import { getUser } from '../../actions/user';
 import { useNavigate } from "react-router-dom";
@@ -14,6 +14,7 @@ import { LOGOUT } from "../../constants/actionTypes";
 import NewsForm from "./NewsForm/NewsForm";
 
 import './styles.scss';
+import VideoForm from "./VideoForm/VideoForm";
 
 
 
@@ -36,7 +37,7 @@ const Profile = () => {
           }
       
         setUser(JSON.parse(localStorage.getItem('profile')));
-    }, [dispatch]);
+    }, [dispatch, navigate, user]);
     
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -97,7 +98,7 @@ const Profile = () => {
                                         <Nav.Link eventKey="news">Новости</Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link eventKey="videos">Видео</Nav.Link>
+                                        <Nav.Link eventKey="video">Видео</Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
                                         <Nav.Link eventKey="antitheft">Антиугон</Nav.Link>
@@ -162,10 +163,16 @@ const Profile = () => {
                             </Tab.Pane>
                             <Tab.Pane eventKey="subscribes">
                             </Tab.Pane>
-                            {/* Модератор */}
-                            <Tab.Pane eventKey="news">
-                                <NewsForm />
-                            </Tab.Pane>
+                            {user.result.is_admin === true && (
+                                <>
+                                    <Tab.Pane eventKey="news">
+                                        <NewsForm />
+                                    </Tab.Pane>
+                                    <Tab.Pane eventKey="video">
+                                        <VideoForm />
+                                    </Tab.Pane>
+                                </>
+                            )}
                         </Tab.Content>
                     </Col>
                 </Row>

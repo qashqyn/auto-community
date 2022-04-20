@@ -11,9 +11,9 @@ const SingleNews = ({ news }) => {
         <Card>
             <Card.Body>
                 <Card.Img variant="top" src={news.selectedFile} />
-                <Card.Subtitle>{news.tags[0]}&emsp;{moment(news.createdAt).format("DD/MM/YYYY")}</Card.Subtitle>
+                <Card.Subtitle>{news.tag}&emsp;{moment(news.createdAt).format("DD/MM/YYYY")}</Card.Subtitle>
                 <Card.Title>{news.title}</Card.Title>
-                <Card.Text>{news.description}</Card.Text>
+                <Card.Text>{news.message}</Card.Text>
                 <LinkContainer to={`/news/${news._id}`}>
                     <Card.Link>Читать больше</Card.Link>
                 </LinkContainer>
