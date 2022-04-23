@@ -28,7 +28,6 @@ export const getAntitheftPost = (id) => async(dispatch) => {
 
 export const createAntitheftPost = (post) => async(dispatch) => {
     try {
-        console.log(post);
         const { data } = await api.createAntitheftPost(post);
         
         dispatch({ type: CREATE, payload: data });

@@ -15,6 +15,7 @@ import NewsForm from "./NewsForm/NewsForm";
 
 import './styles.scss';
 import VideoForm from "./VideoForm/VideoForm";
+import MyPosts from "./MyPosts/MyPosts";
 
 
 
@@ -37,7 +38,7 @@ const Profile = () => {
           }
       
         setUser(JSON.parse(localStorage.getItem('profile')));
-    }, [dispatch, navigate, user]);
+    }, [dispatch]);
     
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -70,7 +71,7 @@ const Profile = () => {
                     </div>
                 </div>
             </div>
-            <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+            <Tab.Container id="left-tabs-example" defaultActiveKey="profile">
                 <Row>
                     <Col sm={3}>
                         <Nav variant="pills" className="flex-column">
@@ -160,6 +161,7 @@ const Profile = () => {
                             <Tab.Pane eventKey="notes">
                             </Tab.Pane>
                             <Tab.Pane eventKey="posts">
+                                <MyPosts />
                             </Tab.Pane>
                             <Tab.Pane eventKey="subscribes">
                             </Tab.Pane>

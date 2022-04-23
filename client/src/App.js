@@ -23,6 +23,9 @@ import AntitheftForm from "./components/Antitheft/AntitheftForm/AntitheftForm";
 import Page404 from "./components/Page404";
 import Videos from "./components/Videos/Videos";
 import VideoDetails from "./components/VideoDetails/VideoDetails";
+import Logbooks from './components/Logbooks/Logbooks';
+import LogbookForm from "./components/Logbooks/LogbookForm/LogbookForm";
+import LogbookDetails from "./components/LogbookDetails/LogbookDetails";
 
 library.add(far, fas);
 
@@ -42,10 +45,15 @@ const App = () => {
                             <Route path="/news" exact element={<News />} />
                             <Route path="/news/search" exact element={<News />} />
                             
+                            
                             <Route path="/antitheft/:id" element={<AntitheftDetails /> } />
                             <Route path="/antitheft" exact element={<Antitheft /> } />
                             <Route path="/antitheft/form" exact element={<AntitheftForm /> } />
                             
+                            <Route path="/logbook/:id" element={<LogbookDetails />} />
+                            <Route path="/logbook" exact element={<Logbooks />} />
+                            <Route path="/logbook/form" exact element={<LogbookForm />} />
+
                             <Route path="/video/:id" element = {<VideoDetails /> } />
                             <Route path="/video" exact element = {<Videos />} />
                             

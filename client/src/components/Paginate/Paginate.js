@@ -41,8 +41,8 @@ const Paginate = ({tags, page, type, filter}) => {
             {numberOfPages>1 && (
                 <Pagination.Item active={page===numberOfPages} href={`?page=${numberOfPages}`}>{numberOfPages}</Pagination.Item>
             )}
-            <Pagination.Next disabled={page===numberOfPages} href={`?page=${page+1}`}/>
-            <Pagination.Last disabled={page===numberOfPages} href={`?page=${numberOfPages}`}/>
+            <Pagination.Next disabled={page===numberOfPages || !numberOfPages} href={`?page=${page+1}`}/>
+            <Pagination.Last disabled={page===numberOfPages || !numberOfPages} href={`?page=${numberOfPages}`}/>
         </Pagination>
     );
 };

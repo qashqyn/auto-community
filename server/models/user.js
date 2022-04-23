@@ -9,7 +9,6 @@ const userSchema = mongoose.Schema({
     country: {type: String, required: true},
     city: {type: String, required: true},
     car: {type: String, required: true},
-    id: { type: String},
     is_admin: {type: Boolean, default: false},
     avatar: String
 });

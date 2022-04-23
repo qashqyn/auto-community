@@ -9,10 +9,10 @@ export const getNews = async (req, res) => {
         const total = await NewsMessage.countDocuments({});
 
         if(tags.length>0){
-            const newsMessages = await NewsMessage.find({tag: { $in: tags.split(',')}}).select('title description tags selectedFile createdAt').limit(LIMIT).skip(startIndex);
+            const newsMessages = await NewsMessage.find({tag: { $in: tags.split(',')}}).select('title description tags selectedFile createdAt').sort({createdAt: -1}).limit(LIMIT).skip(startIndex);
             res.status(200).json({data: newsMessages, currentPage:Number(page), numberOfPages: Math.ceil(total / LIMIT)});
         }else{
-            const newsMessages = await NewsMessage.find().select('title description tags selectedFile createdAt').limit(LIMIT).skip(startIndex);
+            const newsMessages = await NewsMessage.find().select('title description tags selectedFile createdAt').sort({createdAt: -1}).limit(LIMIT).skip(startIndex);
             res.status(200).json({data: newsMessages, currentPage:Number(page), numberOfPages: Math.ceil(total / LIMIT)});
         }
     } catch (error) {

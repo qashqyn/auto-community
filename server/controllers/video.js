@@ -8,10 +8,10 @@ export const getVideos = async (req, res) => {
         const total = await Video.countDocuments({});
 
         if(tags.length>0){
-            const videos = await Video.find({tag: { $in: tags.split(',')}}).select('title videoID createdAt').limit(LIMIT).skip(startIndex);
+            const videos = await Video.find({tag: { $in: tags.split(',')}}).select('title videoID createdAt').sort({createdAt: -1}).limit(LIMIT).skip(startIndex);
             res.status(200).json({data: videos, currentPage:Number(page), numberOfPages: Math.ceil(total / LIMIT)});
         }else{
-            const videos = await Video.find().select('title tag videoID createdAt').limit(LIMIT).skip(startIndex);
+            const videos = await Video.find().select('title tag videoID createdAt').sort({createdAt: -1}).limit(LIMIT).skip(startIndex);
             res.status(200).json({data: videos, currentPage:Number(page), numberOfPages: Math.ceil(total / LIMIT)});
         }
     } catch (error) {

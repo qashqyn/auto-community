@@ -23,6 +23,15 @@ export const createAntitheftPost = (newPost) => API.post(`/antitheft`, newPost);
 export const updateAntitheftPost = (id, updatedPost) => API.patch(`/antitheft/${id}`, updatedPost);
 export const deleteAntitheftPost = (id) => API.delete(`/antitheft/${id}`);
 export const likeAntitheftPost = (id) => API.patch(`/antitheft/${id}/like`);
+// LOGBOOK
+export const fetchLogbooks = () => API.get(`/logbooks`);
+export const fetchLogbooksByCategory = (categories) => API.get(`/logbooks/category?category=${categories.join()}`);
+export const createLogbook = (newPost) => API.post(`/logbooks`, newPost);
+export const fetchLogbook = (id) => API.get(`/logbooks/${id}`);
+export const fetchUserLogbooks = () => API.get(`/logbooks/my`);
+export const deleteLogbook = (id) => API.delete(`/logbooks/${id}`);
+
+
 // VIDEOS
 export const fetchVideos = (tags, page) => API.get(`/video?tags=${tags.join()}&page=${page}`);
 export const fetchVideo = (id) => API.get(`/video/${id}`);
