@@ -92,7 +92,7 @@ const Profile = () => {
                             </Nav.Item>
                             {user.result.is_admin === true && (
                                 <>
-                                    <Nav.Item>
+                                    <Nav.Item className="mod">
                                         Модератор
                                     </Nav.Item>
                                     <Nav.Item>

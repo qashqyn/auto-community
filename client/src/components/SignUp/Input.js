@@ -8,7 +8,7 @@ const Input = ({name, label, type, handleChange, value, disabled=false, required
 
     // EDITABLE
     const checkChar = (e) => {
-        if(e.target.textContent.length > maxCharacters && e.keyCode != 8)
+        if(e.target.textContent.length > maxCharacters && e.keyCode !== 8)
             e.preventDefault();
         setCharCount(e.target.textContent.length, handleChange(e));
     }
@@ -26,6 +26,14 @@ const Input = ({name, label, type, handleChange, value, disabled=false, required
                 <Form.Check onChange={handleChange} className="checkbox" type={type} id={name} label={label} required={required}/>
             </Form.Group>
         );
+    else if(type === 'radio')
+        return (
+            <Form.Group >
+                {options.map((option, key) => (
+                    <Form.Check className="radio-button" key={key} label={option.label} id={name+key} type="radio" value={option.value} name={name}/>
+                ))}
+            </Form.Group>
+        )
     else if(type === 'select')
         return (
             <Form.Group controlId={name} className="input">

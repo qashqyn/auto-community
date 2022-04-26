@@ -23,4 +23,37 @@
             }
         }
     }
+
+    .nav-pills{
+        .nav-item{
+            .nav-link{
+                cursor: pointer;
+                font-weight: 600;
+                font-size: 20px;
+                line-height: 24px;
+                color: #C7C7C7!important;
+                background: #fff!important;
+                margin: 0;
+                border-radius: 0;
+                &.active{
+                    background: #EBF5F7!important;
+                    
+                    font-weight: 600;
+                    font-size: 20px;
+                    line-height: 24px;
+                    color: #333333!important;
+                }
+            }
+            &.mod{
+                font-weight: 600;
+                font-size: 20px;
+                line-height: 24px;
+                display: flex;
+                align-items: center;
+                color: #333333;
+                padding: 8px 16px;
+                margin-top: 40px;
+            }
+        }
+    }
 }

@@ -30,7 +30,10 @@ export const createLogbook = (newPost) => API.post(`/logbooks`, newPost);
 export const fetchLogbook = (id) => API.get(`/logbooks/${id}`);
 export const fetchUserLogbooks = () => API.get(`/logbooks/my`);
 export const deleteLogbook = (id) => API.delete(`/logbooks/${id}`);
-
+// MARKET
+export const fetchMarketPost = (id) => API.get(`/market/${id}`);
+export const fetchMarketPosts = (page) => API.get(`/market/?page=${page}`);
+export const createMarketPost = (newPost) => API.post(`/market`, newPost);
 
 // VIDEOS
 export const fetchVideos = (tags, page) => API.get(`/video?tags=${tags.join()}&page=${page}`);

@@ -1,0 +1,71 @@
+#market-form{
+    padding-top: 40px;
+    padding-bottom: 72px;
+    h1{
+        font-weight: 600;
+        font-size: 32px;
+        line-height: 32px;
+        color: #112D4E;
+        margin-top: 48px;
+        margin-bottom: 40px;
+        padding: 0;
+    }
+    p{
+        font-weight: 500;
+        font-size: 22px;
+        line-height: 28px;
+        color: #333333;
+        margin-bottom: 32px;
+    }
+
+    .selectedImages{
+        display: flex;
+        gap: 32px;
+        margin: 32px 0;
+        .image{
+            width: 256px;
+            height: 160px;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+            img{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                min-width: 100%;
+                min-height: 100%;
+                object-fit: cover;
+            }
+            span{
+                cursor: pointer;
+                top: 8px;
+                right: 8px;
+                position: absolute;
+                width: 24px;
+                height: 24px;
+            }
+        }
+    }
+    .icon-container{
+        width: 40px;
+        height: 40px;
+        display: flex;
+        svg{
+            fill: none;
+            margin: auto;
+            max-width: 40px;
+            max-height: 40px;
+        }
+    }
+
+    .buttons{
+        display: flex;
+        justify-content: space-between;
+        vertical-align: baseline;
+        .submit{
+            background: #94C6C8;
+            border-radius: 1px;
+        }
+    }
+}

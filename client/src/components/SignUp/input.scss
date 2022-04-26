@@ -1,3 +1,22 @@
+.radio-button{
+    padding-left: 0;
+    label{
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 14px;
+        color: #000000;
+    }
+    input{
+        display: none;   
+        &:checked ~ label{
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 14px;
+            color: #457B9D;
+        }
+    }
+}
+
 .input{
     margin-bottom: 24px;
     width: 100%;

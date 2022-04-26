@@ -7,6 +7,7 @@ import { getAntitheftPosts } from '../../actions/antitheft';
 import { getVideos } from '../../actions/videos';
 
 import './styles.scss';
+import { getMarketPosts } from '../../actions/market';
 
 const Paginate = ({tags, page, type, filter}) => {
     const { numberOfPages } = useSelector((state) => state.posts);
@@ -20,6 +21,9 @@ const Paginate = ({tags, page, type, filter}) => {
                 dispatch(getAntitheftPosts(filter, page));
             else if(type === 'video')
                 dispatch(getVideos(tags, page));
+            else if(type === 'market')
+                dispatch(getMarketPosts(page));
+                
         }
     },[dispatch, tags, page, filter, type]);
 
