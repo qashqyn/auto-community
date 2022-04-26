@@ -1,0 +1,36 @@
+.video-card{
+    box-shadow: none;
+    border: none;
+    border-radius: 0;
+    .card-img{
+        cursor: pointer;
+    }
+    .card-title{
+        cursor: pointer;
+        margin: 16px 0;
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 24px;
+        /* or 120% */
+        
+        display: flex;
+        align-items: center;
+        font-feature-settings: 'pnum' on, 'lnum' on;
+        
+        /* black */
+        
+        color: #000000;
+    }
+    .card-text{
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 14px;
+        /* identical to box height, or 117% */
+
+        display: flex;
+        align-items: center;
+        font-feature-settings: 'pnum' on, 'lnum' on;
+
+        color: #636363;
+    }
+}

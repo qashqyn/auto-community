@@ -2,14 +2,18 @@ import NewsMessage from "../models/newsMessage.js";
 import NewsComment from "../models/newsComment.js";
 
 export const getNews = async (req, res) => {
-    const { tags } = req.query;
+    const { tags, page } = req.query;
     try {
+        const LIMIT = 9;
+        const startIndex = (Number(page) - 1) * LIMIT;
+        const total = await NewsMessage.countDocuments({});
+
         if(tags.length>0){
-            const newsMessages = await NewsMessage.find({tags: { $in: tags.split(',')}}).select('title description tags selectedFile createdAt');
-            res.status(200).json(newsMessages);
+            const newsMessages = await NewsMessage.find({tag: { $in: tags.split(',')}}).select('title description tags selectedFile createdAt').sort({createdAt: -1}).limit(LIMIT).skip(startIndex);
+            res.status(200).json({data: newsMessages, currentPage:Number(page), numberOfPages: Math.ceil(total / LIMIT)});
         }else{
-            const newsMessages = await NewsMessage.find().select('title description tags selectedFile createdAt');
-            res.status(200).json(newsMessages);
+            const newsMessages = await NewsMessage.find().select('title description tags selectedFile createdAt').sort({createdAt: -1}).limit(LIMIT).skip(startIndex);
+            res.status(200).json({data: newsMessages, currentPage:Number(page), numberOfPages: Math.ceil(total / LIMIT)});
         }
     } catch (error) {
         res.status(404).json({message: error.message});      

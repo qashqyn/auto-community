@@ -2,10 +2,10 @@ import { START_LOADING, END_LOADING, FETCH_ALL, FETCH_ONE, CREATE, UPDATE, DELET
 import * as api from '../api';
 
 // Action Creators
-export const getNews = (tags) => async(dispatch) => { 
+export const getNews = (tags, page) => async(dispatch) => { 
     try {
         dispatch({ type: START_LOADING });
-        const { data } = await api.fetchNews(tags);
+        const { data } = await api.fetchNews(tags, page);
         
         dispatch({ type: FETCH_ALL, payload: data });
         dispatch({ type: END_LOADING});

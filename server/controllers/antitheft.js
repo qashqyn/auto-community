@@ -1,14 +1,18 @@
 import AntitheftMessage from "../models/antitheftMessage.js";
 
 export const getPosts = async (req, res) => {
-    const {city, sort, amount} = req.query;
+    const {city, sort, amount, page} = req.query;
     try {
+        const LIMIT = 6;
+        const startIndex = (Number(page) - 1) * LIMIT;
+        const total = await AntitheftMessage.countDocuments({});
+
         const location = new RegExp(city, 'i');
         const sorting = sort === "new" ? '-createdAt' : 'createdAt';
 
-        const antitheftMessages = await AntitheftMessage.find({location}).where("amount").gte(amount).sort(sorting);
+        const antitheftMessages = await AntitheftMessage.find({location}).where("amount").gte(amount).sort(sorting).limit(LIMIT).skip(startIndex);
         
-        res.status(200).json(antitheftMessages);
+        res.status(200).json({data: antitheftMessages, currentPage:Number(page), numberOfpages: Math.ceil(total / LIMIT)});
     } catch (error) {
         res.status(404).json({message: error.message});      
     }

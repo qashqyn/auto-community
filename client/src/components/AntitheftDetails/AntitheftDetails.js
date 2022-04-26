@@ -8,8 +8,6 @@ import { Container, Image, Spinner } from "react-bootstrap";
 import { getAntitheftPost } from "../../actions/antitheft";
 import Breadcrumbs from "../Breadcrumbs";
 
-import CommentsSection from "../CommentsSection/CommentsSection";
-
 import "./styles.scss";
 import ImageCarousel from "../ImageCarousel";
 

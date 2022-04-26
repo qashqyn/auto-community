@@ -1,7 +1,26 @@
+.radio-button{
+    padding-left: 0;
+    label{
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 14px;
+        color: #000000;
+    }
+    input{
+        display: none;   
+        &:checked ~ label{
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 14px;
+            color: #457B9D;
+        }
+    }
+}
+
 .input{
     margin-bottom: 24px;
     width: 100%;
-    input{
+    select, input, textarea{
         height: 48px;
         border: none;
         // border-bottom: 1px solid ;
@@ -10,7 +29,29 @@
         background: none;
         background-color: none;
         
-        &:focus{
+        &:focus, &:focus-visible{
+            outline: none;
+            box-shadow: inset 0px -1px 0px #457B9D;
+        }
+    }
+    .editable{
+        height: auto;
+        border: none;
+        // border-bottom: 1px solid ;
+        box-shadow: inset 0px -1px 0px #B3B3B3;
+        border-radius: 0;
+        background: none;
+        background-color: none;
+        padding: 8px 14px;
+        color: initial;
+        &:empty:before{
+            content: attr(placeholder);
+            color: #636363;
+            pointer-events: none;
+            display: block; /* For Firefox */
+          }
+        &:focus, &:focus-visible{
+            outline: none;
             box-shadow: inset 0px -1px 0px #457B9D;
         }
     }
@@ -36,6 +77,23 @@
             line-height: 16px;
 
             color: #000000;
+        }
+    }
+
+    .formatBtns{
+        .formatBtn{
+            cursor: pointer;
+            width: 56px;
+            height: 32px;
+            text-align: center;
+            display: inline-block;
+            border: 1px solid #EBEBEB;
+            box-sizing: border-box;
+            border-radius: 8px;
+            
+            &.active{
+                border-color: #457B9D;
+            }
         }
     }
 }

@@ -1,26 +1,40 @@
-import { FETCH_ALL, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
+import { FETCH_ALL_VIDEO, CREATE_VIDEO, UPDATE_VIDEO, DELETE_VIDEO, LIKE_VIDEO, START_LOADING, END_LOADING, FETCH_ONE_VIDEO } from '../constants/actionTypes';
 import * as api from '../api';
 
 // Action Creators
-export const getVideos = () => async(dispatch) => {
-    // try {
-    //     const { data } = await api.fetchNews();
+export const getVideos = (tags, page) => async(dispatch) => {
+    try {
+        dispatch({type: START_LOADING});
+        const { data } = await api.fetchVideos(tags, page);
         
-    //     dispatch({ type: FETCH_ALL, payload: data });
-    // } catch (error) {
-    //     console.log(error);
-    // }
+        dispatch({ type: FETCH_ALL_VIDEO, payload: data });
+        dispatch({type: END_LOADING});
+    } catch (error) {
+        console.log(error);
+    }
 }
 
-// export const createNews = (news) => async(dispatch) => {
-//     try {
-//         const { data } = await api.createNews(news);
+export const getVideo = (id) => async(dispatch) => { 
+    try {
+        dispatch({ type: START_LOADING });
+        const { data } = await api.fetchVideo(id);
         
-//         dispatch({ type: CREATE, payload: data });
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
+        dispatch({ type: FETCH_ONE_VIDEO, payload: data });
+        dispatch({ type: END_LOADING});
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const createVideo = (video) => async(dispatch) => {
+    try {
+        const { data } = await api.createVideo(video);
+        
+        dispatch({ type: CREATE_VIDEO, payload: data });
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 // export const updateNews = (id, news) => async(dispatch) => {
 //     try {

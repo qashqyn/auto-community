@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import decode from 'jwt-decode';
 import FileBase from 'react-file-base64';
 
-import { Row, Col, Form, Container, Tab, Nav, Button, Card, Image } from "react-bootstrap";
+import { Row, Col, Form, Container, Tab, Nav, Button, Image } from "react-bootstrap";
 
 // import { getUser } from '../../actions/user';
 import { useNavigate } from "react-router-dom";
@@ -14,6 +14,8 @@ import { LOGOUT } from "../../constants/actionTypes";
 import NewsForm from "./NewsForm/NewsForm";
 
 import './styles.scss';
+import VideoForm from "./VideoForm/VideoForm";
+import MyPosts from "./MyPosts/MyPosts";
 
 
 
@@ -69,7 +71,7 @@ const Profile = () => {
                     </div>
                 </div>
             </div>
-            <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+            <Tab.Container id="left-tabs-example" defaultActiveKey="profile">
                 <Row>
                     <Col sm={3}>
                         <Nav variant="pills" className="flex-column">
@@ -90,14 +92,14 @@ const Profile = () => {
                             </Nav.Item>
                             {user.result.is_admin === true && (
                                 <>
-                                    <Nav.Item>
+                                    <Nav.Item className="mod">
                                         Модератор
                                     </Nav.Item>
                                     <Nav.Item>
                                         <Nav.Link eventKey="news">Новости</Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link eventKey="videos">Видео</Nav.Link>
+                                        <Nav.Link eventKey="video">Видео</Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
                                         <Nav.Link eventKey="antitheft">Антиугон</Nav.Link>
@@ -159,13 +161,20 @@ const Profile = () => {
                             <Tab.Pane eventKey="notes">
                             </Tab.Pane>
                             <Tab.Pane eventKey="posts">
+                                <MyPosts />
                             </Tab.Pane>
                             <Tab.Pane eventKey="subscribes">
                             </Tab.Pane>
-                            {/* Модератор */}
-                            <Tab.Pane eventKey="news">
-                                <NewsForm />
-                            </Tab.Pane>
+                            {user.result.is_admin === true && (
+                                <>
+                                    <Tab.Pane eventKey="news">
+                                        <NewsForm />
+                                    </Tab.Pane>
+                                    <Tab.Pane eventKey="video">
+                                        <VideoForm />
+                                    </Tab.Pane>
+                                </>
+                            )}
                         </Tab.Content>
                     </Col>
                 </Row>

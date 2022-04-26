@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 import { Row, Col, Spinner, Container, Dropdown } from "react-bootstrap";
 
@@ -7,29 +8,34 @@ import { getNews } from '../../actions/news';
 
 import SingleNews from "./SingleNews/SingleNews";
 import Breadcrumbs from "../Breadcrumbs";
+import Paginate from "../Paginate/Paginate";
 
 import './styles.scss';
 
 const tagsArray = ["Тест-драйвы", "Путешествия", "Ремонт", "Покупка машины", "История", "Фотосессии", "Новые модели", "Спорткары", "Электромобили", "Безопасность", "Обучение", "Шины и диски"];
+
+function useQuery() {
+    return new URLSearchParams(useLocation().search);
+}
 
 const News = () => {
     const { posts: news, isLoading } = useSelector((state) => state.posts);
     const [ tags, setTags ] = useState([]);
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(getNews(tags));
-    }, [dispatch]);
+    const query = useQuery();
+    const page = query.get('page') || 1;
+
 
     const addTag = async (tag) => {
         if(!tags.includes(tag)){
             setTags((prevState) => [...prevState, tag]);
-            dispatch(getNews(tags));
+            dispatch(getNews(tags,1));
         }
     }
     const removeTag = async (tag) => {
-        setTags(tags.filter(item => item != tag));
-        dispatch(getNews(tags));
+        setTags(tags.filter(item => item !== tag));
+        dispatch(getNews(tags,1));
     }
 
     return (
@@ -75,14 +81,17 @@ const News = () => {
                     </Spinner>
                 </div>
             ) : (
-                <Row xs={1} md={2} lg={3}>
-                    {news.map((singleNews) => (
-                        <Col key={singleNews._id}>
-                            <SingleNews news={singleNews} />
-                        </Col>
-                    ))}
-                </Row>
+                <>
+                    <Row xs={1} md={2} lg={3}>
+                        {news.map((singleNews) => (
+                            <Col key={singleNews._id}>
+                                <SingleNews news={singleNews} />
+                            </Col>
+                        ))}
+                    </Row>
+                </>
             )}
+            <Paginate page={Number(page)} tags={tags} type="news" />
         </Container>
     );
 }

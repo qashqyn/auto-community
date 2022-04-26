@@ -39,7 +39,7 @@ const Login = () => {
                         <Input name="email" label="Электронная почта" type="email" handleChange={handleChange}/>                        
                         <Input name="password" label="Пароль" type="password" handleChange={handleChange}/>
                         <div className="d-flex">
-                            <Input name="remember" label="Запомнить меня" type="checkbox"/>
+                            <Input name="remember" label="Запомнить меня" required={false} type="checkbox"/>
                             <div className="forget">Забыли пароль?</div>
                         </div>
                         <Button className="login-btn" type="submit">Войти</Button>

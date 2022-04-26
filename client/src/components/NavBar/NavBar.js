@@ -24,7 +24,7 @@ const NavBar = (props) => {
     const logout = () => {
         dispatch({ type: actionType.LOGOUT });
     
-        navigate('/auth');
+        navigate('/login');
     
         setUser(null);
       };

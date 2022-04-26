@@ -21,6 +21,14 @@ import Antitheft from "./components/Antitheft/Antitheft";
 import AntitheftDetails from "./components/AntitheftDetails/AntitheftDetails";
 import AntitheftForm from "./components/Antitheft/AntitheftForm/AntitheftForm";
 import Page404 from "./components/Page404";
+import Videos from "./components/Videos/Videos";
+import VideoDetails from "./components/VideoDetails/VideoDetails";
+import Logbooks from './components/Logbooks/Logbooks';
+import LogbookForm from "./components/Logbooks/LogbookForm/LogbookForm";
+import LogbookDetails from "./components/LogbookDetails/LogbookDetails";
+import Market from "./components/Market/Market";
+import MarketForm from "./components/Market/MarketForm/MarketForm";
+import MarketDetails from "./components/MarketDetails/MarketDetails";
 
 library.add(far, fas);
 
@@ -33,14 +41,29 @@ const App = () => {
                     <Route path="/" exact element={<Home />} />
                     <Route path="">
                         {/* <Container> */}
+                            <Route path="/login" exact element={<Login />} />
+                            <Route path="/signup" exact element={<SignUp />} />
+                            
                             <Route path="/news/:id" element={<NewsDetails />} />
                             <Route path="/news" exact element={<News />} />
                             <Route path="/news/search" exact element={<News />} />
+                            
+                            
                             <Route path="/antitheft/:id" element={<AntitheftDetails /> } />
                             <Route path="/antitheft" exact element={<Antitheft /> } />
                             <Route path="/antitheft/form" exact element={<AntitheftForm /> } />
-                            <Route path="/login" exact element={<Login />} />
-                            <Route path="/signup" exact element={<SignUp />} />
+                            
+                            <Route path="/logbook/:id" element={<LogbookDetails />} />
+                            <Route path="/logbook" exact element={<Logbooks />} />
+                            <Route path="/logbook/form" exact element={<LogbookForm />} />
+
+                            <Route path="/video/:id" element = {<VideoDetails /> } />
+                            <Route path="/video" exact element = {<Videos />} />
+                            
+                            <Route path="/market/:id" element={<MarketDetails />} />
+                            <Route path="/market" exact element = {<Market />} />
+                            <Route path="/market/form" exact element = {<MarketForm />} />
+
                             <Route path="/profile" exact element={<Profile />} />
                         {/* </Container> */}
                     </Route>
