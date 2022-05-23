@@ -25,14 +25,26 @@
         border: none;
         // border-bottom: 1px solid ;
         box-shadow: inset 0px -1px 0px #B3B3B3;
+        
         border-radius: 0;
         background: none;
         background-color: none;
         
+        &.is-invalid{
+            box-shadow: inset 0px -1px 0px #dc3545;
+            &:focus{
+                outline: none;
+                box-shadow: inset 0px -1px 0px #dc3545;
+            }
+        }
+
         &:focus, &:focus-visible{
             outline: none;
             box-shadow: inset 0px -1px 0px #457B9D;
         }
+    }
+    textarea{
+        height: initial;
     }
     .editable{
         height: auto;

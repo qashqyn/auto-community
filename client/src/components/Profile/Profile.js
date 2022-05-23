@@ -6,7 +6,7 @@ import FileBase from 'react-file-base64';
 import { Row, Col, Form, Container, Tab, Nav, Button, Image } from "react-bootstrap";
 
 // import { getUser } from '../../actions/user';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Input from "../SignUp/Input";
 
 import { edit } from "../../actions/auth";
@@ -16,12 +16,15 @@ import NewsForm from "./NewsForm/NewsForm";
 import './styles.scss';
 import VideoForm from "./VideoForm/VideoForm";
 import MyPosts from "./MyPosts/MyPosts";
+import AntitheftPosts from "./AntitheftPosts/AntitheftPosts";
 
 
 
 const Profile = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
+    const [crTab, setCrTab] = useState("profile");
     
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
     
@@ -39,6 +42,12 @@ const Profile = () => {
       
         setUser(JSON.parse(localStorage.getItem('profile')));
     }, [dispatch]);
+
+    useEffect(() => {
+        if(location.hash){
+            setCrTab(location.hash.substring(1));
+        }
+    }, [location])
     
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -71,24 +80,24 @@ const Profile = () => {
                     </div>
                 </div>
             </div>
-            <Tab.Container id="left-tabs-example" defaultActiveKey="profile">
+            <Tab.Container id="left-tabs-example" defaultActiveKey="profile" activeKey={crTab}>
                 <Row>
                     <Col sm={3}>
                         <Nav variant="pills" className="flex-column">
                             <Nav.Item>
-                                <Nav.Link eventKey="profile">Профиль</Nav.Link>
+                                <Nav.Link eventKey="profile" href="">Профиль</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link eventKey="liked">Понравившиеся</Nav.Link>
+                                <Nav.Link eventKey="liked" href="#liked">Понравившиеся</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link eventKey="notes">Заметки</Nav.Link>
+                                <Nav.Link eventKey="notes" href="#notes">Заметки</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link eventKey="posts">Мои посты</Nav.Link>
+                                <Nav.Link eventKey="myposts" href="#myposts">Мои посты</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link eventKey="subsribes">Подписка</Nav.Link>
+                                <Nav.Link eventKey="subscribes" href="#subscribes">Подписка</Nav.Link>
                             </Nav.Item>
                             {user.result.is_admin === true && (
                                 <>
@@ -96,16 +105,16 @@ const Profile = () => {
                                         Модератор
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link eventKey="news">Новости</Nav.Link>
+                                        <Nav.Link eventKey="news" href="#news">Новости</Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link eventKey="video">Видео</Nav.Link>
+                                        <Nav.Link eventKey="video" href="#video">Видео</Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link eventKey="antitheft">Антиугон</Nav.Link>
+                                        <Nav.Link eventKey="antitheft" href="#antitheft">Антиугон</Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link eventKey="images">Изображение</Nav.Link>
+                                        <Nav.Link eventKey="images" href="#images">Изображение</Nav.Link>
                                     </Nav.Item>
                                 </>
                             )}
@@ -160,18 +169,29 @@ const Profile = () => {
                             </Tab.Pane>
                             <Tab.Pane eventKey="notes">
                             </Tab.Pane>
-                            <Tab.Pane eventKey="posts">
-                                <MyPosts />
+                            <Tab.Pane eventKey="myposts">
+                                {crTab === "myposts" && (
+                                    <MyPosts />
+                                )}
                             </Tab.Pane>
                             <Tab.Pane eventKey="subscribes">
                             </Tab.Pane>
                             {user.result.is_admin === true && (
                                 <>
                                     <Tab.Pane eventKey="news">
-                                        <NewsForm />
+                                        {crTab === "news" && (
+                                            <NewsForm />
+                                        )}
                                     </Tab.Pane>
                                     <Tab.Pane eventKey="video">
-                                        <VideoForm />
+                                        {crTab === "video" && (
+                                            <VideoForm />
+                                        )}
+                                    </Tab.Pane>
+                                    <Tab.Pane eventKey="antitheft">
+                                        {crTab === "antitheft" && (
+                                            <AntitheftPosts />
+                                        )}
                                     </Tab.Pane>
                                 </>
                             )}

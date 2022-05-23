@@ -119,51 +119,51 @@ body{
     padding-top: 80px;
 }
 /* Logbook block */
-.logbook{
+#logbook-home{
     background: #112D4E;
     padding: 64px 0;
-}
-.logbook .card-body{
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    height: 100%;
-    justify-content: space-between;
-}
-.logbook .card-title{
-    margin-top: 0;
-    font-weight: 600;
-    font-size: 40px;
-    line-height: 100%;
-    margin-bottom: 16px;
+    .card-body{
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        height: 100%;
+        justify-content: space-between;
+    }
+    .card-title{
+        margin-top: 0;
+        font-weight: 600;
+        font-size: 40px;
+        line-height: 100%;
+        margin-bottom: 16px;
 
-    color: #FFFFFF;
-}
-.logbook .card-subtitle{
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 100%;
-    margin-bottom: 32px;
+        color: #FFFFFF;
+    }
+    .card-subtitle{
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 100%;
+        margin-bottom: 32px;
 
-    color: #D7D7D7;
-}
-.logbook .card-text{
-    font-weight: 500;
-    font-size: 20px;
-    line-height: 130%;
+        color: #D7D7D7;
+    }
+    .card-text{
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 130%;
 
-    color: #FFFFFF;
-}
-.logbook .btn{
-    display: block;
-    width: 250px;
-    margin-top: auto;
-    margin-bottom: 0;
-}
-.logbook img{
-    object-fit: cover;
-    object-position: center;
+        color: #FFFFFF;
+    }
+    .btn{
+        display: block;
+        width: 250px;
+        margin-top: auto;
+        margin-bottom: 0;
+    }
+    img{
+        object-fit: cover;
+        object-position: center;
+    }
 }
 
 /* Video */

@@ -1,0 +1,33 @@
+#login-modal{
+    .modal-footer{
+        .row{
+            width: 100%;
+            .col{
+                padding: 0 5px;
+                &:first-of-type{
+                    padding-left: 0;
+                }
+                &:last-of-type{
+                    padding-right: 0;
+                }
+                .btn{
+                    margin: 0px!important;
+                    width: 100%;
+                    display: block;
+                    text-align: center;
+                    box-sizing: border-box;
+                    padding: 10px 0;
+                }
+                .login{
+                    color: #457B9D;
+                    border: 1px solid #457B9D;
+                    background: none;
+                }
+                .register{
+                    color: #FFFFFF;
+                    background: #457B9D;
+                }
+            }
+        }
+    }
+}

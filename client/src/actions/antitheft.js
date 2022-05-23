@@ -1,4 +1,4 @@
-import { START_LOADING, END_LOADING, FETCH_ALL, FETCH_ONE, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
+import { START_LOADING, END_LOADING, FETCH_ALL, FETCH_ONE, CREATE, UPDATE, DELETE, LIKE,SET_STATUS } from '../constants/actionTypes';
 import * as api from '../api';
 
 // Action Creators
@@ -28,7 +28,7 @@ export const getAntitheftPost = (id) => async(dispatch) => {
 
 export const createAntitheftPost = (post) => async(dispatch) => {
     try {
-        const { data } = await api.createAntitheftPost(post);
+        const data = await api.createAntitheftPost(post);
         
         dispatch({ type: CREATE, payload: data });
     } catch (error) {
@@ -61,6 +61,30 @@ export const likeAntitheftPost = (id) => async(dispatch) => {
         const { data } = await api.likeAntitheftPost(id);
         
         dispatch({ type: LIKE, payload: data });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+
+export const getAdminAntitheftPosts = (status) => async(dispatch) => {
+    try {
+        dispatch({ type: START_LOADING });
+        const { data } = await api.fetchAdminAntitheftPosts(status);
+        
+        dispatch({ type: FETCH_ALL, payload: data });
+        dispatch({ type: END_LOADING});
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const adminSetAntitheftStatus = (id, status) => async(dispatch) => {
+    try {
+        const data = await api.setAdminAntitheftStatus(id, status);
+
+        dispatch({type: SET_STATUS, payload: data});
     } catch (error) {
         console.log(error);
     }

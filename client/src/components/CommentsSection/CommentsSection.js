@@ -16,7 +16,7 @@ const CommentsSection = ({comments}) => {
                     <p>Участвовать в обсуждениях могут только зарегистрированные пользователи.</p>
                     <div>
                         <LinkContainer to="/login"><Button className="login">Войти</Button></LinkContainer>
-                        <LinkContainer to="/signup"><Button className="registr">Регистрироваться</Button></LinkContainer>
+                        <LinkContainer to="/signup"><Button className="register">Регистрироваться</Button></LinkContainer>
                     </div>
                 </div>
             ) : (

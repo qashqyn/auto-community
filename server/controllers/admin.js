@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import NewsMessage from "../models/newsMessage.js";
 import Video from "../models/video.js";
+import AntitheftMessage from "../models/antitheftMessage.js";
+
 
 // NEWS
 export const createNews = async (req, res) => {
@@ -75,3 +77,33 @@ export const deleteVideo = async (req, res) => {
 
     res.json({message: 'Video deleted successfully'});
 };
+
+// ANTITHEFT
+export const getAntitheftPosts = async (req, res) => {
+    const {status} = req.query;
+    try {
+        if(!!status && status.length>0){
+            const antitheftMessages = await AntitheftMessage.find().where('status').equals(status).select('mark model releaseYear createdAt status').sort('createdAt');
+            res.status(200).json({data: antitheftMessages});
+        }else{
+            const antitheftMessages = await AntitheftMessage.find().select('mark model releaseYear createdAt status').sort('createdAt');
+            res.status(200).json({data: antitheftMessages});
+        }
+    } catch (error) {
+        res.status(404).json({message: error.message});      
+    }
+}
+
+export const setAntitheftStatus = async (req, res) => {
+    const {status: newStatus} = req.query;
+    const {id} = req.params;
+    try {
+        if(!mongoose.Types.ObjectId.isValid(id))
+            return res.status(404).send("No post with that Id");
+
+        await AntitheftMessage.findByIdAndUpdate(id, {status: newStatus}, {new: true});
+        res.status(204).json({message: "success"});
+    } catch (error) {
+        res.status(404).json({message: error.message});      
+    }
+}

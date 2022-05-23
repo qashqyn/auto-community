@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 
@@ -65,32 +65,36 @@ const News = () => {
                             removeTag(tag);
                         }}>
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M24 0H0V24H24V0Z" fill="#333333" fill-opacity="0.01"/>
-                                <path d="M5 5L19 19" stroke="#333333" stroke-width="2"/>
-                                <path d="M5 19L19 5" stroke="#333333" stroke-width="2"/>
+                                <path d="M24 0H0V24H24V0Z" fill="#333333" fillOpacity="0.01"/>
+                                <path d="M5 5L19 19" stroke="#333333" strokeWidth="2"/>
+                                <path d="M5 19L19 5" stroke="#333333" strokeWidth="2"/>
                             </svg>
                         </span>
                     </div>
                 ))}
             </div>
 
-            {isLoading ? (
+            {(isLoading || !news) ? (
                 <div className="text-center">
                     <Spinner animation="border" role="status">
                         <span className="visually-hidden">Загрузка...</span>
                     </Spinner>
                 </div>
-            ) : (
-                <>
-                    <Row xs={1} md={2} lg={3}>
-                        {news.map((singleNews) => (
-                            <Col key={singleNews._id}>
-                                <SingleNews news={singleNews} />
-                            </Col>
-                        ))}
-                    </Row>
-                </>
-            )}
+            ) : ((!!news && news.length) > 0 ? 
+                (
+                    <>
+                        <Row xs={1} md={2} lg={3}>
+                            {news.map((singleNews) => (
+                                <Col key={singleNews._id}>
+                                    <SingleNews news={singleNews} />
+                                </Col>
+                            ))}
+                        </Row>
+                    </>
+                ) : (
+                    <h3 className="text-center">Нету новостей по этому запросу</h3>
+                ))
+            }
             <Paginate page={Number(page)} tags={tags} type="news" />
         </Container>
     );

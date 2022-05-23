@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { createLogbook } from "../../../actions/logbook";
 import Breadcrumbs from "../../Breadcrumbs";
 import Input from "../../SignUp/Input";
@@ -11,7 +12,10 @@ const categories = ['Автозвук', 'Аксессуары', 'Видео', '�
 
 const LogbookForm = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [ formData, setFormData ] = useState(initialState);
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+
 
     const handleSubmit = (e) =>{
         e.preventDefault();
@@ -25,6 +29,12 @@ const LogbookForm = () => {
     const handleEditable = (e) => {
         setFormData({...formData, message: e.target.innerHTML});
     }
+
+    useEffect(() => {
+        if(!user || !user.result){
+            navigate(-1);
+        }
+    }, [user])
 
     return (
         <div id="logbookForm">

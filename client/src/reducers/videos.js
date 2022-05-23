@@ -7,7 +7,7 @@ const videosReducers = (state = {isLoading:true, videos: [] }, action) => {
         case END_LOADING:
             return { ...state, isLoading: false};
         case FETCH_ALL_VIDEO:
-            return { ...state, videos: action.payload.data, currentPage: action.payload.currentPage, numberOfPages: action.payload.numberOfPages};
+            return { ...state, videos: action.payload.data, currentPage: action.payload?.currentPage, numberOfPages: action.payload?.numberOfPages};
         case FETCH_ONE_VIDEO:
             return { ...state, video: action.payload };
         case CREATE_VIDEO:

@@ -38,7 +38,7 @@ const NewsForm = () => {
             <Input name="title" label="Заголовок статьи" type="text" handleChange={handleChange}/>
             <Input name="subtitle" label="Подзаголовок статьи" type="text" handleChange={handleChange}/>
             <Input name="tag" label="Тег" type="select" options={tagOptions} handleChange={handleChange} />
-            <Input name="message" label="Содержание статьи" type="text" handleChange={handleChange}/>
+            <Input name="message" label="Содержание статьи" type="textarea" handleChange={handleChange}/>
             <div id="newsImage">
                 <label>
                     <FileBase

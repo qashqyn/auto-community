@@ -10,7 +10,7 @@ export const getPosts = async (req, res) => {
         const location = new RegExp(city, 'i');
         const sorting = sort === "new" ? '-createdAt' : 'createdAt';
 
-        const antitheftMessages = await AntitheftMessage.find({location}).where("amount").gte(amount).sort(sorting).limit(LIMIT).skip(startIndex);
+        const antitheftMessages = await AntitheftMessage.find({location}).where("status").equals("approved").where("amount").gte(amount).sort(sorting).limit(LIMIT).skip(startIndex);
         
         res.status(200).json({data: antitheftMessages, currentPage:Number(page), numberOfpages: Math.ceil(total / LIMIT)});
     } catch (error) {
@@ -65,6 +65,7 @@ export const createPost = async (req, res) => {
         
         res.status(201).json(newPost);
     } catch (error) {
+        console.log(error);
         res.status(409).json({error});
     }
 };

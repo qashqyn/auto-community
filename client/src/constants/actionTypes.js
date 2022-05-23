@@ -19,3 +19,6 @@ export const UPDATE_USER = 'UPDATE_USER';
 
 export const START_LOADING = 'START_LOADING';
 export const END_LOADING = 'END_LOADING';
+
+export const CLEAR_STATE = 'CLEAR_STATE';
+export const SET_STATUS = 'SET_STATUS';

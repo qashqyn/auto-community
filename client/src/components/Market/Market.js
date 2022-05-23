@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
 import { useLocation } from "react-router-dom";
 import Breadcrumbs from "../Breadcrumbs";
+import LoginModal from "../Modals/LoginModal";
 import Paginate from "../Paginate/Paginate";
 import Input from "../SignUp/Input";
 
@@ -19,8 +20,10 @@ const categories = ['Автозвук и мультимедиа', 'Автосв�
 
 const Market = () => {
     const {posts, isLoading} = useSelector((state) => state.posts);
-
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
     const [selectedCategories, setSelectedCategories] = useState([]);
+
+    const [show, setShow] = useState(false);
 
     const query = useQuery();
     const page = query.get('page') || 1;
@@ -33,17 +36,27 @@ const Market = () => {
         }
     }
 
+    const openLoginModal = (e) =>{
+        e.preventDefault();
+        setShow(true);
+    }
+
     return (
         <Container>
+            <LoginModal show={show} setShow={setShow} text="Добавить объвления могут только зарегистрированные пользователи." />
             <Breadcrumbs currentPage="Магазин" />
             <h1>Магазин</h1>
             <div className="d-flex justify-content-between">
                 <div>
                     search
                 </div>
-                <LinkContainer to="/market/form">
-                    <Button>Добавить объявление</Button>
-                </LinkContainer>
+                {user?.result ? (
+                    <LinkContainer to="/market/form">
+                        <Button>Добавить объявление</Button>
+                    </LinkContainer>
+                ) : (
+                    <Button onClick={openLoginModal} >Добавить объявление</Button>
+                )}
             </div>
             <Row>
                 <Col xs={3}>
@@ -59,21 +72,22 @@ const Market = () => {
                     </div>
                 </Col>
                 <Col xs={9}>
-                    <Row xs={1} md={3}>
                         {isLoading ? (
                             <div className="text-center">
                                 <Spinner animation="border" role="status">
                                     <span className="visually-hidden">Загрузка...</span>
                                 </Spinner>
                             </div>
-                        ) : 
-                            posts.map((post) => (
-                                <Col key={post._id}>
-                                    <MarketCard post={post} />
-                                </Col>
-                            ))
+                        ) : (
+                            <Row xs={1} md={3}>
+                                {posts.map((post) => (
+                                    <Col key={post._id}>
+                                        <MarketCard post={post} />
+                                    </Col>
+                                ))}
+                            </Row>
+                        )
                         }
-                    </Row>
                 </Col>
             </Row>
             <Paginate page={Number(page)} type="market"/>

@@ -50,15 +50,15 @@ const LogbookCard = ({logbook, update=false}) => {
         document.getElementById(`short${logbook._id}`).innerHTML = text;
     }, [logbook]);
 
-    return (
+    return logbook && (
         <Card className="logbook-card">
             <Card.Body>
                 <Card.Header className="d-flex">
                     <div className="avatar avatar-md">
-                        <Image src={logbook.author.avatar} />
+                        <Image src={logbook.author?.avatar} />
                     </div>
                     <div>
-                        {logbook.author.firstname} {logbook.author.lastname}
+                        {logbook.author?.firstname} {logbook.author?.lastname}
                     </div>
                     <div>
                         

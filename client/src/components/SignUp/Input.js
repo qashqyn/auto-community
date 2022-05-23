@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import FileBase from 'react-file-base64';
 import {Form} from "react-bootstrap";
 import './input.scss';
+import moment from 'moment';
 
-const Input = ({name, label, type, handleChange, value, disabled=false, required=true, options=[], maxCharacters=0 }) => {
+const Input = ({error='', name, label, type, handleChange, value, disabled=false, required=false, options=[], maxCharacters=0 }) => {
     const [ charCount, setCharCount ] = useState(0);
 
     // EDITABLE
@@ -20,10 +21,28 @@ const Input = ({name, label, type, handleChange, value, disabled=false, required
         document.execCommand('insertImage', false, img);
     }
 
-    if(type === 'checkbox')
+    function generateArrayOfYears() {
+        var max = new Date().getFullYear();
+        var min = max - 100;
+        var years = [];
+      
+        for (var i = max; i >= min; i--) {
+          years.push(i);
+        }
+        return years;
+    }
+
+    if(type === 'date')
         return (
             <Form.Group controlId={name} className="input">
-                <Form.Check onChange={handleChange} className="checkbox" type={type} id={name} label={label} required={required}/>
+                <Form.Control isInvalid={error} type="date" placeholder={label} name={name} onChange={handleChange} max={moment(new Date()).format("YYYY-MM-DD")} className="datepicker" label={label} required={required} />
+                <Form.Control.Feedback type="invalid">{error}</Form.Control.Feedback>
+            </Form.Group>
+        )
+    else if(type === 'checkbox')
+        return (
+            <Form.Group controlId={name} className="input">
+                <Form.Check onChange={handleChange} className="checkbox"  type={type} id={name} label={label} required={required}/>
             </Form.Group>
         );
     else if(type === 'radio')
@@ -45,6 +64,21 @@ const Input = ({name, label, type, handleChange, value, disabled=false, required
                         <option value={option} key={key}>{option}</option>
                     ))}
                 </Form.Select>
+            </Form.Group>
+        );
+    else if(type === 'year')
+        return (
+            <Form.Group controlId={name} className="input">
+                <Form.Select name={name} onChange={handleChange} required={required} placeholder={label}>
+                    {label && (
+                        <option value="">{label}</option>
+                    )}
+                    {generateArrayOfYears().map((year, key) => (
+                        <option value={year} key={key}>{year}</option>
+                    ))}
+                </Form.Select>
+                <Form.Control isInvalid={error} className="d-none" />
+                <Form.Control.Feedback type="invalid">{error}</Form.Control.Feedback>
             </Form.Group>
         );
     else if(type === 'editable')
@@ -70,10 +104,18 @@ const Input = ({name, label, type, handleChange, value, disabled=false, required
                 </div>
             </Form.Group>
         )
+    else if(type === 'textarea') 
+        return (
+            <Form.Group controlId={name} className="input">
+                <Form.Control isInvalid={error.length > 0} placeholder={label} name={name} rows={5} as={type} disabled={disabled} onChange={handleChange} required={required} value={value}></Form.Control>
+                <Form.Control.Feedback type="invalid">{error}</Form.Control.Feedback>
+            </Form.Group>
+        );    
     else 
         return (
             <Form.Group controlId={name} className="input">
-                <Form.Control placeholder={label} name={name} type={type} disabled={disabled} onChange={handleChange} required={required} value={value}></Form.Control>
+                <Form.Control isInvalid={error.length > 0} placeholder={label} name={name} type={type} disabled={disabled} onChange={handleChange} required={required} value={value}></Form.Control>
+                <Form.Control.Feedback type="invalid">{error}</Form.Control.Feedback>
             </Form.Group>
         );
 }

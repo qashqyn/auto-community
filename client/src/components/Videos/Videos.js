@@ -72,7 +72,7 @@ const Vidoes = () => {
                 ))}
             </div>
 
-            {isLoading ? (
+            {(isLoading || !videos) ? (
                 <div className="text-center">
                     <Spinner animation="border" role="status">
                         <span className="visually-hidden">Загрузка...</span>

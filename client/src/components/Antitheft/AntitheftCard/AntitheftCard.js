@@ -13,7 +13,7 @@ const AntitheftCard = ({ post }) => {
             <Card className="antitheft-card">
                 <Card.Body>
                     <div className="antitheft-card-img">
-                        <Card.Img variant="left" src={post.selectedFiles.length > 0 ? post.selectedFiles[0] : NoImg} />
+                        <Card.Img variant="left" src={post.selectedFiles?.length > 0 ? post.selectedFiles[0] : NoImg} />
                     </div>
                     <div className="info">
                         <Card.Title>{post.mark} {post.model} {(new Date(post.releaseYear).getFullYear())}</Card.Title>

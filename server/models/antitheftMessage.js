@@ -22,6 +22,10 @@ const antitheftSchema = mongoose.Schema({
         type: Date,
         default: new Date()
     },
+    status: {
+        type: String,
+        default: 'waiting'
+    }
 });
 
 const AntitheftMessage = mongoose.model('AntitheftMessage', antitheftSchema);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row, Image } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import FileBase from 'react-file-base64';
@@ -9,15 +9,18 @@ import Breadcrumbs from "../../Breadcrumbs";
 import Input from "../../SignUp/Input";
 
 import "./styles.scss";
+import { useNavigate } from "react-router-dom";
 
 const initialState = {title:'', category: '', model: '', manufactor: '', condition: '', location:'', cost:'', tel: '', whatsapp:'', description: ''};
 const categories = ['Автозвук и мультимедиа', 'Автосвет', 'Аксессуары', 'Гаджеты', 'Двигатель и выхлопная система', 'Инструменты', 'Климат', 'Кузов', 'Подвеска', 'Рулевое управление', 'Салон', 'Тормозная система', 'Трансмиссия', 'Шины и диски', 'Электрооборудование', 'Другое'];
 
 
 const MarketForm = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [formData, setFormData] = useState(initialState);
     const [images, setImages] = useState([]);
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -27,6 +30,13 @@ const MarketForm = () => {
     const handleChange = (e) => {
         setFormData({...formData, [e.target.name]: e.target.value});
     }
+
+    useEffect(() => {
+        if(!user || !user.result){
+            navigate(-1);
+        }
+    }, [user])
+
     return (
         <div id="market-form">
             <Container>

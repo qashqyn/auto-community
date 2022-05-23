@@ -45,3 +45,7 @@ export const signup = (formData) => API.post('/user/signup', formData);
 export const editUserInfo = (formData) => API.patch('/user/edit', formData);
 
 export const fetchUser = (id) => API.get(`/user/${id}`);
+
+// ADMIN
+export const fetchAdminAntitheftPosts = (status) => API.get(`/admin/antitheft?status=${status}`);
+export const setAdminAntitheftStatus = (id, status) => API.get(`/admin/antitheft/${id}?status=${status}`);

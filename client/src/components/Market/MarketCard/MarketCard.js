@@ -7,7 +7,7 @@ const MarketCard = ({post}) => {
         <Card>
             <LinkContainer to={`/market/${post._id}`}>
                 <Card.Body>
-                    <Card.Img src={post.imgs[0]} />
+                    <Card.Img src={post?.imgs[0]} />
                     <Card.Title>{post.title}</Card.Title>
                     <Card.Text>{post.location}</Card.Text>
                     <Card.Text className="cost">{post.cost} ₸</Card.Text>

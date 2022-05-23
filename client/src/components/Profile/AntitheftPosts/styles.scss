@@ -1,0 +1,74 @@
+.statusModalHeader{
+    font-weight: 500;
+    font-size: 24px;
+    color: var(--bs-danger);
+    &.status204{
+        color: var(--bs-success);   
+    }
+}
+.modal-body{
+    display: flex;
+    .left{
+        width: 50%;
+        .details{
+            p{
+                font-weight: 500;
+                font-size: 18px;
+                line-height: 22px;
+                color: #636363;
+                margin: 16px 0px;
+                span{
+                    color:#000;
+                    &.amount{
+                        font-weight: 600;
+                        font-size: 20px;
+                        color: #1C71A7;
+                    }
+                }
+            }
+        }
+        h3{
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 20px;
+            color: #000000;
+        }
+        .special-marks{
+            p{
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 22px;
+                color: #000000;
+            }
+        }
+    }
+    .right{
+        width: 50%;
+    }
+}
+#antitheft-posts{
+    .chooseStatusBtns{
+        margin-bottom: 20px;
+    }
+    .card{
+        margin-bottom: 10px;
+        box-shadow: #eee 0 0 5px 1px ;
+        .card-text{
+            &>span{
+                margin-left: auto;
+                &.approved::after{
+                        content: "Одобрено";
+                        color: var(--bs-success);
+                }
+                &.waiting::after{
+                    content: "В ожидании";
+                    color: var(--bs-warning);
+                }
+                &.dismissed::after{
+                    content: "Отклонено";
+                    color: var(--bs-danger);
+                }
+            }
+        }
+    }
+}

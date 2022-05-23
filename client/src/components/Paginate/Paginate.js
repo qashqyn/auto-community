@@ -10,7 +10,7 @@ import './styles.scss';
 import { getMarketPosts } from '../../actions/market';
 
 const Paginate = ({tags, page, type, filter}) => {
-    const { numberOfPages } = useSelector((state) => state.posts);
+    const { isLoading, numberOfPages } = useSelector((state) => state.posts);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -28,26 +28,30 @@ const Paginate = ({tags, page, type, filter}) => {
     },[dispatch, tags, page, filter, type]);
 
     return (
-        <Pagination className='justify-content-center' id="pagination">
-            <Pagination.First disabled={page===1} href={`?page=1`}/>
-            <Pagination.Prev disabled={page===1} href={`?page=${page-1}`}/>
-            <Pagination.Item active={page===1} href={`?page=1`}>{1}</Pagination.Item>
-            {page>4 && (<Pagination.Ellipsis /> )}
+        <>
+            {(!isLoading && (numberOfPages && numberOfPages>1)) && (
+                <Pagination className='justify-content-center' id="pagination">
+                    <Pagination.First disabled={page===1} href={`?page=1`}/>
+                    <Pagination.Prev disabled={page===1} href={`?page=${page-1}`}/>
+                    <Pagination.Item active={page===1} href={`?page=1`}>{1}</Pagination.Item>
+                    {page>4 && (<Pagination.Ellipsis /> )}
 
-            {page>3 && <Pagination.Item href={`?page=${page-2}`}>{page-2}</Pagination.Item>}
-            {page>2 && <Pagination.Item href={`?page=${page-1}`}>{page-1}</Pagination.Item>}
-            {(page>1 && page<numberOfPages) && <Pagination.Item active href={`?page=${page}`}>{page}</Pagination.Item>}
-            {page<numberOfPages-1 && <Pagination.Item href={`?page=${page+1}`}>{page+1}</Pagination.Item>}
-            {page<numberOfPages-2 && <Pagination.Item href={`?page=${page+2}`}>{page+2}</Pagination.Item>}
+                    {page>3 && <Pagination.Item href={`?page=${page-2}`}>{page-2}</Pagination.Item>}
+                    {page>2 && <Pagination.Item href={`?page=${page-1}`}>{page-1}</Pagination.Item>}
+                    {(page>1 && page<numberOfPages) && <Pagination.Item active href={`?page=${page}`}>{page}</Pagination.Item>}
+                    {page<numberOfPages-1 && <Pagination.Item href={`?page=${page+1}`}>{page+1}</Pagination.Item>}
+                    {page<numberOfPages-2 && <Pagination.Item href={`?page=${page+2}`}>{page+2}</Pagination.Item>}
 
 
-            {page<numberOfPages-3 && (<Pagination.Ellipsis /> )}
-            {numberOfPages>1 && (
-                <Pagination.Item active={page===numberOfPages} href={`?page=${numberOfPages}`}>{numberOfPages}</Pagination.Item>
+                    {page<numberOfPages-3 && (<Pagination.Ellipsis /> )}
+                    {numberOfPages>1 && (
+                        <Pagination.Item active={page===numberOfPages} href={`?page=${numberOfPages}`}>{numberOfPages}</Pagination.Item>
+                        )}
+                    <Pagination.Next disabled={page===numberOfPages || !numberOfPages} href={`?page=${page+1}`}/>
+                    <Pagination.Last disabled={page===numberOfPages || !numberOfPages} href={`?page=${numberOfPages}`}/>
+                </Pagination>
             )}
-            <Pagination.Next disabled={page===numberOfPages || !numberOfPages} href={`?page=${page+1}`}/>
-            <Pagination.Last disabled={page===numberOfPages || !numberOfPages} href={`?page=${numberOfPages}`}/>
-        </Pagination>
+        </>
     );
 };
 

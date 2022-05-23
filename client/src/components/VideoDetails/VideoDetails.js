@@ -40,7 +40,7 @@ const VideoDetails = () => {
             <Breadcrumbs links={[{link: '/video', name: 'Видео'}]} currentPage={video?.title} />
             <Row>
                 <Col xm={12} md={8}>
-                    {isLoading ? (
+                    {(isLoading || !video) ? (
                         <div className="text-center">
                             <Spinner animation="border" role="status">
                                 <span className="visually-hidden">Загрузка...</span>
@@ -49,7 +49,7 @@ const VideoDetails = () => {
                     ) : (
                         <div>
                             <div  id="videoPlayer">
-                                <iframe src={`https://www.youtube.com/embed/${video.videoID}`} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                <iframe src={`https://www.youtube.com/embed/${video.videoID}`} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>
                             </div>
                             <div className="heading">{video.title}</div>
                             <div className="actions">

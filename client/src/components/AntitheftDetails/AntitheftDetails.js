@@ -22,7 +22,7 @@ const AntitheftDetails = () => {
 
     return (
         <Container className="antitheft" id="antitheftDetails">
-            {isLoading ? (
+            {(isLoading || !post) ? (
                 <div className="text-center">
                     <Spinner animation="border" role="status">
                         <span className="visually-hidden">Загрузка...</span>

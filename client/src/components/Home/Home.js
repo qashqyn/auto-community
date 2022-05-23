@@ -8,7 +8,7 @@ import { Button, Card, Col, Container, Image, Row, Spinner } from "react-bootstr
 import peopleIcon from '../../images/peopleIcon.png';
 import logbook from '../../images/logbook.png';
 import market from '../../images/market.png';
-import './style.css';
+import './style.scss';
 
 import { getNews } from '../../actions/news';
 import SingleNews from "../News/SingleNews/SingleNews";
@@ -103,7 +103,7 @@ const Home = () => {
                 <div className="block news">
                     <div className="heading">Стоит прочитать</div>
                     <div className="sub-heading">Будьте в курсе последних новостей</div>
-                    {!news.length ? (
+                    {(!news || news.length === 0) ? (
                         <div className="text-center p-5">
                             <Spinner animation="border" role="status">
                                 <span className="visually-hidden">Загрузка...</span>
@@ -111,8 +111,8 @@ const Home = () => {
                         </div>
                     ) : (
                         <Row xs={1} md={2} lg={3}>
-                            {news.slice(0, 3).map((singleNews) => (
-                                <Col key={singleNews._id}>
+                            {news.slice(0, 3).map((singleNews, key) => (
+                                <Col key={key}>
                                     <SingleNews news={singleNews} />
                                 </Col>
                             ))}
@@ -126,7 +126,7 @@ const Home = () => {
                     </div>
                 </div>
             </Container>
-                <div className="block logbook">
+                <div id="logbook-home" className="block">
                     <Container>
                         <div className="d-flex">
                             <div className="w-50">
@@ -149,7 +149,7 @@ const Home = () => {
                 <div className="block video">
                     <div className="heading">Видео</div>
                         <div className="sub-heading">Тест-драйвы, обзоры, ASMR и рекламные ролики</div>
-                        {!videos.length ? (
+                        {(!videos || videos.length === 0) ? (
                             <div className="text-center p-5">
                                 <Spinner animation="border" role="status">
                                     <span className="visually-hidden">Загрузка...</span>
@@ -168,7 +168,7 @@ const Home = () => {
                         )} 
 
                         <div className="btn-wrapper">
-                        <LinkContainer to="/news">
+                        <LinkContainer to="/video">
                             <Button>Посмотреть все видео</Button>
                         </LinkContainer>
                     </div>
