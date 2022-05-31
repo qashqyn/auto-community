@@ -38,6 +38,7 @@ export const createMarketPost = (newPost) => API.post(`/market`, newPost);
 // VIDEOS
 export const fetchVideos = (tags, page) => API.get(`/video?tags=${tags.join()}&page=${page}`);
 export const fetchVideo = (id) => API.get(`/video/${id}`);
+export const fetchRelatedVideos = (data) => API.get(`/video/related?id=${data.id}&count=${data.count}`);
 export const createVideo = (newVideo) => API.post(`/admin/video`, newVideo);
 // AUTH
 export const login = (formData) => API.post('/user/login', formData);

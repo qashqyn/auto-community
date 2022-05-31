@@ -1,4 +1,4 @@
-import { CREATE_VIDEO, DELETE_VIDEO, FETCH_ALL_VIDEO, LIKE_VIDEO, UPDATE_VIDEO, FETCH_ONE_VIDEO, START_LOADING, END_LOADING } from "../constants/actionTypes";
+import { CREATE_VIDEO, DELETE_VIDEO, FETCH_ALL_VIDEO, LIKE_VIDEO, UPDATE_VIDEO, FETCH_ONE_VIDEO, START_LOADING, END_LOADING, FETCH_RELATED_VIDEO } from "../constants/actionTypes";
 
 const videosReducers = (state = {isLoading:true, videos: [] }, action) => {
     switch (action.type) {
@@ -8,6 +8,9 @@ const videosReducers = (state = {isLoading:true, videos: [] }, action) => {
             return { ...state, isLoading: false};
         case FETCH_ALL_VIDEO:
             return { ...state, videos: action.payload.data, currentPage: action.payload?.currentPage, numberOfPages: action.payload?.numberOfPages};
+        case FETCH_RELATED_VIDEO:
+            console.log(action.payload);
+            return { ...state, related: action.payload.related, videoCount: action.payload?.videoCount};
         case FETCH_ONE_VIDEO:
             return { ...state, video: action.payload };
         case CREATE_VIDEO:

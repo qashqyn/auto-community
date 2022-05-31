@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Video from "../models/video.js";
 
 export const getVideos = async (req, res) => {
@@ -34,6 +35,18 @@ export const getVideo = async (req, res) => {
         res.status(404).json({message: error.message});      
     }
 };
+
+export const getRelatedVideos = async (req, res) => {
+    const {id, count} = req.query;
+    try {
+        const data = await Video.find({ _id: { $nin: [mongoose.Types.ObjectId(id)] } }).select('title videoID createdAt').limit(count);
+
+        return res.status(200).json({related: data, videoCount: count});
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({message: "Something went wrong"});
+    }
+}
 
 
 export const likeVideo = async (req, res) => {

@@ -4,24 +4,29 @@ import { useParams } from "react-router-dom";
 
 import { Container, Row, Col, Spinner } from "react-bootstrap";
 
-import { getVideo } from "../../actions/videos";
+import { getRelatedVideos, getVideo } from "../../actions/videos";
 import Breadcrumbs from "../Breadcrumbs";
 
 import CommentsSection from "../CommentsSection/CommentsSection";
 
 import "./styles.scss";
+import Video from "../Videos/Video/Video";
 
 const VideoDetails = () => {
-    const { video, isLoading } = useSelector((state) => state.videos);
+    const { video, isLoading, related, videoCount } = useSelector((state) => state.videos);
     const dispatch = useDispatch();
     const { id } = useParams();    
+    const [count, setCount] = useState(4);
 
     const [ isLiked, setLiked ] = useState(false);
     const [ isFav, setFav ] = useState(false);
     // const {isLiked, isFav } = useSelector({false, false})
 
     useEffect(() => {
-        dispatch(getVideo(id));
+        if(id){
+            dispatch(getVideo(id));
+            dispatch(getRelatedVideos({id: id, count: count}));
+        }
     }, [dispatch, id]);
 
     // var momentRu = moment().locale('ru');
@@ -41,7 +46,7 @@ const VideoDetails = () => {
             <Row>
                 <Col xm={12} md={8}>
                     {(isLoading || !video) ? (
-                        <div className="text-center">
+                        <div className="text-center p-5">
                             <Spinner animation="border" role="status">
                                 <span className="visually-hidden">Загрузка...</span>
                             </Spinner>
@@ -49,7 +54,7 @@ const VideoDetails = () => {
                     ) : (
                         <div>
                             <div  id="videoPlayer">
-                                <iframe src={`https://www.youtube.com/embed/${video.videoID}`} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>
+                                <iframe src={`https://www.youtube.com/embed/${video.videoID}?rel=0`} frameBorder="0" rel="0"  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"></iframe>
                             </div>
                             <div className="heading">{video.title}</div>
                             <div className="actions">
@@ -98,7 +103,21 @@ const VideoDetails = () => {
                         </div>
                     )}
                 </Col>
-
+                <Col>
+                    {(videoCount && videoCount > 0 && related && related.length>0) ? (
+                        <div>
+                            {related.map((rv) => (
+                                <Video video={rv} />
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="text-center p-5">
+                            <Spinner animation="border" role="status">
+                                <span className="visually-hidden">Загрузка...</span>
+                            </Spinner>
+                        </div>
+                    )}
+                </Col>
             </Row>
         </Container>
     );

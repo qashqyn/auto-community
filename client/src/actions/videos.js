@@ -1,4 +1,4 @@
-import { FETCH_ALL_VIDEO, CREATE_VIDEO, UPDATE_VIDEO, DELETE_VIDEO, LIKE_VIDEO, START_LOADING, END_LOADING, FETCH_ONE_VIDEO } from '../constants/actionTypes';
+import { FETCH_ALL_VIDEO, CREATE_VIDEO, UPDATE_VIDEO, DELETE_VIDEO, LIKE_VIDEO, START_LOADING, END_LOADING, FETCH_ONE_VIDEO, FETCH_RELATED_VIDEO } from '../constants/actionTypes';
 import * as api from '../api';
 
 // Action Creators
@@ -13,12 +13,21 @@ export const getVideos = (tags, page) => async(dispatch) => {
         console.log(error);
     }
 }
+export const getRelatedVideos = (formData) => async(dispatch) => {
+    try {
+        const { data}  = await api.fetchRelatedVideos(formData);
+        
+        dispatch({ type: FETCH_RELATED_VIDEO, payload: data });
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 export const getVideo = (id) => async(dispatch) => { 
     try {
         dispatch({ type: START_LOADING });
         const { data } = await api.fetchVideo(id);
-        
+
         dispatch({ type: FETCH_ONE_VIDEO, payload: data });
         dispatch({ type: END_LOADING});
     } catch (error) {
