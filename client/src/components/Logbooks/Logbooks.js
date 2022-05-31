@@ -11,6 +11,7 @@ import './styles.scss';
 import { LinkContainer } from 'react-router-bootstrap';
 import Input from '../SignUp/Input';
 import LoginModal from '../Modals/LoginModal';
+import Search from '../Search/Search';
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -28,6 +29,9 @@ const Logbooks = () => {
     const [show, setShow] = useState(false);
 
     const query = useQuery();
+
+    const [searchText, setSearchText] = useState('');
+
 
     useEffect(() => {
         if(selectedCategories.length > 0)
@@ -54,15 +58,25 @@ const Logbooks = () => {
         setShow(true);
     }
 
+    const handleSearchChange = (e) => {
+        e.preventDefault();
+        setSearchText(e.target.value);
+    }
+    const handleSearchSubmit = (e) => {
+        e.preventDefault();
+        if(searchText && searchText.length>0){
+            console.log("search");
+            dispatch(getLogbooks(searchText));
+        }
+    }
+
     return (
         <Container>
             <LoginModal show={show} setShow={setShow} text="Добавить объвление могут только зарегистрированные пользователи." />
             <Breadcrumbs currentPage="Бортжурнал" />
                 <h1>Бортжурнал</h1>
             <div className="top">
-                <div>
-                    search
-                </div>
+                <Search text={searchText} handleChange={handleSearchChange} handleSubmit={handleSearchSubmit} />
                 {user?.result ? (
                     <LinkContainer to="/logbook/form">
                         <Button>Добавить объявление</Button>
@@ -97,10 +111,16 @@ const Logbooks = () => {
                                 <span className="visually-hidden">Загрузка...</span>
                             </Spinner>
                         </div>
-                    ) : logbooks.map((logbook) => (
-                            <LogbookCard logbook={logbook} key={logbook._id}/>
+                        
+                    ) : 
+                        (!!logbooks && logbooks.length > 0) ? 
+                            logbooks.map((logbook) => (
+                                    <LogbookCard logbook={logbook} key={logbook._id}/>
+                            ))
+                        : (
+                            <h3 className="text-center p-5">Нету постов по этому запросу</h3>        
                         )
-                    )}
+                    }
                 </Col>
             </Row>
 

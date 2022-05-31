@@ -1,10 +1,10 @@
 import { CREATE, DELETE, END_LOADING, FETCH_ALL, FETCH_ONE, START_LOADING } from "../constants/actionTypes";
 import * as api from '../api';
 
-export const getLogbooks = () => async(dispatch) => {
+export const getLogbooks = (search = '') => async(dispatch) => {
     try {
         dispatch({type: START_LOADING});
-        const {data} = await api.fetchLogbooks();
+        const {data} = await api.fetchLogbooks(search);
 
         dispatch({type: FETCH_ALL, payload: data});
         dispatch({type: END_LOADING});

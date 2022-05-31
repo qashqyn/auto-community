@@ -2,8 +2,11 @@ import mongoose from 'mongoose';
 import LogbookMessage from '../models/logbookMessage.js';
 
 export const getPosts = async (req, res) => {
+    const { search } = req.query;
     try{
-        const logbooks = await LogbookMessage.find().select('title message author likes').populate({
+        const srch = new RegExp(search, 'i');
+
+        const logbooks = await LogbookMessage.find({$or: [{title: srch}, {message: srch}]}).select('title message author likes').populate({
             path: 'author',
             select: 'firstname lastname avatar car'
         }).sort('-createdAt');

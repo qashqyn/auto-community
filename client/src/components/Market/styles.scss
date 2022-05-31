@@ -1,0 +1,14 @@
+.market-list{
+    .topbar{
+        display: flex;
+        justify-content: space-between;
+        button{
+            white-space: nowrap;
+            width: auto;
+            height: 100%;
+        }
+        padding-bottom: 32px;
+        margin: 32px 0;
+        border-bottom: 1px solid #C2C2C2;
+    }
+}

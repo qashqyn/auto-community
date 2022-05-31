@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Row, Spinner,Col, Container, Button } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
 import { useLocation } from "react-router-dom";
+import { getMarketPosts } from "../../actions/market";
 import Breadcrumbs from "../Breadcrumbs";
 import LoginModal from "../Modals/LoginModal";
 import Paginate from "../Paginate/Paginate";
+import Search from "../Search/Search";
 import Input from "../SignUp/Input";
 
 import MarketCard from "./MarketCard/MarketCard";
@@ -25,6 +27,9 @@ const Market = () => {
 
     const [show, setShow] = useState(false);
 
+    const [searchText, setSearchText] = useState('');
+    const dispatch = useDispatch();
+
     const query = useQuery();
     const page = query.get('page') || 1;
 
@@ -41,15 +46,25 @@ const Market = () => {
         setShow(true);
     }
 
+    const handleSearchChange = (e) => {
+        e.preventDefault();
+        setSearchText(e.target.value);
+    }
+    const handleSearchSubmit = (e) => {
+        e.preventDefault();
+        if(searchText && searchText.length>0){
+            console.log("search");
+            dispatch(getMarketPosts(1, searchText));
+        }
+    }
+
     return (
-        <Container>
+        <Container className="market-list">
             <LoginModal show={show} setShow={setShow} text="Добавить объвления могут только зарегистрированные пользователи." />
             <Breadcrumbs currentPage="Магазин" />
             <h1>Магазин</h1>
-            <div className="d-flex justify-content-between">
-                <div>
-                    search
-                </div>
+            <div className="topbar">
+                <Search text={searchText} handleChange={handleSearchChange} handleSubmit={handleSearchSubmit} />
                 {user?.result ? (
                     <LinkContainer to="/market/form">
                         <Button>Добавить объявление</Button>
@@ -88,13 +103,13 @@ const Market = () => {
                                     ))}
                                 </Row>
                             ) : (
-                                <h3 className="text-center">Нету товаров по этому запросу</h3>
+                                <h3 className="text-center p-5">Нету товаров по этому запросу</h3>
                             )
                         )
                         }
                 </Col>
             </Row>
-            <Paginate page={Number(page)} type="market"/>
+            <Paginate page={Number(page)} searchText={searchText} type="market"/>
         </Container>
     );
 };

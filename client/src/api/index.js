@@ -24,7 +24,7 @@ export const updateAntitheftPost = (id, updatedPost) => API.patch(`/antitheft/${
 export const deleteAntitheftPost = (id) => API.delete(`/antitheft/${id}`);
 export const likeAntitheftPost = (id) => API.patch(`/antitheft/${id}/like`);
 // LOGBOOK
-export const fetchLogbooks = () => API.get(`/logbooks`);
+export const fetchLogbooks = (search) => API.get(`/logbooks?search=${search}`);
 export const fetchLogbooksByCategory = (categories) => API.get(`/logbooks/category?category=${categories.join()}`);
 export const createLogbook = (newPost) => API.post(`/logbooks`, newPost);
 export const fetchLogbook = (id) => API.get(`/logbooks/${id}`);
@@ -32,7 +32,7 @@ export const fetchUserLogbooks = () => API.get(`/logbooks/my`);
 export const deleteLogbook = (id) => API.delete(`/logbooks/${id}`);
 // MARKET
 export const fetchMarketPost = (id) => API.get(`/market/${id}`);
-export const fetchMarketPosts = (page) => API.get(`/market/?page=${page}`);
+export const fetchMarketPosts = (page, search) => API.get(`/market/?page=${page}&search=${search}`);
 export const createMarketPost = (newPost) => API.post(`/market`, newPost);
 
 // VIDEOS

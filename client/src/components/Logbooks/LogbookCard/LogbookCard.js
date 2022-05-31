@@ -102,7 +102,7 @@ const LogbookCard = ({logbook, update=false}) => {
                                         </svg>
                                     )}
                                 </div>
-                                {logbook.likes.length}
+                                {logbook.likes && logbook.likes.length}
                             </div>
                         </div>
                         <LinkContainer to={`/logbook/${logbook._id}`}>

@@ -1,13 +1,14 @@
 import Market from '../models/market.js';
 
 export const getPosts = async (req, res) => {
-    const {page} = req.query;
+    const {page, search} = req.query;
     try{
         const LIMIT = 12;
         const startIndex = (Number(page) - 1) * LIMIT;
         const total = await Market.countDocuments({});
 
-        const posts = await Market.find().limit(LIMIT).skip(startIndex);
+        const srch = new RegExp(search, 'i');
+        const posts = await Market.find({$or: [{title: srch}, {description: srch}]}).limit(LIMIT).skip(startIndex);
 
         res.status(200).json({data: posts, currentpage: Number(page), numberOfPages: Math.ceil(total / LIMIT)});
     }catch(error){

@@ -1,10 +1,10 @@
 import * as api from '../api';
 import { CREATE, END_LOADING, FETCH_ALL, FETCH_ONE, START_LOADING } from '../constants/actionTypes';
 
-export const getMarketPosts = (page) => async(dispatch) => {
+export const getMarketPosts = (page, search) => async(dispatch) => {
     try {
         dispatch({type: START_LOADING});
-        const { data } = await api.fetchMarketPosts(page);
+        const { data } = await api.fetchMarketPosts(page, search);
         dispatch({type: FETCH_ALL, payload: data});
         dispatch({type: END_LOADING});
     } catch (error) {
