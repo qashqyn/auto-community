@@ -19,12 +19,17 @@ const NewsDetails = () => {
     const navigate = useNavigate();
     const { id } = useParams();    
 
+    const user = JSON.parse(localStorage.getItem('profile'));
+
     const [ isLiked, setLiked ] = useState(false);
     const [ isFav, setFav ] = useState(false);
     // const {isLiked, isFav } = useSelector({false, false})
 
     useEffect(() => {
         dispatch(getSingleNews(id));
+        if(!!user && !!user.result._id && !!post && !!post.likes && post.likes>0 && post.likes.includes(user.result._id)){
+            setLiked(true);
+        }  
     }, [id]);
 
     // var momentRu = moment().locale('ru');
@@ -41,8 +46,8 @@ const NewsDetails = () => {
     return (
         <Container className="news">
             <Breadcrumbs currentPage="Новости" />
-            {isLoading ? (
-                <div className="text-center">
+            {(isLoading || !post) ? (
+                <div className="text-center p-5">
                     <Spinner animation="border" role="status">
                         <span className="visually-hidden">Загрузка...</span>
                     </Spinner>
@@ -76,12 +81,12 @@ const NewsDetails = () => {
                         <div className="action">
                             <div className="icon-container">
                                 <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M40 0H0V40H40V0Z" fill="white" fill-opacity="0.01"/>
-                                    <path d="M40 0H0V40H40V0Z" fill="white" fill-opacity="0.01"/>
-                                    <path d="M36.6668 5H3.3335V30H10.8335V34.1667L19.1668 30H36.6668V5Z" stroke="black" stroke-width="1.6"/>
-                                    <path d="M11.6665 16.25V18.75" stroke="black" stroke-width="1.6"/>
-                                    <path d="M20 16.25V18.75" stroke="black" stroke-width="1.6"/>
-                                    <path d="M28.3335 16.25V18.75" stroke="black" stroke-width="1.6"/>
+                                    <path d="M40 0H0V40H40V0Z" fill="white" fillOpacity="0.01"/>
+                                    <path d="M40 0H0V40H40V0Z" fill="white" fillOpacity="0.01"/>
+                                    <path d="M36.6668 5H3.3335V30H10.8335V34.1667L19.1668 30H36.6668V5Z" stroke="black" strokeWidth="1.6"/>
+                                    <path d="M11.6665 16.25V18.75" stroke="black" strokeWidth="1.6"/>
+                                    <path d="M20 16.25V18.75" stroke="black" strokeWidth="1.6"/>
+                                    <path d="M28.3335 16.25V18.75" stroke="black" strokeWidth="1.6"/>
                                 </svg>
                             </div>
                             {post.comments.length}
@@ -90,11 +95,11 @@ const NewsDetails = () => {
                             <div className="icon-container">
                                 {isFav ? (
                                     <svg width="22" height="30" viewBox="0 0 22 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M1 28.3332V1.6665H21V28.3332L11 23.4134L1 28.3332Z" fill="#457B9D" stroke="#457B9D" stroke-width="1.6"/>
+                                        <path d="M1 28.3332V1.6665H21V28.3332L11 23.4134L1 28.3332Z" fill="#457B9D" stroke="#457B9D" strokeWidth="1.6"/>
                                     </svg>
                                 ) : (
                                     <svg width="22" height="30" viewBox="0 0 22 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M1 28.3332V1.6665H21V28.3332L11 23.4134L1 28.3332Z" stroke="black" stroke-width="1.6"/>
+                                        <path d="M1 28.3332V1.6665H21V28.3332L11 23.4134L1 28.3332Z" stroke="black" strokeWidth="1.6"/>
                                     </svg>
                                 )}
                             </div>

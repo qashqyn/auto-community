@@ -19,9 +19,6 @@ const newsSchema = mongoose.Schema({
         default: new Date()
     },
 });
-// newsSchema.virtuial('url').get(function(){
-//     return '/news/'+this._id;
-// });
 
 const NewsMessage = mongoose.model('NewsMessage', newsSchema);
 

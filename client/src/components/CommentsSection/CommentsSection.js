@@ -7,7 +7,9 @@ import { LinkContainer } from "react-router-bootstrap";
 import "./styles.scss";
 
 const CommentsSection = ({comments}) => {
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+    const user = JSON.parse(localStorage.getItem('profile'));
+
+
     return (
         <div className="comments">
             <div className="h4">Комментарии <span className="count">{comments.length}</span></div> 
@@ -32,21 +34,27 @@ const CommentsSection = ({comments}) => {
                     </Form>
                 </div>
             )}
-            {comments.map((comment) => (
-                <div className="comment" key={comment._id}>
-                    <div className="comment-heading">
-                        <div className="avatar avatar-sm">
-                            <Image src={comment.author.avatar} />
+            {comments.length > 0 ? (
+                comments.map((comment) => (
+                    <div className="comment" key={comment._id}>
+                        <div className="comment-heading">
+                            <div className="avatar avatar-sm">
+                                <Image src={comment.author?.avatar} />
+                            </div>
+                            <div>
+                                <div className="username">{comment.user?.firstname + " " + comment.user?.lastname}</div>
+                                <div className="car">Я езжу на {comment.user?.car}</div>
+                            </div>
                         </div>
-                        <div>
-                            <div className="username">{comment.user.firstname + " " + comment.user.lastname}</div>
-                            <div className="car">Я езжу на {comment.user.car}</div>
-                        </div>
+                        <div className="comment-message">{comment.message}</div>
+                        <div className="answer">Ответить</div>
                     </div>
-                    <div className="comment-message">{comment.message}</div>
-                    <div className="answer">Ответить</div>
+                ))
+            ) : (
+                <div className="no-comments">
+                    Нет комментариев. Будьте первым!
                 </div>
-            ))}
+            )}
         </div>
     );
 }

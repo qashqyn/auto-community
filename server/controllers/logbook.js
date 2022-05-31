@@ -3,9 +3,9 @@ import LogbookMessage from '../models/logbookMessage.js';
 
 export const getPosts = async (req, res) => {
     try{
-        const logbooks = await LogbookMessage.find().populate({
+        const logbooks = await LogbookMessage.find().select('title message author likes').populate({
             path: 'author',
-            select: 'firstname lastname avatar'
+            select: 'firstname lastname avatar car'
         }).sort('-createdAt');
 
         res.status(200).json({data: logbooks, currentPage: 0, numberofPages: 0});

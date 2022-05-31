@@ -72,20 +72,24 @@ const Market = () => {
                     </div>
                 </Col>
                 <Col xs={9}>
-                        {isLoading ? (
-                            <div className="text-center">
+                        {(isLoading || !posts) ? (
+                            <div className="text-center p-5">
                                 <Spinner animation="border" role="status">
                                     <span className="visually-hidden">Загрузка...</span>
                                 </Spinner>
                             </div>
                         ) : (
-                            <Row xs={1} md={3}>
-                                {posts.map((post) => (
-                                    <Col key={post._id}>
-                                        <MarketCard post={post} />
-                                    </Col>
-                                ))}
-                            </Row>
+                            (!!posts && posts.length > 0) ? (
+                                <Row xs={1} md={3}>
+                                    {posts.map((post) => (
+                                        <Col key={post._id}>
+                                            <MarketCard post={post} />
+                                        </Col>
+                                    ))}
+                                </Row>
+                            ) : (
+                                <h3 className="text-center">Нету товаров по этому запросу</h3>
+                            )
                         )
                         }
                 </Col>

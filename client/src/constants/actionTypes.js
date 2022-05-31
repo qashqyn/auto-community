@@ -12,10 +12,12 @@ export const DELETE_VIDEO = 'DELETE_VIDEO';
 export const FETCH_ALL_VIDEO = 'FETCH_ALL_VIDEO';
 export const FETCH_ONE_VIDEO = 'FETCH_ONE_VIDEO';
 export const LIKE_VIDEO = 'LIKE_VIDEO';
-
+// AUTH
 export const AUTH = 'AUTH';
 export const LOGOUT = 'LOGOUT';
 export const UPDATE_USER = 'UPDATE_USER';
+export const RESET_PASSWORD = 'RESET_PASSWORD';
+export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
 
 export const START_LOADING = 'START_LOADING';
 export const END_LOADING = 'END_LOADING';

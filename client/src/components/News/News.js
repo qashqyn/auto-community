@@ -75,7 +75,7 @@ const News = () => {
             </div>
 
             {(isLoading || !news) ? (
-                <div className="text-center">
+                <div className="text-center p-5">
                     <Spinner animation="border" role="status">
                         <span className="visually-hidden">Загрузка...</span>
                     </Spinner>

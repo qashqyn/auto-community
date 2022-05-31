@@ -1,8 +1,44 @@
 .logbook-card{
     height: auto;
 
-
+    border: #D7D7D7 solid 0.5px;
     .card-body{
+        .card-header{
+            display: flex;
+            padding: 0;
+            background: none;
+            border: none;
+            .avatar{
+                margin-right: 16px;
+            }
+            div:last-of-type{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                .author-info{
+                    font-weight: 500;
+                    font-size: 16px;
+                    line-height: 20px;
+                    color: #000000;
+                }
+                .author-car{
+                    margin-top: 8px;
+                    font-weight: 400;
+                    font-size: 16px;
+                    line-height: 20px;
+                    color: #636363;
+    
+                }
+            }
+        }
+        .card-footer{
+            margin-top: 16px;
+            padding: 0;
+            background: none;
+            border: none;
+            display: flex;
+            justify-content: space-between;
+        }
         .images{
             display: flex;
             gap:16px;
@@ -75,6 +111,33 @@
                         }
                     }
                 }
+            }
+        }
+        .actions{
+            display: flex;
+            gap: 40px;
+            .action{
+                display: flex;
+                gap: 6px;
+                font-weight: 500;
+                font-size: 18px;
+                line-height: 22px;
+                font-feature-settings: 'pnum' on, 'lnum' on;
+                color: #333333;
+                align-items: center;
+                .icon-container{
+                    cursor: pointer;
+                    width: 40px;
+                    height: 40px;
+                    display: flex;
+                    svg{
+                        fill: none;
+                        margin: auto;
+                        max-width: 40px;
+                        max-height: 40px;
+                    }
+                }
+    
             }
         }
     }

@@ -29,6 +29,7 @@ import LogbookDetails from "./components/LogbookDetails/LogbookDetails";
 import Market from "./components/Market/Market";
 import MarketForm from "./components/Market/MarketForm/MarketForm";
 import MarketDetails from "./components/MarketDetails/MarketDetails";
+import Reset from "./components/Login/Reset/Reset";
 
 library.add(far, fas);
 
@@ -42,6 +43,7 @@ const App = () => {
                     <Route path="">
                         {/* <Container> */}
                             <Route path="/login" exact element={<Login />} />
+                            <Route path="/login/reset/:token" element={<Reset />} />
                             <Route path="/signup" exact element={<SignUp />} />
                             
                             <Route path="/news/:id" element={<NewsDetails />} />
