@@ -6,7 +6,7 @@ import { getUserLogbooks, deleteLogbook } from "../../../actions/logbook";
 
 import './styles.scss';
 
-const LogbookCard = ({logbook, update=false}) => {
+const LogbookCard = ({logbook, update=false, isAuthor=false}) => {
     const dispatch = useDispatch();
 
     const deletePost = (e) => {
@@ -62,19 +62,21 @@ const LogbookCard = ({logbook, update=false}) => {
     return logbook && (
         <Card className="logbook-card">
             <Card.Body>
-                <Card.Header>
-                    <div className="avatar avatar-sm">
-                        <Image src={logbook.author?.avatar} />
-                    </div>
-                    <div>
-                        <div className="author-info">
-                            {logbook.author?.firstname} {logbook.author?.lastname}
+                {!isAuthor && (
+                    <Card.Header>
+                        <div className="avatar avatar-sm">
+                            <Image src={logbook.author?.avatar} />
                         </div>
-                        <div className="author-car">
-                            {logbook.author?.car}
+                        <div>
+                            <div className="author-info">
+                                {logbook.author?.firstname} {logbook.author?.lastname}
+                            </div>
+                            <div className="author-car">
+                                {logbook.author?.car}
+                            </div>
                         </div>
-                    </div>
-                </Card.Header>
+                    </Card.Header>
+                )}
                 <div className="images" id={`images${logbook._id}`}>
                     <div id={`mainimg${logbook._id}`} className="main-image"></div>
                     <div id={`imgs${logbook._id}`} className="other-images"></div>

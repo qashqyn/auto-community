@@ -37,6 +37,7 @@ export const likeLogbook = (id) => API.patch(`/logbooks/${id}/like`);
 export const fetchMarketPost = (id) => API.get(`/market/${id}`);
 export const fetchMarketPosts = (page, search) => API.get(`/market/?page=${page}&search=${search}`);
 export const createMarketPost = (newPost) => API.post(`/market`, newPost);
+export const deleteMarketPost = (id) => API.delete(`/market/${id}`);
 
 // VIDEOS
 export const fetchVideos = (tags, page) => API.get(`/video?tags=${tags.join()}&page=${page}`);
@@ -50,6 +51,7 @@ export const editUserInfo = (formData) => API.patch('/user/edit', formData);
 export const resetPassword = (email) => API.post('/user/reset_pass', email);
 export const changePassword = (formData) => API.post('/user/change_pass', formData);
 export const fetchLikedPosts = () => API.get('/user/liked');
+export const fetchMyPosts = () => API.get('/user/myposts');
 
 export const fetchUser = (id) => API.get(`/user/${id}`);
 

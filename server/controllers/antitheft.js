@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import AntitheftMessage from "../models/antitheftMessage.js";
 
 export const getPosts = async (req, res) => {
@@ -85,10 +86,16 @@ export const updatePost = async (req, res) => {
 export const deletePost = async (req, res) => {
     const { id: _id } = req.params;
 
+    if(!req.userId) return res.status(403).json({message: "Unaithenticated"});
+
     if(!mongoose.Types.ObjectId.isValid(_id))
         return res.status(404).send("No antitheft post with that Id");
 
-    await AntitheftMessage.findByIdAndRemove(_id);
-
-    res.json({message: 'Antitheft post deleted successfully'});
+    const post = await AntitheftMessage.findById(_id);
+    if(!!post && !!post.author && String(post.author) === String(req.userId)){
+        await AntitheftMessage.findByIdAndRemove(_id);
+        return res.json({message: 'Antitheft post deleted successfully'});
+    }else{
+        return res.status(404).json({message: 'No authority'});
+    }
 };

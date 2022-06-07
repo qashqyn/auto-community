@@ -1,5 +1,5 @@
 import * as api from '../api';
-import { CREATE, END_LOADING, FETCH_ALL, FETCH_ONE, START_LOADING } from '../constants/actionTypes';
+import { CREATE, END_LOADING, FETCH_ALL, FETCH_ONE, START_LOADING, DELETE } from '../constants/actionTypes';
 
 export const getMarketPosts = (page, search) => async(dispatch) => {
     try {
@@ -29,6 +29,16 @@ export const createMarketPost = (post) => async(dispatch) => {
         const { data } = await api.createMarketPost(post);
         
         dispatch({ type: CREATE, payload: data });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const deleteMarketPost = (id) => async(dispatch) => {
+    try {
+        await api.deleteMarketPost(id);
+        
+        dispatch({ type: DELETE, payload: id });
     } catch (error) {
         console.log(error);
     }

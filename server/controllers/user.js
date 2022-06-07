@@ -4,6 +4,10 @@ import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 import UserModal from "../models/user.js";
 import nodemailer from 'nodemailer';
+import LogbookMessage from '../models/logbookMessage.js';
+import AntitheftMessage from "../models/antitheftMessage.js";
+import Market from '../models/market.js';
+
 
 export const login = async (req, res) => {
     const { email, password } = req.body;
@@ -146,6 +150,27 @@ export const getLikedPosts = async (req, res) => {
 
         return res.json(data);
 
+    } catch (error) {
+        console.log(error);
+
+        return res.status(500).json({message: "Something went wrong."});
+    }
+}
+
+export const getMyPosts = async (req, res) => {
+    try {
+        if(!req.userId) return res.json({message: "Unaithenticated"});
+        const _id = req.userId;
+
+        const logbooks = await LogbookMessage.find({"author": {$exists: true, $eq: _id}}).select('title message likes').sort('-createdAt');
+
+        const market = await Market.find({"author": {$exists: true, $eq: _id}}).select('imgs title location cost').sort('-createdAt');
+
+        const antitheft = await AntitheftMessage.find({"author": {$exists: true, $eq: _id}}).where("status").equals("approved").sort('-createdAt');
+
+        const data = {logbooks, market, antitheft};
+
+        return res.json(data);
     } catch (error) {
         console.log(error);
 

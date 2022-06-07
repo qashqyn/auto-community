@@ -91,9 +91,9 @@ const Profile = () => {
                             <Nav.Item>
                                 <Nav.Link eventKey="liked" href="#liked">Понравившиеся</Nav.Link>
                             </Nav.Item>
-                            <Nav.Item>
+                            {/* <Nav.Item>
                                 <Nav.Link eventKey="notes" href="#notes">Заметки</Nav.Link>
-                            </Nav.Item>
+                            </Nav.Item> */}
                             <Nav.Item>
                                 <Nav.Link eventKey="myposts" href="#myposts">Мои посты</Nav.Link>
                             </Nav.Item>
@@ -114,9 +114,9 @@ const Profile = () => {
                                     <Nav.Item>
                                         <Nav.Link eventKey="antitheft" href="#antitheft">Антиугон</Nav.Link>
                                     </Nav.Item>
-                                    <Nav.Item>
+                                    {/* <Nav.Item>
                                         <Nav.Link eventKey="images" href="#images">Изображение</Nav.Link>
-                                    </Nav.Item>
+                                    </Nav.Item> */}
                                 </>
                             )}
                             <Nav.Item>

@@ -1,4 +1,4 @@
-import { AUTH, CHANGE_PASSWORD, LIKED_POSTS, LOGOUT, RESET_PASSWORD, UPDATE_USER } from '../constants/actionTypes';
+import { AUTH, CHANGE_PASSWORD, LIKED_POSTS, LOGOUT, MY_POSTS, RESET_PASSWORD, UPDATE_USER } from '../constants/actionTypes';
 
 const authReducer = (state = {authData: null}, action) => {
     switch(action.type){
@@ -15,7 +15,8 @@ const authReducer = (state = {authData: null}, action) => {
             localStorage.clear();
 
             return {...state, authData: null, status: action.payload?.status};
-
+        case MY_POSTS:
+            return {...state, myPosts: action.payload?.data};
         case LIKED_POSTS:
             return {...state, likedPosts: action.payload?.data};
         default:

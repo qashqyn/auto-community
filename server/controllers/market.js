@@ -1,4 +1,5 @@
 import Market from '../models/market.js';
+import mongoose from 'mongoose';
 
 export const getPosts = async (req, res) => {
     const {page, search} = req.query;
@@ -46,10 +47,16 @@ export const createPost = async (req, res) => {
 export const deletePost = async (req, res) => {
     const { id: _id } = req.params;
 
+    if(!req.userId) return res.json({message: "Unaithenticated"});
+
     if(!mongoose.Types.ObjectId.isValid(_id))
         return res.status(404).send("No product post with that Id");
 
-    await Market.findByIdAndRemove(_id);
-
-    res.json({message: 'Product post deleted successfully'});
+    const post = await Market.findById(_id);
+    if(!!post && !!post.author && String(post.author) === String(req.userId)){
+        await Market.findByIdAndRemove(_id);
+        return res.json({message: 'Product post deleted successfully'});
+    }else{
+        return res.status(404).json({message: 'No authority'});
+    }
 };

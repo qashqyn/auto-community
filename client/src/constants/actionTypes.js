@@ -21,6 +21,7 @@ export const UPDATE_USER = 'UPDATE_USER';
 export const RESET_PASSWORD = 'RESET_PASSWORD';
 export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
 export const LIKED_POSTS = 'LIKED_POSTS';
+export const MY_POSTS = 'MY_POSTS';
 
 export const START_LOADING = 'START_LOADING';
 export const END_LOADING = 'END_LOADING';
