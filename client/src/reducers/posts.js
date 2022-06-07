@@ -16,7 +16,7 @@ const postsReducers = (state = {isLoading:true, posts: [] }, action) => {
             return {...state, posts: [ ...state.posts, action.payload], status: action.payload?.status };
         case UPDATE:
         case LIKE:
-            return { ...state, posts: state.posts.map((post) => post._id === action.payload._id ? action.payload : post)};
+            return { ...state, postLikes: action.payload};
         case DELETE:
             return { ...state, posts : state.posts.filter((post) => post._id !== action.payload._id)};
         case SET_STATUS:

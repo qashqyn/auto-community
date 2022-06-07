@@ -5,38 +5,54 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { Container, Image, Spinner } from "react-bootstrap";
 
-import { getSingleNews } from "../../actions/news";
+import { getSingleNews, likeNews } from "../../actions/news";
 import Breadcrumbs from "../Breadcrumbs";
-import { LinkContainer } from "react-router-bootstrap";
 
 import CommentsSection from "../CommentsSection/CommentsSection";
 
 import "./styles.scss";
 
 const NewsDetails = () => {
-    const { post, isLoading } = useSelector((state) => state.posts);
+    const { post, isLoading, postLikes } = useSelector((state) => state.posts);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const { id } = useParams();    
 
     const user = JSON.parse(localStorage.getItem('profile'));
 
+    const [likeCount, setLikeCount] = useState(0);
     const [ isLiked, setLiked ] = useState(false);
     const [ isFav, setFav ] = useState(false);
     // const {isLiked, isFav } = useSelector({false, false})
 
     useEffect(() => {
         dispatch(getSingleNews(id));
-        if(!!user && !!user.result._id && !!post && !!post.likes && post.likes>0 && post.likes.includes(user.result._id)){
-            setLiked(true);
-        }  
+         
     }, [id]);
 
-    // var momentRu = moment().locale('ru');
+    useEffect(()=>{
+        if(postLikes){
+            setLikeCount(postLikes.length);
+            if(!!user && !!user.result._id){
+                setLiked(postLikes.includes(user.result._id));
+            }  
+        }
+    }, [postLikes]);
+    useEffect(()=>{
+        if(!!post){
+            setLikeCount(post.likes.length);
+            if(!!user && !!user.result._id){
+                setLiked(post.likes.includes(user.result._id));
+            } 
+        }
+    },[post]);
 
-    const likeNews = (e) => {
+    const likeNewsHandler = (e) => {
         e.preventDefault();
+
+        setLikeCount((isLiked) ? likeCount-1 : likeCount+1);
         setLiked(!isLiked);
+
+        dispatch(likeNews(id));
     }
     const favNews = (e) => {
         e.preventDefault();
@@ -64,7 +80,7 @@ const NewsDetails = () => {
                         {post.message}
                     </div>
                     <div className="actions">
-                        <div className="action" onClick={likeNews}>
+                        <div className="action" onClick={likeNewsHandler}>
                             <div className="icon-container">
                                 {isLiked ? (
                                     <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -76,7 +92,7 @@ const NewsDetails = () => {
                                     </svg>
                                 )}
                             </div>
-                            {post.likes.length}
+                            {likeCount}
                         </div>
                         <div className="action">
                             <div className="icon-container">
@@ -105,7 +121,7 @@ const NewsDetails = () => {
                             </div>
                         </div>
                     </div>
-                    <CommentsSection comments={post.comments} /> 
+                    <CommentsSection comments={post.comments} type="news" postId={post._id} /> 
                 </div>
             )}
         </Container>

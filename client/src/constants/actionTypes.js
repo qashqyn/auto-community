@@ -5,6 +5,7 @@ export const DELETE = 'DELETE';
 export const FETCH_ALL = 'FETCH_ALL';
 export const FETCH_ONE = 'FETCH_ONE';
 export const LIKE = 'LIKE';
+export const COMMENT = 'COMMENT';
 // VIDEO
 export const CREATE_VIDEO = 'CREATE_VIDEO';
 export const UPDATE_VIDEO = 'UPDATE_VIDEO';
@@ -19,6 +20,7 @@ export const LOGOUT = 'LOGOUT';
 export const UPDATE_USER = 'UPDATE_USER';
 export const RESET_PASSWORD = 'RESET_PASSWORD';
 export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
+export const LIKED_POSTS = 'LIKED_POSTS';
 
 export const START_LOADING = 'START_LOADING';
 export const END_LOADING = 'END_LOADING';

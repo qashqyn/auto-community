@@ -1,4 +1,4 @@
-import { START_LOADING, END_LOADING, FETCH_ALL, FETCH_ONE, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
+import { START_LOADING, END_LOADING, FETCH_ALL, FETCH_ONE, CREATE, UPDATE, DELETE, LIKE, COMMENT } from '../constants/actionTypes';
 import * as api from '../api';
 
 // Action Creators
@@ -56,11 +56,20 @@ export const deleteNews = (id) => async(dispatch) => {
     }
 }
 
-export const likeNews = (id, news) => async(dispatch) => {
+export const likeNews = (id) => async(dispatch) => {
     try {
         const { data } = await api.likeNews(id);
         
         dispatch({ type: LIKE, payload: data });
+    } catch (error) {
+        console.log(error);
+    }
+}
+export const commentNews = (id, comment) => async(dispatch) => {
+    try {
+        const { data } = await api.commentNews(id, comment);
+        
+        dispatch({ type: COMMENT, payload: data });
     } catch (error) {
         console.log(error);
     }

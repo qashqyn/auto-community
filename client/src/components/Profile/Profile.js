@@ -17,6 +17,7 @@ import './styles.scss';
 import VideoForm from "./VideoForm/VideoForm";
 import MyPosts from "./MyPosts/MyPosts";
 import AntitheftPosts from "./AntitheftPosts/AntitheftPosts";
+import LikedPosts from "./LikedPosts/LikedPosts";
 
 
 
@@ -166,6 +167,9 @@ const Profile = () => {
                                 </div>
                             </Tab.Pane>
                             <Tab.Pane eventKey="liked">
+                                {crTab === "liked" && (
+                                    <LikedPosts />
+                                )}
                             </Tab.Pane>
                             <Tab.Pane eventKey="notes">
                             </Tab.Pane>

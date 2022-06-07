@@ -1,14 +1,30 @@
 import React, { useState } from "react";
-
+import { useDispatch } from "react-redux";
 import { Button, Form, Image} from "react-bootstrap";
 
 import { LinkContainer } from "react-router-bootstrap";
 
 import "./styles.scss";
+import { commentNews } from "../../actions/news";
 
-const CommentsSection = ({comments}) => {
+const CommentsSection = ({comments, type, postId}) => {
     const user = JSON.parse(localStorage.getItem('profile'));
 
+    const [text, setText] = useState('');
+
+    const dispatch = useDispatch();
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if(text.length > 0){
+            switch(type) {
+                case 'news':
+                    dispatch(commentNews(postId, {message: text}));
+                    break;
+            }
+            setText('');
+        }
+    }
 
     return (
         <div className="comments">
@@ -24,9 +40,9 @@ const CommentsSection = ({comments}) => {
             ) : (
                 <div className="d-flex">
                     <div className="avatar avatar-md"><Image src={user.result.avatar} /></div>
-                    <Form className="w-100 form">
+                    <Form className="form" onSubmit={handleSubmit}>
                         <Form.Group className="textarea">
-                            <Form.Control as="textarea" rows={3} placeholder="Написать комментарии"></Form.Control>
+                            <Form.Control as="textarea" rows={3} value={text} onChange={(e) => {e.preventDefault(); setText(e.target.value)}} placeholder="Написать комментарии"></Form.Control>
                         </Form.Group>
                         <div className="d-flex">
                             <Button type="submit">Отправить</Button>
@@ -39,7 +55,7 @@ const CommentsSection = ({comments}) => {
                     <div className="comment" key={comment._id}>
                         <div className="comment-heading">
                             <div className="avatar avatar-sm">
-                                <Image src={comment.author?.avatar} />
+                                <Image src={comment.user?.avatar} />
                             </div>
                             <div>
                                 <div className="username">{comment.user?.firstname + " " + comment.user?.lastname}</div>
@@ -47,7 +63,7 @@ const CommentsSection = ({comments}) => {
                             </div>
                         </div>
                         <div className="comment-message">{comment.message}</div>
-                        <div className="answer">Ответить</div>
+                        {/* <div className="answer">Ответить</div> */}
                     </div>
                 ))
             ) : (

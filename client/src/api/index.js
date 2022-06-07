@@ -16,6 +16,7 @@ export const createNews = (newNews) => API.post(`/admin/news`, newNews);
 export const updateNews = (id, updatedNews) => API.patch(`/admin/news/${id}`, updatedNews);
 export const deleteNews = (id) => API.delete(`/admin/news/${id}`);
 export const likeNews = (id) => API.patch(`/news/${id}/likeNews`);
+export const commentNews = (id, data) => API.post(`/news/${id}/comment`, data);
 // ANTITHEFT
 export const fetchAntitheftPost = (id) => API.get(`/antitheft/${id}`);
 export const fetchAntitheftPosts = (filter, page) => API.get(`/antitheft/?city=${filter.city}&sort=${filter.sort}&amount=${filter.amount}&page=${page}`);
@@ -30,6 +31,8 @@ export const createLogbook = (newPost) => API.post(`/logbooks`, newPost);
 export const fetchLogbook = (id) => API.get(`/logbooks/${id}`);
 export const fetchUserLogbooks = () => API.get(`/logbooks/my`);
 export const deleteLogbook = (id) => API.delete(`/logbooks/${id}`);
+export const likeLogbook = (id) => API.patch(`/logbooks/${id}/like`);
+
 // MARKET
 export const fetchMarketPost = (id) => API.get(`/market/${id}`);
 export const fetchMarketPosts = (page, search) => API.get(`/market/?page=${page}&search=${search}`);
@@ -46,6 +49,7 @@ export const signup = (formData) => API.post('/user/signup', formData);
 export const editUserInfo = (formData) => API.patch('/user/edit', formData);
 export const resetPassword = (email) => API.post('/user/reset_pass', email);
 export const changePassword = (formData) => API.post('/user/change_pass', formData);
+export const fetchLikedPosts = () => API.get('/user/liked');
 
 export const fetchUser = (id) => API.get(`/user/${id}`);
 

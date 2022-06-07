@@ -4,10 +4,10 @@ const logbookSchema = mongoose.Schema({
     title: String,
     message: String,
     category: String,
-    likes: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    }],
+    likes: {
+        type: [String],
+        default: []
+    },
     comments: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'LogbookComment'

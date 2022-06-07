@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Spinner,Col, Container, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
@@ -13,12 +13,14 @@ import Input from "../SignUp/Input";
 import MarketCard from "./MarketCard/MarketCard";
 
 import './styles.scss';
+import cars from '../../cars/cars.json';
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
 }
 
 const categories = ['Автозвук и мультимедиа', 'Автосвет', 'Аксессуары', 'Гаджеты', 'Двигатель и выхлопная система', 'Инструменты', 'Климат', 'Кузов', 'Подвеска', 'Рулевое управление', 'Салон', 'Тормозная система', 'Трансмиссия', 'Шины и диски', 'Электрооборудование', 'Другое'];
+
 
 const Market = () => {
     const {posts, isLoading} = useSelector((state) => state.posts);
@@ -58,6 +60,50 @@ const Market = () => {
         }
     }
 
+    const [carSelect, setCarSelect] = useState({brand: '', brandId: null, model: '',modelId: null, generation: '', generationId: null});
+    const [carOptions, setCarOptions] = useState({brands: [], models: [], generations: []});
+
+    const setBrands = () =>{
+        let brandds = [];
+        cars.brands.map((brand) => brandds.push(brand.name));
+        setCarOptions({...carOptions, brands: brandds});
+    }
+    
+    useEffect(() => {
+        setBrands();
+    }, [carSelect.brands]);
+
+    const handleBrandChoose = (e) => {
+        e.preventDefault();
+        let brandId = e.target.value;
+        if(brandId !== carSelect.brandId){
+            let modells = [];
+            setCarSelect({...carSelect, brandId: brandId, brand: cars.brands[brandId].name, model: '', modelId: null, generation: '', generationId: null});
+            cars.brands[brandId].models.map((model) => modells.push(model.name));
+            setCarOptions({...carOptions, models: modells});
+        }
+    }
+    const handleModelChoose = (e) => {
+        e.preventDefault();
+        let modelId = e.target.value;
+        if(modelId !== carSelect.modelId){
+            let generationns = [];
+            setCarSelect({...carSelect, modelId: modelId, model: cars.brands[carSelect.brandId].models[modelId].name, generation: '', generationId: null});
+            cars.brands[carSelect.brandId].models[modelId].generations.map((generation) => generationns.push(generation));
+            setCarOptions({...carOptions, generations: generationns});
+        }
+    }
+    const handleGenerationChoose = (e) => {
+        e.preventDefault();
+        let generationId = e.target.value;
+        if(generationId !== carSelect.generationId)
+            setCarSelect({...carSelect, generationId: generationId, generation: cars.brands[carSelect.brandId].models[carSelect.modelId].generations[generationId]});
+    }
+
+    useEffect(() => {
+        console.log(carSelect);
+    }, [carSelect]);
+
     return (
         <Container className="market-list">
             <LoginModal show={show} setShow={setShow} text="Добавить объвления могут только зарегистрированные пользователи." />
@@ -80,6 +126,12 @@ const Market = () => {
                         {categories.map((category, key) => (
                             <Input key={key} type="checkbox" name={category} label={category} handleChange={addCategory} />
                         ))}
+                    </div>
+                    <div className="car-filter">
+                        <h3>Подходит для</h3>
+                        <Input type="select" name="car-brands" label="Всех марок" keyAsValue={true} options={carOptions.brands} handleChange={handleBrandChoose} />
+                        <Input type="select" name="car-models" label="Всех моделей" keyAsValue={true} options={carOptions.models} handleChange={handleModelChoose} />
+                        <Input type="select" name="car-generations" label="Всех поколений" keyAsValue={true} options={carOptions.generations} handleChange={handleGenerationChoose} />
                     </div>
                     <div className="condition-filter">
                         <h3>Состояние</h3>

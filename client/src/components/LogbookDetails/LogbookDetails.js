@@ -3,34 +3,53 @@ import React, { useEffect, useState } from 'react';
 import { Button, Container, Image, Spinner } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getLogbook } from '../../actions/logbook';
+import { getLogbook, likeLogbook } from '../../actions/logbook';
 import Breadcrumbs from '../Breadcrumbs';
 import CommentsSection from '../CommentsSection/CommentsSection';
 
 import './styles.scss';
 
 const LogbookDetails = () => {
-    const {post, isLoading} = useSelector((state) => state.posts);
+    const {post, isLoading, postLikes} = useSelector((state) => state.posts);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const { id } = useParams();
 
+    const [likeCount, setLikeCount] = useState(0);
     const [ isLiked, setLiked ] = useState(false);
     const [ isFav, setFav ] = useState(false);
     const user = JSON.parse(localStorage.getItem('profile'));
 
     useEffect(() => {
         dispatch(getLogbook(id));
-        if(!!user && !!user.result._id && !!post && !!post.likes && post.likes>0 && post.likes.includes(user.result._id)){
-            setLiked(true);
-        }  
-    },[dispatch, id]);
+    },[id]);
 
-    const likeLogbook = (e) => {
+    
+    useEffect(()=>{
+        if(postLikes){
+            setLikeCount(postLikes.length);
+            if(!!user && !!user.result._id){
+                setLiked(postLikes.includes(user.result._id));
+            }  
+        }
+    }, [postLikes]);
+    useEffect(()=>{
+        if(!!post){
+            setLikeCount(post.likes.length);
+            if(!!user && !!user.result._id){
+                setLiked(post.likes.includes(user.result._id));
+            } 
+        }
+    },[post]);
+    
+    const likeLogbookHandler = (e) => {
         e.preventDefault();
+
+        setLikeCount((isLiked) ? Number(likeCount)-1 : Number(likeCount)+1);
         setLiked(!isLiked);
+        
+        dispatch(likeLogbook(id));
     }
-    const favLogbook = (e) => {
+    const favLogbookHandler = (e) => {
         e.preventDefault();
         setFav(!isFav);
     }
@@ -68,7 +87,7 @@ const LogbookDetails = () => {
                         {moment(post.createdAt).format('DD MMMM YYYY')}
                     </div>
                     <div className="actions">
-                        <div className="action" onClick={likeLogbook}>
+                        <div className="action" onClick={likeLogbookHandler}>
                             <div className="icon-container">
                                 {isLiked ? (
                                     <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -80,7 +99,7 @@ const LogbookDetails = () => {
                                     </svg>
                                 )}
                             </div>
-                            {post.likes.length}
+                            {likeCount}
                         </div>
                         <div className="action">
                             <div className="icon-container">
@@ -95,7 +114,7 @@ const LogbookDetails = () => {
                             </div>
                             {post.comments.length}
                         </div>
-                        <div className="action" onClick={favLogbook}>
+                        <div className="action" onClick={favLogbookHandler}>
                             <div className="icon-container">
                                 {isFav ? (
                                     <svg width="22" height="30" viewBox="0 0 22 30" fill="none" xmlns="http://www.w3.org/2000/svg">

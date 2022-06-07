@@ -130,3 +130,25 @@ export const changePassword = async (req,res) => {
         return res.status(500).json({message: "Something went wrong."});
     }
 }
+
+export const getLikedPosts = async (req, res) => {
+    try {
+        if(!req.userId) return res.json({message: "Unaithenticated"});
+        const _id = req.userId;
+
+        const data = await UserModal.findById(_id).select('likedNews, likedLogbooks').populate({
+            path: 'likedNews',
+            select: 'title description tags selectedFile createdAt',
+        }).populate({
+            path: 'likedLogbooks',
+            select: 'title message createdAt category',
+        });
+
+        return res.json(data);
+
+    } catch (error) {
+        console.log(error);
+
+        return res.status(500).json({message: "Something went wrong."});
+    }
+}

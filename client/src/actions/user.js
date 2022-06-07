@@ -1,4 +1,4 @@
-import { FETCH_ALL, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
+import { FETCH_ALL, CREATE, UPDATE, DELETE, LIKE, LIKED_POSTS, START_LOADING, END_LOADING } from '../constants/actionTypes';
 import * as api from '../api';
 
 // Action Creators
@@ -7,6 +7,19 @@ export const getUser = () => async(dispatch) => {
         const { data } = await api.fetchUser();
         
         dispatch({ type: FETCH_ALL, payload: data });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const getLiked = () => async (dispatch) => {
+    try {
+        dispatch({type: START_LOADING});
+        const data = await api.fetchLikedPosts();
+
+        dispatch({type: LIKED_POSTS, payload: data});
+        dispatch({type: END_LOADING});
+
     } catch (error) {
         console.log(error);
     }

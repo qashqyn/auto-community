@@ -1,4 +1,4 @@
-import { CREATE, DELETE, END_LOADING, FETCH_ALL, FETCH_ONE, START_LOADING } from "../constants/actionTypes";
+import { CREATE, DELETE, LIKE, END_LOADING, FETCH_ALL, FETCH_ONE, START_LOADING } from "../constants/actionTypes";
 import * as api from '../api';
 
 export const getLogbooks = (search = '') => async(dispatch) => {
@@ -64,6 +64,16 @@ export const deleteLogbook = (id) => async(dispatch) => {
         await api.deleteLogbook(id);
 
         dispatch({type: DELETE, payload: id});
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const likeLogbook = (id) => async(dispatch) => {
+    try {
+        const { data } = await api.likeLogbook(id);
+        
+        dispatch({ type: LIKE, payload: data });
     } catch (error) {
         console.log(error);
     }

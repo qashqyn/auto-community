@@ -1,0 +1,32 @@
+{
+    "brands": [
+        {
+            "name":"Toyota",
+            "models": [
+                {
+                    "name": "4Runner",
+                    "generations": [
+                        "N60 1st Generation",
+                        "N120/N130 2nd Generation",
+                        "N180 3rd Generation",
+                        "N210 4th Generation",
+                        "N280 5th Generation"
+                    ]
+                },
+                {
+                    "name": "Altezza",
+                    "generations": []
+                }
+            ]
+        },
+        {
+            "name":"BMW",
+            "models": [
+                {
+                    "name": "1-series",
+                    "generations": []
+                }
+            ]
+        }
+    ]
+}

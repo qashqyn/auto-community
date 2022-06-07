@@ -4,7 +4,7 @@ import {Form} from "react-bootstrap";
 import './input.scss';
 import moment from 'moment';
 
-const Input = ({error='', name, label, type, handleChange, value, disabled=false, required=false, options=[], maxCharacters=0 }) => {
+const Input = ({error='', name, label, type, handleChange, value, disabled=false, required=false, options=[], keyAsValue=false, maxCharacters=0 }) => {
     const [ charCount, setCharCount ] = useState(0);
 
     // EDITABLE
@@ -61,7 +61,7 @@ const Input = ({error='', name, label, type, handleChange, value, disabled=false
                         <option value="">{label}</option>
                     )}
                     {options.map((option, key) => (
-                        <option value={option} key={key}>{option}</option>
+                        <option value={keyAsValue ? key : option} key={key}>{option}</option>
                     ))}
                 </Form.Select>
             </Form.Group>

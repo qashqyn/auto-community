@@ -10,6 +10,9 @@ const userSchema = mongoose.Schema({
     city: {type: String, required: true},
     car: {type: String, required: true},
     is_admin: {type: Boolean, default: false},
+    likedNews: [{type: mongoose.Schema.Types.ObjectId, ref: 'NewsMessage'}],
+    likedLogbooks: [{type: mongoose.Schema.Types.ObjectId, ref: 'LogbookMessage'}],
+
     avatar: String
 });
 
