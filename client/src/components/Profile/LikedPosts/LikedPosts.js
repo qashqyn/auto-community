@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Button, Col, Row, Spinner, Tab, Tabs } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
-import { getUserLogbooks } from '../../../actions/logbook';
 import { getLiked } from '../../../actions/user';
 import LogbookCard from '../../Logbooks/LogbookCard/LogbookCard';
 import SingleNews from '../../News/SingleNews/SingleNews';
@@ -50,7 +49,7 @@ const LikedPosts = () => {
                     : likedPosts.likedLogbooks.length === 0 ? 
                         nothing({'name':'Бортжурнале', 'link': '/logbook'}) 
                         : 
-                        likedPosts.likedLogbooks.map((post, key) => (<LogbookCard key={key} logbook={post} update={true} />)) 
+                        likedPosts.likedLogbooks.map((post, key) => (<LogbookCard key={key} logbook={post} />)) 
                     } 
                 </Tab>
                 <Tab eventKey="likedNews" title="Новости">

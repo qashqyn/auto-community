@@ -23,9 +23,16 @@ const News = () => {
     const [ tags, setTags ] = useState([]);
     const dispatch = useDispatch();
 
+    const user = JSON.parse(localStorage.getItem('profile'));
+
     const query = useQuery();
     const page = query.get('page') || 1;
 
+    const [isAdmin, setAdmin] = useState(false);
+
+    useEffect(()=> {
+        setAdmin(user && user.result && user.result.is_admin)
+    }, [user]);
 
     const addTag = async (tag) => {
         if(!tags.includes(tag)){
@@ -86,7 +93,7 @@ const News = () => {
                         <Row xs={1} md={2} lg={3}>
                             {news.map((singleNews) => (
                                 <Col key={singleNews._id}>
-                                    <SingleNews news={singleNews} />
+                                    <SingleNews news={singleNews} isAdmin={isAdmin} />
                                 </Col>
                             ))}
                         </Row>
