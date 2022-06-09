@@ -8,7 +8,14 @@ const userSchema = mongoose.Schema({
     tel: {type: String, required: true},
     country: {type: String, required: true},
     city: {type: String, required: true},
-    car: {type: String, required: true},
+    cars: [{
+        mark: String,
+        model: String,
+        color: String,
+        generation: String,
+        carStatus: String,
+        image: String
+    }],
     is_admin: {type: Boolean, default: false},
     likedNews: [{type: mongoose.Schema.Types.ObjectId, ref: 'NewsMessage'}],
     likedLogbooks: [{type: mongoose.Schema.Types.ObjectId, ref: 'LogbookMessage'}],

@@ -56,4 +56,36 @@
             }
         }
     }
+
+    .avatar-change{
+        display: flex;
+        justify-items: center;
+        gap: 32px;
+        margin-bottom: 32px;
+        .avatar-btns{
+            margin: auto 0;
+            gap: 16px;
+            display: flex;
+            .avatar-upload{
+                cursor: pointer;
+                background: #457B9D;
+                border-radius: 1px;
+                padding: 6px 32px;
+                font-weight: 500;
+                font-size: 18px;
+                line-height: 20px;
+                color: #FFFFFF;
+                height: auto;
+                input{
+                    display: none;
+                }
+            }
+            .avatar-remove{
+                background: none;
+                color: #457B9D;
+                border: 1px solid #457B9D;
+                padding: 6px 32px;
+            }
+        }
+    }
 }

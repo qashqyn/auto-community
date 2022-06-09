@@ -11,6 +11,8 @@ import Breadcrumbs from "../Breadcrumbs";
 import "./styles.scss";
 import ImageCarousel from "../ImageCarousel";
 
+import NoImg from '../../images/noimg.jpg';
+
 const MarketDetails = () => {
     const { post, isLoading } = useSelector((state) => state.posts);
     const dispatch = useDispatch();
@@ -38,7 +40,9 @@ const MarketDetails = () => {
                                 <p>Город: <span>{post.location}</span></p>
                                 <p>Производитель: <span>{post.manufactor}</span></p>
                                 <p>Состояние: <span>{post.condition}</span></p>
-                                {/* <p>Подходит для: <span>{post.suits}</span></p> */}
+                                {post.suits && (
+                                    <p>Подходит для: <span>{post.suits}</span></p>
+                                )}
                                 <p>Размещено: <span>{moment(post.createdAt).format('DD.MM.YYYY')}</span></p>
                                 <p>Цена: <span className="amount">{post.cost} ₸</span></p>
                             </div>
@@ -52,12 +56,12 @@ const MarketDetails = () => {
                                 <h3>Владелец</h3>
                                 <div className="d-flex">
                                     <div className="avatar avatar-sm">
-                                        <Image src={post.author.avatar} />
+                                        <Image src={post.author.avatar ? post.author.avatar : NoImg} />
                                     </div>
                                     <div>
                                         <p>{post.author.firstname + " " + post.author.lastname}</p>
                                         <a href={"tel:"+post.tel}>{post.tel}</a>
-                                        <p>Whatsapp: <a href={"tel:"+post.whatsapp}>{post.whatsapp}</a></p>
+                                        <p>Whatsapp: <a href={"https://wa.me/"+post.whatsapp.replace(/ /g,'').replace(/\+/g,'').replace(/\D/g,'')} target="_blank">{post.whatsapp}</a></p>
                                     </div>
                                 </div>
                             </div>

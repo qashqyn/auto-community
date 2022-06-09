@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import NewsMessage from "../models/newsMessage.js";
 import Video from "../models/video.js";
 import AntitheftMessage from "../models/antitheftMessage.js";
-
+import CarModel from "../models/carModel.js";
 
 // NEWS
 export const createNews = async (req, res) => {
@@ -105,5 +105,59 @@ export const setAntitheftStatus = async (req, res) => {
         res.status(204).json({message: "success"});
     } catch (error) {
         res.status(404).json({message: error.message});      
+    }
+}
+
+// CAR MODELS
+export const addCarModel = async (req, res) => {
+    const data = req.body;
+    try {
+        let exists = await CarModel.findOne({mark: data.mark});
+
+        if(exists === null){
+            const newCar = new CarModel({mark: data.mark, models: [{name: data.model, generations: [data.generation]}]});
+            await newCar.save();
+        }else{
+            let modelExists = null;
+            let index = null;
+            exists.models.map((model, key) => {
+                if(model.name === data.model){
+                    modelExists = model;
+                    index = key;
+                }
+            });
+            if(modelExists === null) {
+                exists.models.push({name: data.model, generations: [data.generation]});
+                await CarModel.findByIdAndUpdate(exists._id, {models: exists.models});
+            }else{
+                let genExists = null;
+                modelExists.generations.map((gen)=>{
+                    if(gen === data.generation)
+                        genExists = gen;
+                });
+                if(genExists === null){
+                    exists.models[index].generations.push(data.generation);
+                    await CarModel.findByIdAndUpdate(exists._id, {models: exists.models});
+                }
+            }
+        }
+
+        const cars = await CarModel.find();
+
+        return res.json(cars);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json(error);
+    }
+}
+
+export const getCarModels = async (req, res) => {
+    try {
+        const cars = await CarModel.find();
+
+        return res.json(cars);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json(error);
     }
 }

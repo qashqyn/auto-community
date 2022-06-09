@@ -58,3 +58,5 @@ export const fetchUser = (id) => API.get(`/user/${id}`);
 // ADMIN
 export const fetchAdminAntitheftPosts = (status) => API.get(`/admin/antitheft?status=${status}`);
 export const setAdminAntitheftStatus = (id, status) => API.get(`/admin/antitheft/${id}?status=${status}`);
+export const fetchCarModels = () => API.get('/admin/carmodels');
+export const addCarModel = (formData) => API.post('/admin/carmodels/add', formData);

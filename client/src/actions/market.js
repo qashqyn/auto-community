@@ -26,7 +26,7 @@ export const getMarketPost = (id) => async(dispatch) => {
 
 export const createMarketPost = (post) => async(dispatch) => {
     try {
-        const { data } = await api.createMarketPost(post);
+        const data = await api.createMarketPost(post);
         
         dispatch({ type: CREATE, payload: data });
     } catch (error) {

@@ -1,4 +1,4 @@
-import { CREATE, DELETE, FETCH_ALL, LIKE, UPDATE, FETCH_ONE, START_LOADING, END_LOADING,CLEAR_STATE, SET_STATUS } from "../constants/actionTypes";
+import { CREATE, DELETE, ADD_CAR, FETCH_ALL, LIKE, UPDATE, FETCH_ONE, START_LOADING, END_LOADING,CLEAR_STATE, SET_STATUS, FETCH_CARS } from "../constants/actionTypes";
 
 const postsReducers = (state = {isLoading:true, posts: [] }, action) => {
     switch (action.type) {
@@ -8,6 +8,9 @@ const postsReducers = (state = {isLoading:true, posts: [] }, action) => {
             return { ...state, isLoading: true};
         case END_LOADING:
             return { ...state, isLoading: false};
+        case ADD_CAR:
+        case FETCH_CARS:
+            return {...state, carModels: action.payload};
         case FETCH_ALL:
             return { ...state, posts: action.payload.data,  currentPage: action.payload?.currentPage, numberOfPages: action.payload?.numberOfPages};
         case FETCH_ONE:

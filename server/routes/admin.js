@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { createNews, updateNews, deleteNews, createVideo, updateVideo, deleteVideo, getAntitheftPosts, setAntitheftStatus } from '../controllers/admin.js';
+import { createNews, updateNews, deleteNews, createVideo, updateVideo, deleteVideo, getAntitheftPosts, setAntitheftStatus, addCarModel,getCarModels } from '../controllers/admin.js';
 
 const router = express.Router();
 // news
@@ -14,6 +14,8 @@ router.delete('/video/:id', deleteVideo);
 // antitheft
 router.get('/antitheft', getAntitheftPosts);
 router.get('/antitheft/:id', setAntitheftStatus);
-
+// Car Models
+router.get('/carmodels', getCarModels)
+router.post('/carmodels/add', addCarModel);
 
 export default router;

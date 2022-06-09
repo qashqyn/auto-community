@@ -31,7 +31,7 @@ export const getSingleNews = async (req, res) => {
                 path: 'comments',
                 select: '-news',
                 options:{ sort: '-date' },
-                populate: {path: 'user', select: 'firstname lastname car avatar'}
+                populate: {path: 'user', select: 'firstname lastname cars avatar'}
             });
         res.status(200).json(data);
     } catch (error) {

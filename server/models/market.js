@@ -12,11 +12,7 @@ const marketSchema = mongoose.Schema({
     whatsapp: String,
     description: String,
     imgs: [String],
-    suits: [{
-        mark: String,
-        model: String,
-        generation: String
-    }],
+    suits: String,
     author: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'

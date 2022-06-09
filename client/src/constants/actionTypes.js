@@ -28,3 +28,7 @@ export const END_LOADING = 'END_LOADING';
 
 export const CLEAR_STATE = 'CLEAR_STATE';
 export const SET_STATUS = 'SET_STATUS';
+
+// CAR MODELS 
+export const FETCH_CARS = 'FETCH_CARS';
+export const ADD_CAR = 'ADD_CAR';

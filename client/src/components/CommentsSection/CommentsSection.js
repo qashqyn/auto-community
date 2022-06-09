@@ -6,6 +6,7 @@ import { LinkContainer } from "react-router-bootstrap";
 
 import "./styles.scss";
 import { commentNews } from "../../actions/news";
+import NoImg from '../../images/noimg.jpg';
 
 const CommentsSection = ({comments, type, postId}) => {
     const user = JSON.parse(localStorage.getItem('profile'));
@@ -39,7 +40,7 @@ const CommentsSection = ({comments, type, postId}) => {
                 </div>
             ) : (
                 <div className="d-flex">
-                    <div className="avatar avatar-md"><Image src={user.result.avatar} /></div>
+                    <div className="avatar avatar-md"><Image src={user.result.avatar ? user.result.avatar : NoImg} /></div>
                     <Form className="form" onSubmit={handleSubmit}>
                         <Form.Group className="textarea">
                             <Form.Control as="textarea" rows={3} value={text} onChange={(e) => {e.preventDefault(); setText(e.target.value)}} placeholder="Написать комментарии"></Form.Control>
@@ -55,11 +56,11 @@ const CommentsSection = ({comments, type, postId}) => {
                     <div className="comment" key={comment._id}>
                         <div className="comment-heading">
                             <div className="avatar avatar-sm">
-                                <Image src={comment.user?.avatar} />
+                                <Image src={comment.user.avatar ? comment.user.avatar : NoImg} />
                             </div>
                             <div>
                                 <div className="username">{comment.user?.firstname + " " + comment.user?.lastname}</div>
-                                <div className="car">Я езжу на {comment.user?.car}</div>
+                                <div className="car">{comment.user.cars.length > 0 ? `Я езжу на ${comment.user.cars[0].mark} ${comment.user.cars[0].model} ${comment.user.cars[0].generation}` : `У меня нет машины`}</div>
                             </div>
                         </div>
                         <div className="comment-message">{comment.message}</div>

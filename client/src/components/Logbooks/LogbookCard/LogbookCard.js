@@ -25,7 +25,7 @@ const LogbookCard = ({logbook, update=false, isAuthor=false}) => {
 
     useEffect(() => {
         if(!!logbook){
-            if(!!user && !!user.result._id && !!logbook.likes && logbook.likes>0 && logbook.likes.includes(user.result._id)){
+            if(!!user && !!user.result && !!user.result._id && !!logbook.likes && logbook.likes>0 && logbook.likes.includes(user.result._id)){
                 setLiked(true);
             }  
 

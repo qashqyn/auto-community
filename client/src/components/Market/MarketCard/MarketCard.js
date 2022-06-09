@@ -5,6 +5,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { deleteMarketPost } from "../../../actions/market";
 
 import './styles.scss';
+import NoImg from '../../../images/noimg.jpg';
 
 const MarketCard = ({post, isAuthor=false}) => {
     const [show, setShow] = useState(false); 
@@ -49,7 +50,7 @@ const MarketCard = ({post, isAuthor=false}) => {
                 )}
                 <LinkContainer to={`/market/${post._id}`}>
                     <Card.Body>
-                        <Card.Img src={post?.imgs && post?.imgs[0]} />
+                        <Card.Img src={(post.imgs && post.imgs.length>0) ? post.imgs[0] : NoImg} />
                         <Card.Title>{post.title}</Card.Title>
                         <Card.Text>{post.location}</Card.Text>
                         <Card.Text className="cost">{post.cost} ₸</Card.Text>

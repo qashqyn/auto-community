@@ -130,7 +130,7 @@ const AntitheftForm = () => {
                             <Input name="location" error={errors.location} label="Место кражи" type="text" handleChange={handleChange} />
                         </Col>
                         <Col>
-                            <Input name="amount" error={errors.amount} label="Сумма вознаграждение в ₸" type="text" handleChange={handleChange} />
+                            <Input name="amount" error={errors.amount} label="Сумма вознаграждение в ₸" type="currency" handleChange={handleChange} />
                         </Col>
                         <Col>
                             <Input name="ownerNumber" error={errors.ownerNumber} label="Номер владельца" type="tel" handleChange={handleChange} />
