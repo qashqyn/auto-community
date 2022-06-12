@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 
@@ -21,8 +21,16 @@ const Vidoes = () => {
     const [tags, setTags] = useState([]);
     const dispatch = useDispatch();
 
+    const user = JSON.parse(localStorage.getItem('profile'));
+
     const query = useQuery();
     const page = query.get('page') || 1;
+
+    const [isAdmin, setAdmin] = useState(false);
+
+    useEffect(()=> {
+        setAdmin(user && user.result && user.result.is_admin)
+    }, [user]);
 
     const addTag = async (tag) => {
         if(!tags.includes(tag)){
@@ -83,7 +91,7 @@ const Vidoes = () => {
                     <Row xs={1} md={2} lg={3}>
                         {videos.map((video) => (
                             <Col key={video._id}>
-                                <Video video={video} />
+                                <Video video={video} isAdmin={isAdmin} />
                             </Col>
                         ))}
                     </Row>

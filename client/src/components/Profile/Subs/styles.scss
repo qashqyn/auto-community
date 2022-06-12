@@ -1,0 +1,48 @@
+#subs{
+    p{
+        margin-top: 130px;
+        text-align: center;
+    }
+    .sub{
+        display: flex;
+        margin-bottom: 24px;
+        &:first-of-type{
+            margin-top: 32px;
+
+        }
+        .avatar{
+            margin-right: 16px;
+        }
+        .author-info{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            .author-name{
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 20px;
+                color: #000000;
+            }
+            .author-car{
+                margin-top: 8px;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 20px;
+                color: #636363;
+    
+            }
+        }
+        .follow-btn{
+            margin-left: auto;
+            display: flex;
+            .btn{
+                margin: auto;
+                &.unsubscribe{
+                    background: none;
+                    color: #457B9D;
+                    border: 1px solid #457B9D;
+                }
+            }
+        }
+    }
+}

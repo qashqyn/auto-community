@@ -5,6 +5,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { getUserLogbooks, deleteLogbook } from "../../../actions/logbook";
 
 import './styles.scss';
+import NoImg from '../../../images/noimg.jpg';
 
 const LogbookCard = ({logbook, update=false, isAuthor=false}) => {
     const dispatch = useDispatch();
@@ -23,6 +24,9 @@ const LogbookCard = ({logbook, update=false, isAuthor=false}) => {
         setLiked(!isLiked);
     }
 
+    const [images, setImages] = useState([]);
+    const [imgCnt, setImgCnt] = useState(0);
+
     useEffect(() => {
         if(!!logbook){
             if(!!user && !!user.result && !!user.result._id && !!logbook.likes && logbook.likes>0 && logbook.likes.includes(user.result._id)){
@@ -30,57 +34,90 @@ const LogbookCard = ({logbook, update=false, isAuthor=false}) => {
             }  
 
             const content = document.getElementById(`hidden${logbook._id}`);
-            const imgs = [...content.getElementsByTagName('img')];
+            if(content){
+                const els = content.getElementsByTagName('img');
+                if(els && els.length > 0){
+                    const imgs = [...els];
+                    setImgCnt(imgs.length);
 
-            if(imgs.length > 0){
-                document.getElementById(`mainimg${logbook._id}`).appendChild(imgs[0]);
-                if(imgs.length === 1)
-                    document.getElementById(`imgs${logbook._id}`).style = 'display: none';
-                for (let index = 1; index < imgs.length && index < 5; index++) {
-                    let imgContainer = document.createElement('div');
-                    imgContainer.classList.add('img-container')
-                    imgContainer.appendChild(imgs[index]);
-
-                    if(index === 4 && imgs.length > 5){
-                        let overlay = document.createElement('div');
-                        overlay.classList.add('overlay')
-                        overlay.innerHTML = `<h5>+ ${(Number(imgs.length) - Number(5))}</h5><p>фотографий</p>`;
-                        imgContainer.appendChild(overlay);
+                    for (let index = 0; index < imgs.length && index < 5; index++) {
+                        setImages((old) => [...old, imgs[index].src]);
                     }
 
-                    document.getElementById(`imgs${logbook._id}`).appendChild(imgContainer);
-                }
-            }else{
-                document.getElementById(`images${logbook._id}`).style = 'display: none';
-            }
+                    // if(imgs.length > 0){
+                    //     document.getElementById(`mainimg${logbook._id}`).appendChild(imgs[0]);
+                    //     if(imgs.length === 1)
+                    //         document.getElementById(`imgs${logbook._id}`).style = 'display: none';
+                    //     for (let index = 1; index < imgs.length && index < 5; index++) {
+                    //         let imgContainer = document.createElement('div');
+                    //         imgContainer.classList.add('img-container')
+                    //         imgContainer.appendChild(imgs[index]);
 
-            const text = content.textContent;
-            document.getElementById(`short${logbook._id}`).innerHTML = text;
+                    //         if(index === 4 && imgs.length > 5){
+                    //             let overlay = document.createElement('div');
+                    //             overlay.classList.add('overlay')
+                    //             overlay.innerHTML = `<h5>+ ${(Number(imgs.length) - Number(5))}</h5><p>фотографий</p>`;
+                    //             imgContainer.appendChild(overlay);
+                    //         }
+
+                    //         document.getElementById(`imgs${logbook._id}`).appendChild(imgContainer);
+                    //     }
+                    // }else{
+                    //     document.getElementById(`images${logbook._id}`).style = 'display: none';
+                    // }
+
+                    const text = content.textContent;
+                    document.getElementById(`short${logbook._id}`).innerHTML = text;
+                }
+            }
         }
     }, [logbook]);
 
     return logbook && (
         <Card className="logbook-card">
             <Card.Body>
-                {!isAuthor && (
+                {(!isAuthor && logbook.author) && (
                     <Card.Header>
                         <div className="avatar avatar-sm">
-                            <Image src={logbook.author?.avatar} />
+                            <Image src={logbook.author.avatar ? logbook.author.avatar : NoImg} />
                         </div>
                         <div>
                             <div className="author-info">
                                 {logbook.author?.firstname} {logbook.author?.lastname}
                             </div>
                             <div className="author-car">
-                                {logbook.author?.car}
+                                {(logbook.author.cars && logbook.author.cars[0]) ? (`Я езжу на ${logbook.author.cars[0].mark} ${logbook.author.cars[0].model} ${logbook.author.cars[0].generation}`) : ('У меня нет машины')}
                             </div>
                         </div>
                     </Card.Header>
                 )}
-                <div className="images" id={`images${logbook._id}`}>
+                {(images && images.length > 0) && (
+                    <div className="images">
+                        <div className="main-image">
+                            <Image src={images[0]} />
+                        </div>
+                        {imgCnt > 1 && (
+                            <div className="other-images">
+                                {images.map((image,key)=>
+                                    key !== 0 && (
+                                        <div className="img-container">
+                                            <Image src={image} />
+                                            {(key === 4 && imgCnt > 5 )&& (
+                                                <div className="overlay">
+                                                    <h5>+ {(Number(imgCnt) - Number(5))}</h5><p>фотографий</p>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )
+                                )}
+                            </div>
+                        )}
+                    </div>
+                )}
+                {/* <div className="images" id={`images${logbook._id}`}>
                     <div id={`mainimg${logbook._id}`} className="main-image"></div>
                     <div id={`imgs${logbook._id}`} className="other-images"></div>
-                </div>
+                </div> */}
                 <div dangerouslySetInnerHTML={{ __html: logbook.message }} hidden id={`hidden${logbook._id}`}/>
                 <Card.Title>{logbook.title}</Card.Title>
                 <Card.Text as="div">

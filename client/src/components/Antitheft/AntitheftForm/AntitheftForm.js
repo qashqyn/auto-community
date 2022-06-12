@@ -75,7 +75,7 @@ const AntitheftForm = () => {
 
 
         if(errCnt === 0){
-            dispatch(createAntitheftPost({...formData, selectedFiles: images}));
+            dispatch(createAntitheftPost({...formData, selectedFiles: images, amount: formData.amount.replace(/ /g, "")}));
         setErrors(errss);
 
         }

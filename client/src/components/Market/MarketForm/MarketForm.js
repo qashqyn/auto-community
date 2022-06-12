@@ -97,7 +97,6 @@ const MarketForm = () => {
     const [statusModal, setStatusModal] = useState(false);
     const [statusModalText, setStatusModalText] = useState({title: '', text: ''});
     useEffect(() => {
-        console.log(status);
         if(status){
             switch(status){
                 case 200:

@@ -71,7 +71,7 @@ const Logbooks = () => {
     }
 
     return (
-        <Container>
+        <Container id="logbooks">
             <LoginModal show={show} setShow={setShow} text="Добавить объвление могут только зарегистрированные пользователи." />
             <Breadcrumbs currentPage="Бортжурнал" />
                 <h1>Бортжурнал</h1>
@@ -104,7 +104,7 @@ const Logbooks = () => {
                         ))}
                     </div>
                 </Col>
-                <Col md={9}>
+                <Col md={9} className="cards">
                     {(isLoading || !logbooks) ? (
                         <div className="text-center p-5">
                             <Spinner animation="border" role="status">

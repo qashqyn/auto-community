@@ -1,7 +1,9 @@
-import { CREATE_VIDEO, DELETE_VIDEO, FETCH_ALL_VIDEO, LIKE_VIDEO, UPDATE_VIDEO, FETCH_ONE_VIDEO, START_LOADING, END_LOADING, FETCH_RELATED_VIDEO } from "../constants/actionTypes";
+import { CREATE_VIDEO, DELETE_VIDEO, FETCH_ALL_VIDEO, LIKE_VIDEO, UPDATE_VIDEO, FETCH_ONE_VIDEO, START_LOADING, END_LOADING, FETCH_RELATED_VIDEO, CLEAR_STATE_VIDEO } from "../constants/actionTypes";
 
-const videosReducers = (state = {isLoading:true, videos: [] }, action) => {
+const videosReducers = (state = {isLoading:true, videos: [], status: null }, action) => {
     switch (action.type) {
+        case CLEAR_STATE_VIDEO: 
+            return {isLoading:true, videos: [], status: null };
         case START_LOADING:
             return { ...state, isLoading: true};
         case END_LOADING:
@@ -14,12 +16,12 @@ const videosReducers = (state = {isLoading:true, videos: [] }, action) => {
         case FETCH_ONE_VIDEO:
             return { ...state, video: action.payload };
         case CREATE_VIDEO:
-            return {...state, videos: [ ...state.videos, action.payload] };
+            return {...state, videos: [ ...state.videos, action.payload], status: action.payload.status };
         case UPDATE_VIDEO:
         case LIKE_VIDEO:
             return { ...state, videos: state.videos.map((video) => video._id === action.payload._id ? action.payload : video)};
         case DELETE_VIDEO:
-            return { ...state, videos : state.videos.filter((video) => video._id !== action.payload._id)};
+            return { ...state, videos : state.videos.filter((video) => video._id !== action.payload)};
         default:
             return state;
     }

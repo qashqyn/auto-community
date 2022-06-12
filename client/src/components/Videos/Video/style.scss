@@ -2,35 +2,57 @@
     box-shadow: none;
     border: none;
     border-radius: 0;
-    .card-img{
-        cursor: pointer;
-    }
-    .card-title{
-        cursor: pointer;
-        margin: 16px 0;
-        font-weight: 600;
-        font-size: 20px;
-        line-height: 24px;
-        /* or 120% */
-        
-        display: flex;
-        align-items: center;
-        font-feature-settings: 'pnum' on, 'lnum' on;
-        
-        /* black */
-        
-        color: #000000;
-    }
-    .card-text{
-        font-weight: 500;
-        font-size: 12px;
-        line-height: 14px;
-        /* identical to box height, or 117% */
-
-        display: flex;
-        align-items: center;
-        font-feature-settings: 'pnum' on, 'lnum' on;
-
-        color: #636363;
+    .card-body{
+        position: relative;
+        .admin-pan{
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            display: flex;
+            gap: 8px;
+            &>div{
+                cursor: pointer;
+                height: 32px;
+                width: 32px;
+                border-radius: 50%;
+                display: flex;
+                background: rgba(45, 45, 46, 0.1);
+                backdrop-filter: blur(8px);
+                &>svg{
+                    margin: auto;
+                }
+            }
+        }
+        .card-img{
+            cursor: pointer;
+        }
+        .card-title{
+            cursor: pointer;
+            margin: 16px 0;
+            font-weight: 600;
+            font-size: 20px;
+            line-height: 24px;
+            /* or 120% */
+            
+            display: flex;
+            align-items: center;
+            font-feature-settings: 'pnum' on, 'lnum' on;
+            
+            /* black */
+            
+            color: #000000;
+        }
+        .card-text{
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 14px;
+            /* identical to box height, or 117% */
+            
+            display: flex;
+            align-items: center;
+            font-feature-settings: 'pnum' on, 'lnum' on;
+            
+            color: #636363;
+        }
     }
 }

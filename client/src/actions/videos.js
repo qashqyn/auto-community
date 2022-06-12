@@ -37,7 +37,7 @@ export const getVideo = (id) => async(dispatch) => {
 
 export const createVideo = (video) => async(dispatch) => {
     try {
-        const { data } = await api.createVideo(video);
+        const data = await api.createVideo(video);
         
         dispatch({ type: CREATE_VIDEO, payload: data });
     } catch (error) {
@@ -55,15 +55,15 @@ export const createVideo = (video) => async(dispatch) => {
 //     }
 // }
 
-// export const deleteNews = (id) => async(dispatch) => {
-//     try {
-//         await api.deleteNews(id);
+export const deleteVideo = (id) => async(dispatch) => {
+    try {
+        await api.deleteVideo(id);
         
-//         dispatch({ type: DELETE, payload: id });
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
+        dispatch({ type: DELETE_VIDEO, payload: id });
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 // export const likeNews = (id, news) => async(dispatch) => {
 //     try {

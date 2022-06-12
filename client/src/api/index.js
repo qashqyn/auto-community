@@ -43,8 +43,9 @@ export const deleteMarketPost = (id) => API.delete(`/market/${id}`);
 export const fetchVideos = (tags, page) => API.get(`/video?tags=${tags.join()}&page=${page}`);
 export const fetchVideo = (id) => API.get(`/video/${id}`);
 export const fetchRelatedVideos = (data) => API.get(`/video/related?id=${data.id}&count=${data.count}`);
+export const deleteVideo = (id) => API.delete(`/admin/video/${id}`);
 export const createVideo = (newVideo) => API.post(`/admin/video`, newVideo);
-// AUTH
+// USER
 export const login = (formData) => API.post('/user/login', formData);
 export const signup = (formData) => API.post('/user/signup', formData);
 export const editUserInfo = (formData) => API.patch('/user/edit', formData);
@@ -54,6 +55,8 @@ export const fetchLikedPosts = () => API.get('/user/liked');
 export const fetchMyPosts = () => API.get('/user/myposts');
 
 export const fetchUser = (id) => API.get(`/user/${id}`);
+export const subscribe = (id) => API.post(`/user/subscribe/${id}`);
+export const fetchSubs = () => API.get('/user/subs');
 
 // ADMIN
 export const fetchAdminAntitheftPosts = (status) => API.get(`/admin/antitheft?status=${status}`);

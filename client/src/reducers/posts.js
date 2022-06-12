@@ -3,7 +3,7 @@ import { CREATE, DELETE, ADD_CAR, FETCH_ALL, LIKE, UPDATE, FETCH_ONE, START_LOAD
 const postsReducers = (state = {isLoading:true, posts: [] }, action) => {
     switch (action.type) {
         case CLEAR_STATE: 
-            return {isLoading:true, posts: [] };
+            return {isLoading:true, posts: [], status: null };
         case START_LOADING:
             return { ...state, isLoading: true};
         case END_LOADING:
@@ -21,7 +21,7 @@ const postsReducers = (state = {isLoading:true, posts: [] }, action) => {
         case LIKE:
             return { ...state, postLikes: action.payload};
         case DELETE:
-            return { ...state, posts : state.posts.filter((post) => post._id !== action.payload._id)};
+            return { ...state, posts : state.posts.filter((post) => post._id !== action.payload)};
         case SET_STATUS:
             return {...state, status: action.payload.status};
         default:

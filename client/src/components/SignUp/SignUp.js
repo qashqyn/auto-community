@@ -60,10 +60,10 @@ const SignUp = () => {
                         <Input name="password" label="Пароль" type="password" handleChange={handleChange}/>                        
                         <Input name="firstname" label="Имя" type="text" handleChange={handleChange}/>                        
                         <Input name="lastname" label="Фамиля" type="text" handleChange={handleChange}/>                        
-                        <Input name="tel" label="Телефон" type="text" handleChange={handleChange}/>                        
+                        <Input name="tel" label="Телефон" type="tel" handleChange={handleChange}/>                        
                         <Input name="country" label="Страна" type="text" handleChange={handleChange}/>                        
                         <Input name="city" label="Город" type="text" handleChange={handleChange}/>                        
-                        <Input name="mark" label="У меня нет машины" options={marks} keyAsValue={true} type="select" handleChange={handleChange}/>                        
+                        {/* <Input name="mark" label="У меня нет машины" options={marks} keyAsValue={true} type="select" handleChange={handleChange}/>                         */}
                         <div className="d-flex politic-wrap">
                             <Input name="politic" label="Я прочитал(-а) и принимаю" type="checkbox" required/>                        
                             &nbsp;

@@ -48,6 +48,7 @@ const AntitheftCard = ({ post, isAuthor=false }) => {
                                 <span>Сумма вознаграждения: <span>{post.amount} ₸</span></span>
                                 <span>Город: <span>{post.location}</span></span>
                                 <span>Гос.номер: <span>{post.stateNumber}</span></span>
+                                {isAuthor && (<span>Статус поста: <span>{(post.status === 'approved') && ('Одобрено')}{(post.status === 'dismissed') && ('Отклонено')}{(post.status === 'waiting') && ('В ожидании')}</span></span>)}
                                 {!isAuthor && (<span className="date">{moment(post.createdAt).format("DD-MM-YYYY")}</span>)}
                             </Card.Text>
                         </div>

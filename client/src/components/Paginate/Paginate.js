@@ -29,7 +29,7 @@ const Paginate = ({tags, page, type, filter, searchText}) => {
 
     return (
         <>
-            {(!isLoading && (numberOfPages && numberOfPages>1)) && (
+            {(!isLoading && (!!numberOfPages && numberOfPages>1)) && (
                 <Pagination className='justify-content-center' id="pagination">
                     <Pagination.First disabled={page===1} href={`?page=1`}/>
                     <Pagination.Prev disabled={page===1} href={`?page=${page-1}`}/>

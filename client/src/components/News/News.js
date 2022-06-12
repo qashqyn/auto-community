@@ -99,7 +99,7 @@ const News = () => {
                         </Row>
                     </>
                 ) : (
-                    <h3 className="text-center">Нету новостей по этому запросу</h3>
+                    <h3 className="text-center p-5">Нету новостей по этому запросу</h3>
                 ))
             }
             <Paginate page={Number(page)} tags={tags} type="news" />

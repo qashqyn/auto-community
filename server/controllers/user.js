@@ -25,7 +25,7 @@ export const login = async (req, res) => {
 
         res.status(200).json({result: existingUser, token});
     } catch (error) {
-        res.status(500).json({message: "Somethinggg went wrong."});
+        res.status(500).json({message: "Something went wrong."});
     }
 };
 
@@ -83,14 +83,15 @@ export const resetPassword = async (req, res) => {
             port: 465,   
             host: "smtp.gmail.com",
             auth: {
-              user: 'qashqyn291@gmail.com',
-              pass: 'Or@lmaQashqyn'
+              user: 'autocommunity.web@gmail.com',
+            //   bqguieeydlumwsng
+              pass: 'bqguieeydlumwsng'
             },
             secure: true,
         });
 
         var mailOptions = {
-            from: 'qashqyn291@gmail.com',
+            from: 'autocommunity.web@gmail.com',
             to: user.email,
             subject: 'Востановление паролья',
             text: `Чтобы востановить пароль перейдите по ссылке: http://localhost:3000/login/reset/${link}`
@@ -166,11 +167,87 @@ export const getMyPosts = async (req, res) => {
 
         const market = await Market.find({"author": {$exists: true, $eq: _id}}).select('imgs title location cost').sort('-createdAt');
 
-        const antitheft = await AntitheftMessage.find({"author": {$exists: true, $eq: _id}}).where("status").equals("approved").sort('-createdAt');
+        const antitheft = await AntitheftMessage.find({"author": {$exists: true, $eq: _id}}).sort('-createdAt');
 
         const data = {logbooks, market, antitheft};
 
         return res.json(data);
+    } catch (error) {
+        console.log(error);
+
+        return res.status(500).json({message: "Something went wrong."});
+    }
+}
+
+
+export const subscribe = async (req, res) => {
+    const { id } = req.params;
+    try {
+        if(!req.userId) return res.json({message: "Unaithenticated"});
+        const userId = req.userId;
+
+        if(!mongoose.Types.ObjectId.isValid(id))
+            return res.status(404).send("No user with that Id");
+
+        const curUser = await UserModal.findById(userId).select('subscriptions');
+        const otherUser = await UserModal.findById(id).select('subscribers');
+
+        const index = curUser.subscriptions.findIndex((subId) => String(subId) === String(id));
+
+        let subscriptions = curUser.subscriptions;
+        let subscribers = otherUser.subscribers;
+
+        if(index === -1){
+            subscriptions.push(id);
+            subscribers.push(userId);
+        }else{
+            subscriptions = subscriptions.filter((subId) => String(subId) !== (id));
+            subscribers = subscribers.filter((subId) => String(subId) !== (userId));
+        }
+
+        // console.log(userId);
+        // console.log(subscriptions);
+        // console.log(id);
+        // console.log(subscribers);
+
+        await UserModal.findByIdAndUpdate(userId, {subscriptions: subscriptions});
+        await UserModal.findByIdAndUpdate(id, {subscribers: subscribers});
+
+        const subs = await UserModal.findById(userId).select('subscriptions subscribers')
+            .populate({
+                path: 'subscriptions',
+                select: 'firstname lastname avatar cars',
+                strictPopulate: false
+            }).populate({
+                path: 'subscribers',
+                select: 'firstname lastname avatar cars',
+                strictPopulate: false 
+            });
+
+        return res.json(subs);
+    } catch (error) {
+        console.log(error);
+
+        return res.status(500).json({message: "Something went wrong."});
+    }
+}
+
+export const getSubs = async (req, res) => {
+    try {
+        if(!req.userId) return res.json({message: "Unaithenticated"});
+        const userId = req.userId;
+        
+        const subs = await UserModal.findById(userId).select('subscriptions subscribers')
+            .populate({
+                path: 'subscriptions',
+                select: 'firstname lastname avatar cars subscribers',
+                strictPopulate: false
+            }).populate({
+                path: 'subscribers',
+                select: 'firstname lastname avatar cars subscriptions',
+                strictPopulate: false 
+            });
+        return res.status(200).json(subs);
     } catch (error) {
         console.log(error);
 

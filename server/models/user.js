@@ -16,6 +16,14 @@ const userSchema = mongoose.Schema({
         carStatus: String,
         image: String
     }],
+    subscribers: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    subscriptions: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
     is_admin: {type: Boolean, default: false},
     likedNews: [{type: mongoose.Schema.Types.ObjectId, ref: 'NewsMessage'}],
     likedLogbooks: [{type: mongoose.Schema.Types.ObjectId, ref: 'LogbookMessage'}],

@@ -37,19 +37,19 @@ const MyPosts = () => {
         <div id='myPosts'>
             <Tabs defaultActiveKey="myLogbooks" id="myPostsTab">
                 <Tab eventKey="myLogbooks" title="Бортжурнал">
-                    {(isLoading || !myPosts.logbooks)? (
+                    {(isLoading || !myPosts || !myPosts.logbooks)? (
                         <div className="text-center">
                             <Spinner animation="border" role="status">
                                 <span className="visually-hidden">Загрузка...</span>
                             </Spinner>
                         </div>
-                    ): myPosts.logbooks.length === 0 ? 
+                    ) : myPosts.logbooks.length === 0 ? 
                         nothing({'name':'Бортжурнале', 'link': '/logbook'}) 
                         : myPosts.logbooks.map((logbook, key) => (<LogbookCard key={key} logbook={logbook} isAuthor={true}  update={true} />)) 
                     } 
                 </Tab>
                 <Tab eventKey="myMarketPosts" title="Магазин">
-                    {(isLoading || !myPosts.market)? (
+                    {(isLoading || !myPosts || !myPosts.market)? (
                         <div className="text-center">
                             <Spinner animation="border" role="status">
                                 <span className="visually-hidden">Загрузка...</span>
@@ -69,7 +69,7 @@ const MyPosts = () => {
                     } 
                 </Tab>
                 <Tab eventKey="myAntitheftPosts" title="Антиугон">
-                    {(isLoading || !myPosts.antitheft)? (
+                    {(isLoading || !myPosts || !myPosts.antitheft)? (
                         <div className="text-center">
                             <Spinner animation="border" role="status">
                                 <span className="visually-hidden">Загрузка...</span>

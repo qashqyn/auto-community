@@ -4,10 +4,12 @@ import { Button, Container, Image, Spinner } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getLogbook, likeLogbook } from '../../actions/logbook';
+import { subscribe } from '../../actions/user';
 import Breadcrumbs from '../Breadcrumbs';
 import CommentsSection from '../CommentsSection/CommentsSection';
 
 import './styles.scss';
+import NoImg from '../../images/noimg.jpg';
 
 const LogbookDetails = () => {
     const {post, isLoading, postLikes} = useSelector((state) => state.posts);
@@ -54,6 +56,13 @@ const LogbookDetails = () => {
         setFav(!isFav);
     }
 
+    const subscribeUser = (e) => {
+        e.preventDefault();
+        if(post && post.author && post.author._id && user && user.result && user.result._id && user.result._id != post.author._id){
+            dispatch(subscribe(post.author._id));
+        }
+    }
+
     return (
         <Container className="logbook">
             <Breadcrumbs currentPage="Бортжурнал"/>
@@ -67,18 +76,18 @@ const LogbookDetails = () => {
                 <>
                     <div className='author'>
                         <div className="avatar avatar-sm">
-                            <Image src={post.author?.avatar} />
+                            <Image src={post.author.avatar ? post.author.avatar : NoImg} />
                         </div>
                         <div className='author-info'>
                             <div className="author-name">
                                 {post.author?.firstname} {post.author?.lastname}
                             </div>
                             <div className="author-car">
-                                {post.author?.car}
+                                {(post.author.cars && post.author.cars[0]) ? (`Я езжу на ${post.author.cars[0].mark} ${post.author.cars[0].model} ${post.author.cars[0].generation && post.author.cars[0].generation}`) : ('У меня нет машины')}
                             </div>
                         </div>
                         <div className='follow-btn'>
-                            <Button>Подписаться</Button>
+                            <Button onClick={subscribeUser}>Подписаться</Button>
                         </div>
                     </div>
                     <h3>{post.title}</h3>

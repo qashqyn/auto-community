@@ -28,7 +28,7 @@ export const getSingleNews = (id) => async(dispatch) => {
 
 export const createNews = (news) => async(dispatch) => {
     try {
-        const { data } = await api.createNews(news);
+        const data = await api.createNews(news);
         
         dispatch({ type: CREATE, payload: data });
     } catch (error) {

@@ -9,7 +9,7 @@ export const getPosts = async (req, res) => {
 
         const logbooks = await LogbookMessage.find({$or: [{title: srch}, {message: srch}]}).select('title message author likes').populate({
             path: 'author',
-            select: 'firstname lastname avatar car'
+            select: 'firstname lastname avatar cars'
         }).sort('-createdAt');
 
         res.status(200).json({data: logbooks, currentPage: 0, numberofPages: 0});
@@ -51,7 +51,7 @@ export const getLogbook = async (req,res) => {
         const data = await LogbookMessage.findById(id)
             .populate({
                 path:'author',
-                select: 'firstname lastname avatar'
+                select: 'firstname lastname avatar cars'
             });
         res.status(200).json(data);
     } catch (error) {

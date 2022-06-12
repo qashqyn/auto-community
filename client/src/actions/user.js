@@ -1,4 +1,4 @@
-import { FETCH_ALL, CREATE, UPDATE, DELETE, LIKE, LIKED_POSTS, START_LOADING, END_LOADING, MY_POSTS } from '../constants/actionTypes';
+import { FETCH_ALL, CREATE, UPDATE, DELETE, LIKE, LIKED_POSTS, START_LOADING, END_LOADING, MY_POSTS, SUBSCRIBE } from '../constants/actionTypes';
 import * as api from '../api';
 
 // Action Creators
@@ -32,6 +32,25 @@ export const getMyPosts = () => async (dispatch) => {
         dispatch({type: MY_POSTS, payload: data});
         dispatch({type: END_LOADING});
 
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const subscribe = (id) => async (dispatch) => {
+    try {
+        const data = await api.subscribe(id);
+
+        dispatch({type: SUBSCRIBE, payload: data});
+    } catch (error) {
+        console.log(error);
+    }
+} 
+export const getSubs = () => async (dispatch) => {
+    try {
+        const data = await api.fetchSubs();
+
+        dispatch({type: SUBSCRIBE, payload: data});
     } catch (error) {
         console.log(error);
     }

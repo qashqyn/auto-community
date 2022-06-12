@@ -22,6 +22,7 @@ import CarMarks from "./CarMarks/CarMarks";
 
 import NoImg from '../../images/noimg.jpg';
 import { getCars } from "../../actions/carModels";
+import Subs from "./Subs/Subs";
 
 
 
@@ -41,7 +42,6 @@ const Profile = () => {
     useEffect(() => {
         dispatch(getCars());
 
-        console.log(formData.cars[0]);
         const token = user?.token;
         if (token) {
             const decodedToken = decode(token);
@@ -321,6 +321,9 @@ const Profile = () => {
                                 )}
                             </Tab.Pane>
                             <Tab.Pane eventKey="subscribes">
+                                {crTab === "subscribes" && (
+                                    <Subs />
+                                )}
                             </Tab.Pane>
                             {user.result.is_admin === true && (
                                 <>

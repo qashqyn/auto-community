@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { signup, login, updateUser, resetPassword, changePassword, getLikedPosts, getMyPosts } from '../controllers/user.js';
+import { signup, login, updateUser, resetPassword, changePassword, getLikedPosts, getMyPosts, subscribe, getSubs } from '../controllers/user.js';
 import auth from '../middleware/auth.js';
 const router = express.Router();
 
@@ -11,5 +11,7 @@ router.post('/reset_pass', resetPassword);
 router.post('/change_pass', changePassword);
 router.get('/liked', auth, getLikedPosts);
 router.get('/myposts', auth, getMyPosts);
+router.post('/subscribe/:id', auth, subscribe);
+router.get('/subs', auth, getSubs);
 
 export default router;
