@@ -1,12 +1,12 @@
-import { FETCH_ALL, CREATE, UPDATE, DELETE, LIKE, LIKED_POSTS, START_LOADING, END_LOADING, MY_POSTS, SUBSCRIBE } from '../constants/actionTypes';
+import { LIKED_POSTS, START_LOADING, END_LOADING, MY_POSTS, SUBSCRIBE, FETCH_USER } from '../constants/actionTypes';
 import * as api from '../api';
 
 // Action Creators
-export const getUser = () => async(dispatch) => { 
+export const getUser = (id) => async(dispatch) => { 
     try {
-        const { data } = await api.fetchUser();
+        const { data } = await api.fetchUser(id);
         
-        dispatch({ type: FETCH_ALL, payload: data });
+        dispatch({ type: FETCH_USER, payload: data });
     } catch (error) {
         console.log(error);
     }
@@ -55,43 +55,3 @@ export const getSubs = () => async (dispatch) => {
         console.log(error);
     }
 }
-
-// export const createNews = (news) => async(dispatch) => {
-//     try {
-//         const { data } = await api.createNews(news);
-        
-//         dispatch({ type: CREATE, payload: data });
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
-
-// export const updateNews = (id, news) => async(dispatch) => {
-//     try {
-//         const { data } = await api.updateNews(id, news);
-        
-//         dispatch({ type: UPDATE, payload: data });
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
-
-// export const deleteNews = (id) => async(dispatch) => {
-//     try {
-//         await api.deleteNews(id);
-        
-//         dispatch({ type: DELETE, payload: id });
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
-
-// export const likeNews = (id, news) => async(dispatch) => {
-//     try {
-//         const { data } = await api.likeNews(id);
-        
-//         dispatch({ type: LIKE, payload: data });
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }

@@ -100,7 +100,7 @@ const LogbookCard = ({logbook, update=false, isAuthor=false}) => {
                             <div className="other-images">
                                 {images.map((image,key)=>
                                     key !== 0 && (
-                                        <div className="img-container">
+                                        <div className="img-container" key={key}>
                                             <Image src={image} />
                                             {(key === 4 && imgCnt > 5 )&& (
                                                 <div className="overlay">

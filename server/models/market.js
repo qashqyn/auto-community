@@ -6,7 +6,6 @@ const marketSchema = mongoose.Schema({
     category: String,
     manufactor: String,
     condition: String,
-    location: String,
     cost: Number,
     tel: String,
     whatsapp: String,

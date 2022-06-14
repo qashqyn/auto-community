@@ -23,6 +23,7 @@ import CarMarks from "./CarMarks/CarMarks";
 import NoImg from '../../images/noimg.jpg';
 import { getCars } from "../../actions/carModels";
 import Subs from "./Subs/Subs";
+import Breadcrumbs from "../Breadcrumbs";
 
 
 
@@ -138,6 +139,7 @@ const Profile = () => {
 
     return (
         <Container className="profile" id="profile">
+            <Breadcrumbs currentPage='Профиль' />
             <div className="profile-top">
                 <div className="avatar avatar-lg">
                     <Image src={user.result.avatar ? user.result.avatar : NoImg}/>

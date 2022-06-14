@@ -254,3 +254,19 @@ export const getSubs = async (req, res) => {
         return res.status(500).json({message: "Something went wrong."});
     }
 }
+
+export const getUser = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const data = await UserModal.findById(id).select('firstname lastname country city cars subscribers subscriptions avatar');
+        const logbooks = await LogbookMessage.find({author: id}).select('title message createdAt');
+        const marketPosts = await Market.find({author: id}).select('title location condition cost imgs suits');
+        const antitheftPosts = await AntitheftMessage.find({author: id, status: 'approved'}).select('mark model releaseYear amount location stateNumber createdAt');
+        
+        return res.json({...data._doc, logbooks, marketPosts, antitheftPosts});
+    } catch (error) {
+        console.log(error);
+
+        return res.status(500).json({message: "Something went wrong."});
+    }
+}

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Button, Image, Spinner, Tab, Tabs } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { getSubs, subscribe } from "../../../actions/user";
+import {LinkContainer } from "react-router-bootstrap";
 
 import NoImg from '../../../images/noimg.jpg';
 
@@ -55,13 +56,15 @@ const Subs = () => {
                                     <Image src={sub.avatar ? sub.avatar : NoImg} />
                                 </div>
                                 <div className='author-info'>
-                                    <div className="author-name">
-                                        {sub.firstname} {sub.lastname}
+                                        <LinkContainer to={`/profile/${sub._id}`}>
+                                            <div className="author-name">
+                                                {sub.firstname} {sub.lastname}
+                                            </div>
+                                        </LinkContainer>
+                                        <div className="author-car">
+                                            {(sub.cars && sub.cars[0]) ? (`Я езжу на ${sub.cars[0].mark} ${sub.cars[0].model} ${sub.cars[0].generation}`)  : ('У меня нет машины')}
+                                        </div>
                                     </div>
-                                    <div className="author-car">
-                                        {(sub.cars && sub.cars[0]) ? (`Я езжу на ${sub.cars[0].mark} ${sub.cars[0].model} ${sub.cars[0].generation}`)  : ('У меня нет машины')}
-                                    </div>
-                                </div>
                                 <div className='follow-btn'>
                                     {isFollowed(sub._id) ? (
                                         <Button value={sub._id} onClick={subscribeUser} className="unsubscribe">Отписаться</Button>
@@ -90,9 +93,11 @@ const Subs = () => {
                                     <Image src={sub.avatar ? sub.avatar : NoImg} />
                                 </div>
                                 <div className='author-info'>
-                                    <div className="author-name">
-                                        {sub.firstname} {sub.lastname}
-                                    </div>
+                                    <LinkContainer to={`/profile/${sub._id}`}>
+                                        <div className="author-name">
+                                            {sub.firstname} {sub.lastname}
+                                        </div>
+                                    </LinkContainer>
                                     <div className="author-car">
                                         {(sub.cars && sub.cars[0]) ? (`Я езжу на ${sub.cars[0].mark} ${sub.cars[0].model} ${sub.cars[0].generation}`) : ('У меня нет машины')}
                                     </div>

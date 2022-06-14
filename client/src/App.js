@@ -30,6 +30,7 @@ import Market from "./components/Market/Market";
 import MarketForm from "./components/Market/MarketForm/MarketForm";
 import MarketDetails from "./components/MarketDetails/MarketDetails";
 import Reset from "./components/Login/Reset/Reset";
+import UserProfile from "./components/UserProfile/UserProfile";
 
 library.add(far, fas);
 
@@ -66,7 +67,9 @@ const App = () => {
                             <Route path="/market" exact element = {<Market />} />
                             <Route path="/market/form" exact element = {<MarketForm />} />
 
+                            <Route path="/profile/:id" element={<UserProfile />} />
                             <Route path="/profile" exact element={<Profile />} />
+                            
                         {/* </Container> */}
                     </Route>
                     <Route path="*" element={<Page404 />} />

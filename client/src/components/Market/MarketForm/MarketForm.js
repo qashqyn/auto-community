@@ -11,6 +11,7 @@ import Input from "../../SignUp/Input";
 import "./styles.scss";
 import { useNavigate } from "react-router-dom";
 import { getCars } from "../../../actions/carModels";
+import { CLEAR_STATE } from "../../../constants/actionTypes";
 
 const initialState = {title:'', category: '', model: '', manufactor: '', condition: '', location:'', cost:'', tel: '', whatsapp:'', description: ''};
 const categories = ['Автозвук и мультимедиа', 'Автосвет', 'Аксессуары', 'Гаджеты', 'Двигатель и выхлопная система', 'Инструменты', 'Климат', 'Кузов', 'Подвеска', 'Рулевое управление', 'Салон', 'Тормозная система', 'Трансмиссия', 'Шины и диски', 'Электрооборудование', 'Другое'];
@@ -44,7 +45,7 @@ const MarketForm = () => {
 
         if(addCar.mark.length > 0 && addCar.model.length > 0 && addCar.generation.length > 0){
             const suits = carModels[addCar.mark].mark + " " + carModels[addCar.mark].models[addCar.model].name + " " + carModels[addCar.mark].models[addCar.model].generations[addCar.generation];
-            dispatch(createMarketPost({...formData, imgs: images, suits}));
+            dispatch(createMarketPost({...formData, imgs: images, suits, cost: formData.cost.replace(/ /g, '')}));
         }
     }
 
@@ -118,6 +119,7 @@ const MarketForm = () => {
             case 201:
                 setFormData(initialState);
                 setAddCar({mark: '',model: '',generation: ''});
+                dispatch({type: CLEAR_STATE})
                 break; 
         }
         setStatusModal(false);

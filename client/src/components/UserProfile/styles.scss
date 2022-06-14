@@ -1,0 +1,76 @@
+#userprofile{
+    .row{
+        margin-bottom: 72px;
+    }
+    .userinfo{
+        height: auto;
+        .card-body{
+            padding: 20px;    
+            .avatar{
+                margin: auto;
+            }
+            .username{
+                font-weight: 500;
+                font-size: 24px;
+                line-height: 24px;
+                text-align: center;
+                color: #000000;
+            }
+            .userid{
+                text-align: center;
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 20px;
+                color: #8E8E8E;
+            }
+            .userlocation{
+                text-align: center;
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 20px;
+                color: #8E8E8E;
+            }
+            .subs{
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 20px;
+                color: #000000;
+                display: flex;
+                .count{
+                    display: block;
+                    margin-left: auto;
+                }
+            }
+        }
+    }
+
+    .accordion{
+        margin-top: 40px;
+        .accordion-header{
+            button{
+                font-weight: 500;
+                font-size: 24px;
+                line-height: 24px;
+                color: #000000;
+            }
+        }
+        p{
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 20px;
+            color: #000000;
+            display: flex;
+            span{
+                margin-left: auto;
+                font-weight: 400;
+
+            }
+        }
+    }
+
+    .tab-pane{
+        &>div{
+            margin-top: 32px;
+        }
+    }
+}

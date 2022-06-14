@@ -1,4 +1,4 @@
-import { AUTH, CHANGE_PASSWORD, LIKED_POSTS, LOGOUT, MY_POSTS, RESET_PASSWORD, SUBSCRIBE, UPDATE_USER } from '../constants/actionTypes';
+import { AUTH, CHANGE_PASSWORD, FETCH_USER, LIKED_POSTS, LOGOUT, MY_POSTS, RESET_PASSWORD, SUBSCRIBE, UPDATE_USER } from '../constants/actionTypes';
 
 const authReducer = (state = {authData: null}, action) => {
     switch(action.type){
@@ -21,6 +21,8 @@ const authReducer = (state = {authData: null}, action) => {
             return {...state, likedPosts: action.payload?.data};
         case SUBSCRIBE:
             return {...state, subs: action.payload.data};
+        case FETCH_USER:
+            return {...state, user: action.payload};
         default:
             return state;
     }

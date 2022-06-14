@@ -23,6 +23,7 @@ export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
 export const LIKED_POSTS = 'LIKED_POSTS';
 export const MY_POSTS = 'MY_POSTS';
 export const SUBSCRIBE = 'SUBSCRIBE';
+export const FETCH_USER = 'FETCH_USER';
 
 export const START_LOADING = 'START_LOADING';
 export const END_LOADING = 'END_LOADING';
