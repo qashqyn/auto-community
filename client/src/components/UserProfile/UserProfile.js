@@ -9,7 +9,9 @@ import LogbookCard from "../Logbooks/LogbookCard/LogbookCard";
 import MarketCard from "../Market/MarketCard/MarketCard";
 
 import NoImg from "../../images/noimg.jpg";
+import LocationIcon from '../../images/ic_location.png';
 import './styles.scss';
+import SubscribeBtn from "../Subscribe/SubscribeBtn";
 
 const UserProfile = () => {
     const {id} = useParams();
@@ -37,7 +39,7 @@ const UserProfile = () => {
                 </div>
             ) : (
                 <Row>
-                    <Col sm={3}>
+                    <Col sm={4}>
                         <Card className="userinfo">
                             <Card.Body>
                                 <div className="avatar avatar-lg">
@@ -45,9 +47,10 @@ const UserProfile = () => {
                                 </div>
                                 <p className="username">{user.firstname} {user.lastname}</p>
                                 <p className="userid">{user._id}</p>
-                                <p className="userlocation">{user.country}, {user.city}</p>
+                                <p className="userlocation"><Image src={LocationIcon} /> {user.country}, {user.city}</p>
                                 <p className="subs">Подписчики <span className="count">{user.subscribers.length}</span></p>
                                 <p className="subs">Подписки <span className="count">{user.subscriptions.length}</span></p>
+                                <SubscribeBtn otherUserId={user._id} user={currentUser?.result} />
                             </Card.Body>
                         </Card>
                         {user.cars && user.cars.length>0 && (
@@ -65,7 +68,7 @@ const UserProfile = () => {
                             </Accordion>
                         )}
                     </Col>
-                    <Col sm={9}>
+                    <Col sm={8}>
                         <Tabs defaultActiveKey="logbooks" id="userPosts">
                             <Tab eventKey="logbooks" title="Бортжурнал">
                                 {!user.logbooks ? (
@@ -75,9 +78,15 @@ const UserProfile = () => {
                                         </Spinner>
                                     </div>
                                 ) : user.logbooks.length === 0 ? 
-                                    (<h3>У пользователя еще нет публикации в этом разделе.</h3>)
+                                    (
+                                        <div className='nothing'>
+                                            <div className='content'>
+                                                <h3>У пользователя еще нет публикации в этом разделе.</h3>
+                                            </div>
+                                        </div>
+                                    )
                                     : user.logbooks.map((post) => (
-                                        <LogbookCard logbook={post} key={post._id} />
+                                        <LogbookCard logbook={post} key={post._id} isAuthor={true} />
                                     ))
                                 }
                             </Tab>
@@ -89,10 +98,22 @@ const UserProfile = () => {
                                         </Spinner>
                                     </div>
                                 ) : user.marketPosts.length === 0 ? 
-                                    (<h3>У пользователя еще нет публикации в этом разделе.</h3>)
-                                    : user.marketPosts.map((post) => (
-                                        <MarketCard post={post} key={post._id} />
-                                    ))
+                                    (
+                                        <div className='nothing'>
+                                            <div className='content'>
+                                                <h3>У пользователя еще нет публикации в этом разделе.</h3>
+                                            </div>
+                                        </div>
+                                    )
+                                    : (
+                                        <Row xs={1} md={2} lg={3}>                                 
+                                            {user.marketPosts.map((post) => (
+                                                <Col key={post._id}>
+                                                    <MarketCard post={post} />
+                                                </Col>
+                                            ))}
+                                        </Row> 
+                                    )
                                 }
                             </Tab>
                             <Tab eventKey="antitheftPosts" title="Антиугон">
@@ -103,7 +124,13 @@ const UserProfile = () => {
                                         </Spinner>
                                     </div>
                                 ) : user.antitheftPosts.length === 0 ? 
-                                    (<h3>У пользователя еще нет публикации в этом разделе.</h3>)
+                                    (
+                                        <div className='nothing'>
+                                            <div className='content'>
+                                                <h3>У пользователя еще нет публикации в этом разделе.</h3>
+                                            </div>
+                                        </div>
+                                    )
                                     : user.antitheftPosts.map((post) => (
                                         <AntitheftCard post={post} key={post._id} />
                                     ))

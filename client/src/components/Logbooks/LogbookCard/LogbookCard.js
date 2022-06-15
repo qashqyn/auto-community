@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Image } from "react-bootstrap";
+import { Button, Card, Image, Modal } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
 import { getUserLogbooks, deleteLogbook } from "../../../actions/logbook";
+import moment from "moment";
 
 import './styles.scss';
 import NoImg from '../../../images/noimg.jpg';
+import Likes from "../../Likes";
+import SubscribeBtn from "../../Subscribe/SubscribeBtn";
+import CommentsSection from "../../CommentsSection/CommentsSection";
 
-const LogbookCard = ({logbook, update=false, isAuthor=false}) => {
+const LogbookCard = ({user = null, logbook, update=false, isAuthor=false}) => {
     const dispatch = useDispatch();
 
     const deletePost = (e) => {
@@ -16,22 +20,17 @@ const LogbookCard = ({logbook, update=false, isAuthor=false}) => {
         dispatch(deleteLogbook(logbook._id));
         dispatch(getUserLogbooks());
     }
-    const [ isLiked, setLiked ] = useState(false);
-    const user = JSON.parse(localStorage.getItem('profile'));
-
-    const likePost = (e) => {
-        e.preventDefault();
-        setLiked(!isLiked);
-    }
 
     const [images, setImages] = useState([]);
     const [imgCnt, setImgCnt] = useState(0);
 
+    const [show, setShow] = useState(false); 
+    const openDeleteModal = () => setShow(true);
+    const closeDeleteModal = () => setShow(false);
+
+
     useEffect(() => {
         if(!!logbook){
-            if(!!user && !!user.result && !!user.result._id && !!logbook.likes && logbook.likes>0 && logbook.likes.includes(user.result._id)){
-                setLiked(true);
-            }  
 
             const content = document.getElementById(`hidden${logbook._id}`);
             if(content){
@@ -43,29 +42,8 @@ const LogbookCard = ({logbook, update=false, isAuthor=false}) => {
                     for (let index = 0; index < imgs.length && index < 5; index++) {
                         setImages((old) => [...old, imgs[index].src]);
                     }
-
-                    // if(imgs.length > 0){
-                    //     document.getElementById(`mainimg${logbook._id}`).appendChild(imgs[0]);
-                    //     if(imgs.length === 1)
-                    //         document.getElementById(`imgs${logbook._id}`).style = 'display: none';
-                    //     for (let index = 1; index < imgs.length && index < 5; index++) {
-                    //         let imgContainer = document.createElement('div');
-                    //         imgContainer.classList.add('img-container')
-                    //         imgContainer.appendChild(imgs[index]);
-
-                    //         if(index === 4 && imgs.length > 5){
-                    //             let overlay = document.createElement('div');
-                    //             overlay.classList.add('overlay')
-                    //             overlay.innerHTML = `<h5>+ ${(Number(imgs.length) - Number(5))}</h5><p>фотографий</p>`;
-                    //             imgContainer.appendChild(overlay);
-                    //         }
-
-                    //         document.getElementById(`imgs${logbook._id}`).appendChild(imgContainer);
-                    //     }
-                    // }else{
-                    //     document.getElementById(`images${logbook._id}`).style = 'display: none';
-                    // }
-
+                }
+                if(!isAuthor){
                     const text = content.textContent;
                     document.getElementById(`short${logbook._id}`).innerHTML = text;
                 }
@@ -73,25 +51,52 @@ const LogbookCard = ({logbook, update=false, isAuthor=false}) => {
         }
     }, [logbook]);
 
+    const [more, setMore] = useState(false);
+
+    const readMore = (e) => {
+        e.preventDefault();
+        setMore(true);
+        setImages(null);
+    }
+
     return logbook && (
         <Card className="logbook-card">
-            <Card.Body>
+            <Modal show={show} onHide={closeDeleteModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Удалить пост</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                        Удалить пост "{logbook.title}" ?
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button onClick={closeDeleteModal}>Отмена</Button>
+                    <Button onClick={deletePost}>Удалить</Button>
+                </Modal.Footer>
+            </Modal>
+            <Card.Body className={isAuthor && 'author'}>
                 {(!isAuthor && logbook.author) && (
                     <Card.Header>
-                        <div className="avatar avatar-sm">
-                            <Image src={logbook.author.avatar ? logbook.author.avatar : NoImg} />
-                        </div>
                         <div>
-                            <div className="author-info">
-                                {logbook.author?.firstname} {logbook.author?.lastname}
+                            <div className="avatar avatar-sm">
+                                <Image src={logbook.author.avatar ? logbook.author.avatar : NoImg} />
                             </div>
-                            <div className="author-car">
-                                {(logbook.author.cars && logbook.author.cars[0]) ? (`Я езжу на ${logbook.author.cars[0].mark} ${logbook.author.cars[0].model} ${logbook.author.cars[0].generation}`) : ('У меня нет машины')}
+                            <div>
+                                <LinkContainer to={`/profile/${logbook.author._id}`}>
+                                    <div className="author-info">
+                                        {logbook.author?.firstname} {logbook.author?.lastname}
+                                    </div>
+                                </LinkContainer>
+                                <div className="author-car">
+                                    {(logbook.author.cars && logbook.author.cars[0]) ? (`Я езжу на ${logbook.author.cars[0].mark} ${logbook.author.cars[0].model} ${logbook.author.cars[0].generation}`) : ('У меня нет машины')}
+                                </div>
                             </div>
                         </div>
+                        <SubscribeBtn otherUserId={logbook.author._id} user={user} btnFilled={false} />
                     </Card.Header>
                 )}
-                {(images && images.length > 0) && (
+                {isAuthor ? (
+                    <Card.Img src={(images && images.length>0) ? images[0] : NoImg} />
+                ) : ((images && images.length > 0) && (
                     <div className="images">
                         <div className="main-image">
                             <Image src={images[0]} />
@@ -113,41 +118,67 @@ const LogbookCard = ({logbook, update=false, isAuthor=false}) => {
                             </div>
                         )}
                     </div>
-                )}
+                ))}
                 {/* <div className="images" id={`images${logbook._id}`}>
                     <div id={`mainimg${logbook._id}`} className="main-image"></div>
                     <div id={`imgs${logbook._id}`} className="other-images"></div>
                 </div> */}
-                <div dangerouslySetInnerHTML={{ __html: logbook.message }} hidden id={`hidden${logbook._id}`}/>
-                <Card.Title>{logbook.title}</Card.Title>
-                <Card.Text as="div">
-                    <div id={`short${logbook._id}`}></div>
-                    {update && (
-                        <Button onClick={deletePost}>delete</Button>
-                    )}
-                </Card.Text>
-                {!update && (
-                    <Card.Footer>
-                        <div className="actions">
-                            <div className="action" onClick={likePost}>
-                                <div className="icon-container">
-                                    {isLiked ? (
-                                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M15.0003 30C-13.75 9.73607 6.14811 -6.07988 14.6702 2.28609C14.7828 2.39609 14.8934 2.51009 15.0003 2.62809C15.1061 2.5102 15.2161 2.39678 15.3303 2.28809C23.8505 -6.08388 43.7505 9.73406 15.0003 30Z" fill="#457B9D"/>
-                                        </svg>                                    
-                                    ) : (
-                                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M15.0003 5.49608L13.6558 4.02208C10.5001 0.562095 4.7137 1.75609 2.62488 6.10608C1.64423 8.15207 1.42297 11.1061 3.21365 14.876C4.9387 18.506 8.52756 22.854 15.0003 27.59C21.473 22.854 25.0599 18.506 26.7869 14.876C28.5775 11.1041 28.3582 8.15207 27.3756 6.10608C25.2868 1.75609 19.5004 0.560095 16.3447 4.02008L15.0003 5.49608ZM15.0003 30C-13.75 9.73607 6.14812 -6.07988 14.6702 2.28609C14.7828 2.39609 14.8934 2.51009 15.0003 2.62809C15.1061 2.5102 15.2161 2.39678 15.3303 2.28809C23.8505 -6.08388 43.7505 9.73407 15.0003 30Z" fill="black"/>
+                <div>
+                    <Card.Title>{logbook.title}</Card.Title>
+                    <div dangerouslySetInnerHTML={{ __html: logbook.message }} className="card-text" hidden={!more} id={`hidden${logbook._id}`}/>
+                    <Card.Text as="div" hidden={more}>
+                        {isAuthor ? (
+                            <p className="category">Категория: <span>{logbook.category}</span></p>
+                        ) : (
+                            <>
+                                <span id={`short${logbook._id}`}></span> <span className="readMore" hidden={!logbook.comments} onClick={readMore} >Читать дальше</span>
+                            </>
+                        )}
+                    </Card.Text>
+                </div>
+                {(!update && logbook.comments) && (
+                    <>
+                        <CommentsSection shortComment={true} comments={logbook.comments} postId={logbook._id} type="logbook" />
+                        <Card.Footer>
+                            <div className="actions">
+                                <Likes user={user} type="logbook" likes={logbook.likes} postId={logbook._id} />
+                                <div className="action">
+                                    <div className="icon-container">
+                                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M40 0H0V40H40V0Z" fill="white" fillOpacity="0.01"/>
+                                            <path d="M40 0H0V40H40V0Z" fill="white" fillOpacity="0.01"/>
+                                            <path d="M36.6668 5H3.3335V30H10.8335V34.1667L19.1668 30H36.6668V5Z" stroke="black" strokeWidth="1.6"/>
+                                            <path d="M11.6665 16.25V18.75" stroke="black" strokeWidth="1.6"/>
+                                            <path d="M20 16.25V18.75" stroke="black" strokeWidth="1.6"/>
+                                            <path d="M28.3335 16.25V18.75" stroke="black" strokeWidth="1.6"/>
                                         </svg>
-                                    )}
+                                    </div>
+                                    {logbook.comments.length}
                                 </div>
-                                {logbook.likes && logbook.likes.length}
                             </div>
-                        </div>
-                        <LinkContainer to={`/logbook/${logbook._id}`}>
-                            <Button>Открыть</Button>
-                        </LinkContainer>
-                    </Card.Footer>
+                            <LinkContainer to={`/logbook/${logbook._id}`}>
+                                <Button>Открыть</Button>
+                            </LinkContainer>
+                        </Card.Footer>
+                    </>
+                )}
+                {isAuthor && (
+                    <div className="admin-pan">
+                        {update ? (
+                            <div onClick={openDeleteModal}>
+                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M18 0H0V18H18V0Z" fill="black" fillOpacity="0.01"/>
+                                    <path d="M3.375 3.75V16.5H14.625V3.75H3.375Z" stroke="black"/>
+                                    <path d="M7.5 7.5V12.375" stroke="black"/>
+                                    <path d="M10.5 7.5V12.375" stroke="black"/>
+                                    <path d="M1.5 3.75H16.5" stroke="black"/>
+                                    <path d="M6 3.75L7.23337 1.5H10.7914L12 3.75H6Z" stroke="black"/>
+                                </svg>
+                            </div>
+                        ) : (
+                            <p className="date">{moment(logbook.createdAt).format("DD.MM.YYYY")}</p>
+                        )}
+                    </div>
                 )}
             </Card.Body>
         </Card>

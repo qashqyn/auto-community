@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, Container, Form, Row, Image } from "react-bootstrap";
+import { Button, Col, Container, Form, Row, Image, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import FileBase from 'react-file-base64';
 
@@ -10,12 +10,13 @@ import Input from "../../SignUp/Input";
 
 import "./styles.scss";
 import { useNavigate } from "react-router-dom";
+import { CLEAR_STATE } from "../../../constants/actionTypes";
 
 const initialState = {mark:'', stateNumber:'', model: '', vin: '', color: '', thiftDate:'', releaseYear:'', location: '', amount:'', ownerNumber: '', specialMarks:''};
 const errorsInitialState = {mark:'', stateNumber:'', model: '', vin: '', color: '', thiftDate:'', releaseYear:'', location: '', amount:'', ownerNumber: '', specialMarks:''};
 
 const AntitheftForm = () => {
-    const status = useSelector((state) => state.post);
+    const {status} = useSelector((state) => state.posts);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [formData, setFormData] = useState(initialState);
@@ -26,7 +27,7 @@ const AntitheftForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        let errss = errorsInitialState;
+        let errss = {mark:'', stateNumber:'', model: '', vin: '', color: '', thiftDate:'', releaseYear:'', location: '', amount:'', ownerNumber: '', specialMarks:''};
 
         let errCnt = 0;
 
@@ -86,18 +87,54 @@ const AntitheftForm = () => {
         setFormData({...formData, [e.target.name]: e.target.value});
     }
 
-    
     useEffect(() => {
         if(!user || !user.result){
             navigate(-1);
         }
     }, [user, navigate])
+
+    const [statusModal, setStatusModal] = useState(false);
+    const [statusModalText, setStatusModalText] = useState({title: '', text: ''});
     useEffect(() => {
-        console.log(status);
-    }, [status])
+        if(status){
+            switch(status){
+                case 200:
+                case 201:
+                    setStatusModalText({title: 'Успех', text: 'Заявка успешно подана.'})
+                    break;
+                default:      
+                    setStatusModalText({title: 'Ошибка', text: 'Что-то пошло не так. Пожалуйста попробуйте позже.'})
+                    break;
+            }
+            setStatusModal(true);
+        }
+    }, [status]);
+    const closeStatusModal = () => {
+        switch(status){
+            case 200:
+            case 201:
+                setFormData(initialState);
+                setImages([]);
+                dispatch({type: CLEAR_STATE});
+                break; 
+        }
+        setStatusModal(false);
+    }
+   
 
     return (
         <div id="antitheft-form">
+            <Modal show={statusModal} onHide={closeStatusModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>{statusModalText.title}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <p>{statusModalText.text}</p>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button onClick={closeStatusModal} >OK</Button>
+                </Modal.Footer>
+            </Modal>
             <Container>
                 <Breadcrumbs links={[{name:'Антиугон', link: '/antitheft'}]} currentPage="Подать объявление" />
                 <h1>Подать объявление</h1>
@@ -106,37 +143,37 @@ const AntitheftForm = () => {
                 <Form onSubmit={handleSubmit}>
                     <Row xs={1} md={2} lg={2}>
                         <Col>
-                            <Input name="mark" error={errors.mark} label="Марка" type="text" handleChange={handleChange} />
+                            <Input name="mark" value={formData.mark} error={errors.mark} label="Марка" type="text" handleChange={handleChange} />
                         </Col>
                         <Col>
-                            <Input name="stateNumber" error={errors.stateNumber} label="Гос номер" type="text" handleChange={handleChange} />
+                            <Input name="stateNumber" value={formData.stateNumber} error={errors.stateNumber} label="Гос номер" type="text" handleChange={handleChange} />
                         </Col>
                         <Col>
-                            <Input name="model" error={errors.model} label="Модель" type="text" handleChange={handleChange} />
+                            <Input name="model" value={formData.model} error={errors.model} label="Модель" type="text" handleChange={handleChange} />
                         </Col>
                         <Col>
-                            <Input name="vin" error={errors.vin} label="VIN - номер" type="text" handleChange={handleChange} />
+                            <Input name="vin" value={formData.vin} error={errors.vin} label="VIN - номер" type="text" handleChange={handleChange} />
                         </Col>
                         <Col>
-                            <Input name="color" error={errors.color} label="Цвет" type="text" handleChange={handleChange} />
+                            <Input name="color" value={formData.color} error={errors.color} label="Цвет" type="text" handleChange={handleChange} />
                         </Col>
                         <Col>
-                            <Input name="thiftDate" error={errors.thiftDate} label="Дата кражи" type="date" handleChange={handleChange} />
+                            <Input name="thiftDate" value={formData.thiftDate} error={errors.thiftDate} label="Дата кражи" type="date" handleChange={handleChange} />
                         </Col>
                         <Col>
-                            <Input name="releaseYear" error={errors.releaseYear} label="Год выпуска" type="year" handleChange={handleChange} />
+                            <Input name="releaseYear" value={formData.releaseYear} error={errors.releaseYear} label="Год выпуска" type="year" handleChange={handleChange} />
                         </Col>
                         <Col>
-                            <Input name="location" error={errors.location} label="Место кражи" type="text" handleChange={handleChange} />
+                            <Input name="location" value={formData.location} error={errors.location} label="Место кражи" type="text" handleChange={handleChange} />
                         </Col>
                         <Col>
-                            <Input name="amount" error={errors.amount} label="Сумма вознаграждение в ₸" type="currency" handleChange={handleChange} />
+                            <Input name="amount" value={formData.amount} error={errors.amount} label="Сумма вознаграждение в ₸" type="currency" handleChange={handleChange} />
                         </Col>
                         <Col>
-                            <Input name="ownerNumber" error={errors.ownerNumber} label="Номер владельца" type="tel" handleChange={handleChange} />
+                            <Input name="ownerNumber" value={formData.ownerNumber} error={errors.ownerNumber} label="Номер владельца" type="tel" handleChange={handleChange} />
                         </Col>
                     </Row>
-                    <Input name="specialMarks" label="Особые отметки Вашего автомобиля (например: вмятина на капоте)" type="text" required={false} handleChange={handleChange} />
+                    <Input name="specialMarks" value={formData.specialMarks} label="Особые отметки Вашего автомобиля (например: вмятина на капоте)" type="text" required={false} handleChange={handleChange} />
                     <div className="buttons">
                         <label className="img-picker">
                             <FileBase type="file" id="filePicker" multiple={true}

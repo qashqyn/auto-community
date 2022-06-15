@@ -14,6 +14,7 @@ import MarketCard from "./MarketCard/MarketCard";
 
 import './styles.scss';
 import cars from '../../cars/cars.json';
+import { getCars } from "../../actions/carModels";
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -23,14 +24,22 @@ const categories = ['Автозвук и мультимедиа', 'Автосв�
 
 
 const Market = () => {
-    const {posts, isLoading} = useSelector((state) => state.posts);
+    const {posts, isLoading, carModels} = useSelector((state) => state.posts);
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
     const [selectedCategories, setSelectedCategories] = useState([]);
 
     const [show, setShow] = useState(false);
 
     const [searchText, setSearchText] = useState('');
+    const [suits, setSuits] = useState('');
+    const [condition, setCondition] = useState('');
     const dispatch = useDispatch();
+     
+    useEffect(()=>{
+        if(!carModels){
+            dispatch(getCars());
+        }
+    }, [carModels]);
 
     const query = useQuery();
     const page = query.get('page') || 1;
@@ -41,6 +50,11 @@ const Market = () => {
         }else if(selectedCategories.includes(e.target.id) && !e.target.checked){
             setSelectedCategories(selectedCategories.filter(item => item != e.target.id));
         }
+    }
+
+    const handleConditionChange = (e) =>{
+        setCondition(e.target.value);
+        console.log(e.target.value);
     }
 
     const openLoginModal = (e) =>{
@@ -56,56 +70,73 @@ const Market = () => {
         e.preventDefault();
         if(searchText && searchText.length>0){
             console.log("search");
-            dispatch(getMarketPosts(1, searchText));
+            dispatch(getMarketPosts(1, searchText, selectedCategories.join(','), suits, condition));
         }
     }
 
-    const [carSelect, setCarSelect] = useState({brand: '', brandId: null, model: '',modelId: null, generation: '', generationId: null});
-    const [carOptions, setCarOptions] = useState({brands: [], models: [], generations: []});
-
-    const setBrands = () =>{
-        let brandds = [];
-        cars.brands.map((brand) => brandds.push(brand.name));
-        setCarOptions({...carOptions, brands: brandds});
-    }
-    
-    useEffect(() => {
-        setBrands();
-    }, [carSelect.brands]);
+    const [carSelect, setCarSelect] = useState({mark: '', model: '', generation: ''});
 
     const handleBrandChoose = (e) => {
         e.preventDefault();
-        let brandId = e.target.value;
-        if(brandId !== carSelect.brandId){
-            let modells = [];
-            setCarSelect({...carSelect, brandId: brandId, brand: cars.brands[brandId].name, model: '', modelId: null, generation: '', generationId: null});
-            cars.brands[brandId].models.map((model) => modells.push(model.name));
-            setCarOptions({...carOptions, models: modells});
+        let modells = [];
+        if(e.target.value){
+            carModels[e.target.value].models.map((model) => {
+                modells.push(model.name);
+            })
         }
+        setModels(modells);
+        setGenerations([]);
+        setCarSelect({mark: e.target.value, model: '', generation: ''});
+        setCarSelect({mark: e.target.value, model: '', generation: ''});
     }
     const handleModelChoose = (e) => {
         e.preventDefault();
-        let modelId = e.target.value;
-        if(modelId !== carSelect.modelId){
-            let generationns = [];
-            setCarSelect({...carSelect, modelId: modelId, model: cars.brands[carSelect.brandId].models[modelId].name, generation: '', generationId: null});
-            cars.brands[carSelect.brandId].models[modelId].generations.map((generation) => generationns.push(generation));
-            setCarOptions({...carOptions, generations: generationns});
+        let gens = [];
+        if(e.target.value){
+            carModels[carSelect.mark].models[e.target.value].generations.map((gen)=>{
+                gens.push(gen);
+            })
+            setGenerations(gens);
         }
+        setCarSelect({...carSelect, model: e.target.value, generation: ''});
+        setCarSelect({...carSelect, model: e.target.value, generation: ''});
     }
     const handleGenerationChoose = (e) => {
         e.preventDefault();
-        let generationId = e.target.value;
-        if(generationId !== carSelect.generationId)
-            setCarSelect({...carSelect, generationId: generationId, generation: cars.brands[carSelect.brandId].models[carSelect.modelId].generations[generationId]});
+        setCarSelect({...carSelect, generation: e.target.value});
+        setCarSelect({...carSelect, generation: e.target.value});
     }
 
     useEffect(() => {
-        console.log(carSelect);
+        let carFilter = "";
+        if(carSelect.mark){
+            carFilter += "" + carModels[carSelect.mark].mark;
+            if(carSelect.model){
+                carFilter+= " " + carModels[carSelect.mark].models[carSelect.model].name;
+                if(carSelect.generation)
+                    carFilter += " " + carModels[carSelect.mark].models[carSelect.model].generations[carSelect.generation];
+            }
+        }
+        setSuits(carFilter);
     }, [carSelect]);
 
+
+    const [marks, setMarks] = useState([]);
+    const [models, setModels] = useState([]);
+    const [generations, setGenerations] = useState([]);
+
+    useEffect(()=>{
+        if(carModels){
+            let markss = [];
+            carModels.map((car) => {
+                markss.push(car.mark);
+            })
+            setMarks(markss);
+        }
+    }, [carModels]);
+
     return (
-        <Container className="market-list">
+        <Container id="market-list">
             <LoginModal show={show} setShow={setShow} text="Добавить объвления могут только зарегистрированные пользователи." />
             <Breadcrumbs currentPage="Магазин" />
             <h1>Магазин</h1>
@@ -120,7 +151,7 @@ const Market = () => {
                 )}
             </div>
             <Row>
-                <Col xs={3}>
+                <Col xs={3} className="filters">
                     <div className="category-filter">
                         <h3>Категории</h3>
                         {categories.map((category, key) => (
@@ -129,13 +160,13 @@ const Market = () => {
                     </div>
                     <div className="car-filter">
                         <h3>Подходит для</h3>
-                        <Input type="select" name="car-brands" label="Всех марок" keyAsValue={true} options={carOptions.brands} handleChange={handleBrandChoose} />
-                        <Input type="select" name="car-models" label="Всех моделей" keyAsValue={true} options={carOptions.models} handleChange={handleModelChoose} />
-                        <Input type="select" name="car-generations" label="Всех поколений" keyAsValue={true} options={carOptions.generations} handleChange={handleGenerationChoose} />
+                        <Input type="select" name="car-brands" label="Всех марок" keyAsValue={true} options={marks} handleChange={handleBrandChoose} />
+                        <Input type="select" name="car-models" label="Всех моделей" keyAsValue={true} options={models} handleChange={handleModelChoose} />
+                        <Input type="select" name="car-generations" label="Всех поколений" keyAsValue={true} options={generations} handleChange={handleGenerationChoose} />
                     </div>
                     <div className="condition-filter">
                         <h3>Состояние</h3>
-                        <Input type="radio" name="condition" options={[{label:'Любое', value: 'any'}, {label:'Только новое', value:'Новое'}, {label: 'Только б/у', value: 'Б/У'}]} handleChange={addCategory} />
+                        <Input type="radio" name="condition" options={[{label:'Любое', value: ''}, {label:'Только новое', value:'Новое'}, {label: 'Только б/у', value: 'Б/У'}]} handleChange={handleConditionChange} />
                     </div>
                 </Col>
                 <Col xs={9}>
@@ -161,7 +192,7 @@ const Market = () => {
                         }
                 </Col>
             </Row>
-            <Paginate page={Number(page)} searchText={searchText} type="market"/>
+            <Paginate page={Number(page)} searchText={searchText} condition={condition} category={selectedCategories.join(',')} suits={suits} type="market"/>
         </Container>
     );
 };

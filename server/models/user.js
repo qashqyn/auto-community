@@ -27,6 +27,7 @@ const userSchema = mongoose.Schema({
     is_admin: {type: Boolean, default: false},
     likedNews: [{type: mongoose.Schema.Types.ObjectId, ref: 'NewsMessage'}],
     likedLogbooks: [{type: mongoose.Schema.Types.ObjectId, ref: 'LogbookMessage'}],
+    likedVideo: [{type: mongoose.Schema.Types.ObjectId, ref: 'Video'}],
 
     avatar: String
 });

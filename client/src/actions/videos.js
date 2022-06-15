@@ -1,4 +1,4 @@
-import { FETCH_ALL_VIDEO, CREATE_VIDEO, UPDATE_VIDEO, DELETE_VIDEO, LIKE_VIDEO, START_LOADING, END_LOADING, FETCH_ONE_VIDEO, FETCH_RELATED_VIDEO } from '../constants/actionTypes';
+import { FETCH_ALL_VIDEO, CREATE_VIDEO, UPDATE_VIDEO, DELETE_VIDEO, LIKE_VIDEO, START_LOADING, END_LOADING, FETCH_ONE_VIDEO, FETCH_RELATED_VIDEO, LIKE, COMMENT } from '../constants/actionTypes';
 import * as api from '../api';
 
 // Action Creators
@@ -65,12 +65,21 @@ export const deleteVideo = (id) => async(dispatch) => {
     }
 }
 
-// export const likeNews = (id, news) => async(dispatch) => {
-//     try {
-//         const { data } = await api.likeNews(id);
+export const likeVideo = (id) => async(dispatch) => {
+    try {
+        const { data } = await api.likeVideo(id);
         
-//         dispatch({ type: LIKE, payload: data });
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
+        dispatch({ type: LIKE, payload: data });
+    } catch (error) {
+        console.log(error);
+    }
+}
+export const commentVideo = (id, comment) => async(dispatch) => {
+    try {
+        const { data } = await api.commentVideo(id, comment);
+        
+        dispatch({ type: COMMENT, payload: data });
+    } catch (error) {
+        console.log(error);
+    }
+}

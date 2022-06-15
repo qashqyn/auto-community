@@ -4,7 +4,7 @@ const videoSchema = mongoose.Schema({
     title: String,
     tag: String,
     videoID: String,
-    likes: [{type: mongoose.Schema.Types.ObjectId, ref:'User'}],
+    likes: [String],
     comments: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'VideoComment'

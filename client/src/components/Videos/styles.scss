@@ -1,4 +1,4 @@
-#news{
+#videos{
     margin-bottom: 72px;
     .top{
         display: flex;
@@ -6,23 +6,21 @@
         padding-bottom: 24px;
         border-bottom: 1px solid #D7D7D7;
         margin-bottom: 16px;
-    }
-
-    #dropdown-tags{
-        border: none;
-        background: none;
-        margin: 0;
-        padding: 0;
-        color: black;
-        &:hover{
-            background: none!important;
-            color: black!important;
+        #dropdown-tags{
+            border: none;
+            background: none;
+            margin: 0;
+            padding: 0;
+            color: black;
+            &:hover{
+                background: none!important;
+                color: black!important;
+            }
+            &:focus{
+                box-shadow: none;
+            }
         }
-        &:focus{
-            box-shadow: none;
-        }
     }
-
     .tags{
         margin: 16px 0 24px;
         display: flex;
@@ -40,4 +38,5 @@
             }
         }   
     }
+
 }

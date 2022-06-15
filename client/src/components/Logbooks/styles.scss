@@ -1,4 +1,15 @@
 #logbooks{
+    margin-bottom: 72px;
+    .top{
+        display: flex;
+        align-items: center;
+        .btn{
+            margin-left: auto;
+        }
+        padding: 32px 0;
+        border-bottom: 1px solid #C2C2C2;
+        margin-bottom: 32px;
+    }
     .cards{
         .card{
             margin-bottom: 32px;

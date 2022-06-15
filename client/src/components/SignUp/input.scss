@@ -5,6 +5,7 @@
         font-size: 14px;
         line-height: 14px;
         color: #000000;
+        cursor: pointer;
     }
     input{
         display: none;   
@@ -93,19 +94,43 @@
     }
 
     .formatBtns{
+        display: flex;
+        gap: 16px;
         .formatBtn{
             cursor: pointer;
             width: 56px;
             height: 32px;
             text-align: center;
-            display: inline-block;
+            display: flex;
             border: 1px solid #EBEBEB;
             box-sizing: border-box;
             border-radius: 8px;
-            
+            &>*{
+                font-size: 16px;
+                line-height: 24px;
+                color: #8E8E8E;
+                &.bold{
+                    font-weight: 700;
+                }
+                &.italic{
+                    font-style: italic;
+                    font-weight: 600;
+                }
+                display: block;
+                margin: auto;
+            }
+            input{
+                display: none;
+            }
+
             &.active{
                 border-color: #457B9D;
             }
         }
+    }
+    .bottom{
+        margin-top: 16px;
+        justify-content: space-between;
+        display: flex;
     }
 }

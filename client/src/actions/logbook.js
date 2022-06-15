@@ -1,8 +1,9 @@
-import { CREATE, DELETE, LIKE, END_LOADING, FETCH_ALL, FETCH_ONE, START_LOADING } from "../constants/actionTypes";
+import { CREATE, DELETE, LIKE, END_LOADING, FETCH_ALL, FETCH_ONE, START_LOADING, CLEAR_STATE, COMMENT } from "../constants/actionTypes";
 import * as api from '../api';
 
 export const getLogbooks = (search = '') => async(dispatch) => {
     try {
+        dispatch({type: CLEAR_STATE});
         dispatch({type: START_LOADING});
         const {data} = await api.fetchLogbooks(search);
 
@@ -50,8 +51,7 @@ export const getLogbook = (id) => async(dispatch) => {
 
 export const createLogbook = (post) => async(dispatch) => {
     try {
-        console.log(post);
-        const { data } = await api.createLogbook(post);
+        const data = await api.createLogbook(post);
 
         dispatch({type: CREATE, payload: data});
     } catch (error) {
@@ -74,6 +74,16 @@ export const likeLogbook = (id) => async(dispatch) => {
         const { data } = await api.likeLogbook(id);
         
         dispatch({ type: LIKE, payload: data });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const commentLogbook = (id, comment) => async(dispatch) => {
+    try {
+        const {data} = await api.commentLogbook(id, comment);
+
+        dispatch({type: COMMENT, payload: data});
     } catch (error) {
         console.log(error);
     }

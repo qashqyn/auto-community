@@ -1,24 +1,51 @@
 .marketCard{
     cursor: pointer;
     position: relative;
-        .admin-pan{
-            z-index: 1000;
-            position: absolute;
-            top: 24px;
-            right: 24px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    .card-title{
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 22px;  
+        margin-bottom: 0;
+        margin-top: 16px;
+    }
+    .card-text{
+        margin-top: 8px;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 18px;
+        margin-bottom: 24px;
+        color: #636363;
+        &.cost{
+            margin-top: auto;
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 18px;
+            color: #457B9D;
+            margin-bottom: 0;
+
+        }
+    }
+    .admin-pan{
+        z-index: 1000;
+        position: absolute;
+        top: 24px;
+        right: 24px;
+        display: flex;
+        gap: 8px;
+        &>div{
+            cursor: pointer;
+            height: 32px;
+            width: 32px;
+            border-radius: 50%;
             display: flex;
-            gap: 8px;
-            &>div{
-                cursor: pointer;
-                height: 32px;
-                width: 32px;
-                border-radius: 50%;
-                display: flex;
-                background: rgba(45, 45, 46, 0.1);
-                backdrop-filter: blur(8px);
-                &>svg{
-                    margin: auto;
-                }
+            background: rgba(45, 45, 46, 0.1);
+            backdrop-filter: blur(8px);
+            &>svg{
+                margin: auto;
             }
         }
+    }
 }

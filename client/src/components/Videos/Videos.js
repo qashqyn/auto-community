@@ -9,6 +9,7 @@ import { getVideos } from '../../actions/videos';
 import Video from "./Video/Video";
 import Breadcrumbs from "../Breadcrumbs";
 import Paginate from "../Paginate/Paginate";
+import './styles.scss';
 
 const tagsArray = ["Тест-драйвы", "Путешествия", "Ремонт", "Покупка машины", "История", "Фотосессии", "Новые модели", "Спорткары", "Электромобили", "Безопасность", "Обучение", "Шины и диски"];
 
@@ -45,7 +46,7 @@ const Vidoes = () => {
 
     
     return (
-        <Container>
+        <Container id="videos">
             <Breadcrumbs currentPage="Видео" />
             <div className="top">
                 <h1>Видео</h1>

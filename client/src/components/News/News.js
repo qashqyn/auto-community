@@ -37,16 +37,18 @@ const News = () => {
     const addTag = async (tag) => {
         if(!tags.includes(tag)){
             setTags((prevState) => [...prevState, tag]);
-            dispatch(getNews(tags,1));
         }
     }
     const removeTag = async (tag) => {
         setTags(tags.filter(item => item !== tag));
-        dispatch(getNews(tags,1));
     }
 
+    useEffect(()=>{
+        dispatch(getNews(tags,1));
+    }, [tags])
+
     return (
-        <Container>
+        <Container id="news">
             <Breadcrumbs currentPage="Новости" />
             <div className="top">
                 <h1>Новости</h1>
@@ -87,7 +89,7 @@ const News = () => {
                         <span className="visually-hidden">Загрузка...</span>
                     </Spinner>
                 </div>
-            ) : ((!!news && news.length) > 0 ? 
+            ) : ((!!news && news.length > 0) ? 
                 (
                     <>
                         <Row xs={1} md={2} lg={3}>

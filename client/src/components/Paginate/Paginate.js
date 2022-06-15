@@ -9,7 +9,7 @@ import { getVideos } from '../../actions/videos';
 import './styles.scss';
 import { getMarketPosts } from '../../actions/market';
 
-const Paginate = ({tags, page, type, filter, searchText}) => {
+const Paginate = ({tags, page, type, filter, searchText, category, suits, condition}) => {
     const { isLoading, numberOfPages } = useSelector((state) => state.posts);
     const dispatch = useDispatch();
 
@@ -22,10 +22,10 @@ const Paginate = ({tags, page, type, filter, searchText}) => {
             else if(type === 'video')
                 dispatch(getVideos(tags, page));
             else if(type === 'market')
-                dispatch(getMarketPosts(page, searchText));
+                dispatch(getMarketPosts(page, searchText, category, suits, condition));
                 
         }
-    },[dispatch, tags, page, type]);
+    },[dispatch, tags, page, type, suits, category, condition]);
 
     return (
         <>

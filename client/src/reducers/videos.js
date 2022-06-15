@@ -3,7 +3,7 @@ import { CREATE_VIDEO, DELETE_VIDEO, FETCH_ALL_VIDEO, LIKE_VIDEO, UPDATE_VIDEO, 
 const videosReducers = (state = {isLoading:true, videos: [], status: null }, action) => {
     switch (action.type) {
         case CLEAR_STATE_VIDEO: 
-            return {isLoading:true, videos: [], status: null };
+            return {...state, isLoading:true, videos: [], status: null };
         case START_LOADING:
             return { ...state, isLoading: true};
         case END_LOADING:
@@ -11,7 +11,6 @@ const videosReducers = (state = {isLoading:true, videos: [], status: null }, act
         case FETCH_ALL_VIDEO:
             return { ...state, videos: action.payload.data, currentPage: action.payload?.currentPage, numberOfPages: action.payload?.numberOfPages};
         case FETCH_RELATED_VIDEO:
-            console.log(action.payload);
             return { ...state, related: action.payload.related, videoCount: action.payload?.videoCount};
         case FETCH_ONE_VIDEO:
             return { ...state, video: action.payload };

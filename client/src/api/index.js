@@ -32,10 +32,12 @@ export const fetchLogbook = (id) => API.get(`/logbooks/${id}`);
 export const fetchUserLogbooks = () => API.get(`/logbooks/my`);
 export const deleteLogbook = (id) => API.delete(`/logbooks/${id}`);
 export const likeLogbook = (id) => API.patch(`/logbooks/${id}/like`);
+export const commentLogbook = (id, data) => API.post(`/logbooks/${id}/comment`, data);
 
+// export const fetchLikes = (id) => API.get(`/logbooks/${id}/`)
 // MARKET
 export const fetchMarketPost = (id) => API.get(`/market/${id}`);
-export const fetchMarketPosts = (page, search) => API.get(`/market/?page=${page}&search=${search}`);
+export const fetchMarketPosts = (page, search, category, suits,condition) => API.get(`/market/?page=${page}&search=${search}&category=${category}&suits=${suits}&condition=${condition}`);
 export const createMarketPost = (newPost) => API.post(`/market`, newPost);
 export const deleteMarketPost = (id) => API.delete(`/market/${id}`);
 
@@ -45,6 +47,8 @@ export const fetchVideo = (id) => API.get(`/video/${id}`);
 export const fetchRelatedVideos = (data) => API.get(`/video/related?id=${data.id}&count=${data.count}`);
 export const deleteVideo = (id) => API.delete(`/admin/video/${id}`);
 export const createVideo = (newVideo) => API.post(`/admin/video`, newVideo);
+export const likeVideo = (id) => API.patch(`/video/${id}/like`);
+export const commentVideo = (id, data) => API.post(`/video/${id}/comment`, data);
 // USER
 export const login = (formData) => API.post('/user/login', formData);
 export const signup = (formData) => API.post('/user/signup', formData);

@@ -3,6 +3,8 @@ import NewsMessage from "../models/newsMessage.js";
 import Video from "../models/video.js";
 import AntitheftMessage from "../models/antitheftMessage.js";
 import CarModel from "../models/carModel.js";
+import nodemailer from 'nodemailer';
+import UserModal from '../models/user.js';
 
 // NEWS
 export const createNews = async (req, res) => {
@@ -101,7 +103,50 @@ export const setAntitheftStatus = async (req, res) => {
         if(!mongoose.Types.ObjectId.isValid(id))
             return res.status(404).send("No post with that Id");
 
-        await AntitheftMessage.findByIdAndUpdate(id, {status: newStatus}, {new: true});
+        const post = await AntitheftMessage.findByIdAndUpdate(id, {status: newStatus}, {new: true});
+
+        const user = await UserModal.findById(post.author).select('email');
+
+
+        const transporter = nodemailer.createTransport({
+            port: 465,   
+            host: "smtp.gmail.com",
+            auth: {
+              user: 'autocommunity.web@gmail.com',
+              pass: 'bqguieeydlumwsng'
+            },
+            secure: true,
+        });
+
+        if(newStatus === 'approved' || newStatus === 'dismissed'){
+            let mailText = '';
+    
+            switch(newStatus){
+                case 'approved':
+                    mailText = 'Мы одобрили вашу заявку на антиугон. Вы можете посмотреть его в своем профиле!'
+                    break;
+                case 'dismissed':
+                    mailText = 'К сожелению ваша заявка на антиугон была отказана. ';
+                    break;
+            }
+    
+            var mailOptions = {
+                from: 'autocommunity.web@gmail.com',
+                to: user.email,
+                subject: 'Заявка на антиугон',
+                text: mailText
+            };
+            
+            transporter.sendMail(mailOptions, function(error, info){
+                if(error){
+                    console.log(error);
+                    return res.status(400).json({message: "Error"});
+                }
+                return res.status(204).json({message: "Success"});
+            });
+        }
+
+
         res.status(204).json({message: "success"});
     } catch (error) {
         res.status(404).json({message: error.message});      

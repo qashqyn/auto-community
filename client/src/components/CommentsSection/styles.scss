@@ -1,8 +1,7 @@
 .comments{
     margin-bottom: 32px;
-    form{
-        flex-grow: 1;
-    }
+
+    
     .h4{
         font-weight: 600;
         font-size: 24px;
@@ -43,6 +42,7 @@
         }
     }
     .form{
+        flex-grow: 1;
         margin-left: 16px;
         margin-bottom: 32px;
         .textarea{
@@ -106,5 +106,47 @@
         font-size: 18px;
         line-height: 22px;
         color: #333333;
+    }
+
+
+    &.short{
+        padding: 24px 16px;
+        background-color: #F8F8F8;
+        .shortcomment{
+            display: flex;
+            .avatar{
+                margin-right: 16px;
+                cursor: pointer;
+            }
+            
+            .shortcomment-message{
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 20px;
+            }
+            margin-bottom: 16px;
+        }
+        .guest{
+            margin-bottom: 0;
+        }
+        .form{
+            flex-grow: 1;
+            margin-left: 16px;
+            margin-bottom: 0;
+            .textarea{
+                margin-bottom: 16px;
+            }
+            .btn{
+                margin-left: auto;
+                padding: 10px 35px;
+                background: #94C6C8;
+                font-weight: 400;
+                font-size: 18px;
+                line-height: 20px;
+                text-align: center;
+                color: #FFFFFF;
+                margin-bottom: 0;
+            }
+        }
     }
 }

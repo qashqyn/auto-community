@@ -8,6 +8,13 @@ import { Button, Card, Col, Container, Image, Row, Spinner } from "react-bootstr
 import peopleIcon from '../../images/peopleIcon.png';
 import logbook from '../../images/logbook.png';
 import market from '../../images/market.png';
+
+// antitheft icons
+import ATicon1 from '../../images/antitheft-icon-1.png';
+import ATicon2 from '../../images/antitheft-icon-2.png';
+import ATicon3 from '../../images/antitheft-icon-3.png';
+import ATicon4 from '../../images/antitheft-icon-4.png';
+
 import './style.scss';
 
 import { getNews } from '../../actions/news';
@@ -50,7 +57,7 @@ const Home = () => {
                             <Card>
                                 <Card.Body>
                                     <div className="text-center">
-                                        <img className="card-icon" src={peopleIcon} />
+                                        <img className="card-icon" src={ATicon1} />
                                     </div>
                                     <Card.Title>972 +</Card.Title>
                                     <Card.Text>машин было крадено за 2021 год</Card.Text>
@@ -62,7 +69,7 @@ const Home = () => {
                             <Card>
                                 <Card.Body>
                                     <div className="text-center">
-                                        <img className="card-icon" src={peopleIcon} />
+                                        <img className="card-icon" src={ATicon2} />
                                     </div>
                                     <Card.Title>181 +</Card.Title>
                                     <Card.Text>случай в городе Алматы</Card.Text>
@@ -74,7 +81,7 @@ const Home = () => {
                             <Card>
                                 <Card.Body>
                                     <div className="text-center">
-                                        <img className="card-icon" src={peopleIcon} />
+                                        <img className="card-icon" src={ATicon3} />
                                     </div>
                                     <Card.Title>62%</Card.Title>
                                     <Card.Text>машин еще не найдены </Card.Text>
@@ -86,7 +93,7 @@ const Home = () => {
                             <Card>
                                 <Card.Body>
                                     <div className="text-center">
-                                        <img className="card-icon" src={peopleIcon} />
+                                        <img className="card-icon" src={ATicon4} />
                                     </div>
                                     <Card.Title>746 +</Card.Title>
                                     <Card.Text>объявлений было подано </Card.Text>

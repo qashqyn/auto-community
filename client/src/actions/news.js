@@ -1,9 +1,10 @@
-import { START_LOADING, END_LOADING, FETCH_ALL, FETCH_ONE, CREATE, UPDATE, DELETE, LIKE, COMMENT } from '../constants/actionTypes';
+import { START_LOADING, END_LOADING, FETCH_ALL, FETCH_ONE, CREATE, UPDATE, DELETE, LIKE, COMMENT, CLEAR_STATE } from '../constants/actionTypes';
 import * as api from '../api';
 
 // Action Creators
 export const getNews = (tags, page) => async(dispatch) => { 
     try {
+        dispatch({type: CLEAR_STATE});
         dispatch({ type: START_LOADING });
         const { data } = await api.fetchNews(tags, page);
         

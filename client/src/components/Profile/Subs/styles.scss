@@ -1,4 +1,23 @@
 #subs{
+    .nav-tabs{
+        margin: 0;
+        border: none;
+        .nav-item{
+            margin: 0;
+            .nav-link{
+                border: none;
+                border-bottom: 1px solid #EBF5F7;
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 18px;
+                color: #636363!important;
+                &.active{
+                    color: #333333!important;
+                    border-bottom: 1px solid #457B9D;
+                }
+            }
+        }
+    }
     p{
         margin-top: 130px;
         text-align: center;
@@ -30,18 +49,6 @@
                 line-height: 20px;
                 color: #636363;
     
-            }
-        }
-        .follow-btn{
-            margin-left: auto;
-            display: flex;
-            .btn{
-                margin: auto;
-                &.unsubscribe{
-                    background: none;
-                    color: #457B9D;
-                    border: 1px solid #457B9D;
-                }
             }
         }
     }

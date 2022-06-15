@@ -58,7 +58,9 @@ export const updateUser = async (req, res) => {
         if(!req.userId) return res.json({message: "Unaithenticated"});
         const _id = req.userId;
 
-        const result = await UserModal.findByIdAndUpdate(_id, { ...userData, _id}, {new: true});
+        const oldUser = await UserModal.findById(_id);
+
+        const result = await UserModal.findByIdAndUpdate(_id, { ...userData, _id, likedLogbooks: oldUser.likedLogbooks, likedNews: oldUser.likedNews, likedVideo: oldUser.likedVideo}, {new: true});
         
         const token = jwt.sign({email: result.email, id: result._id}, 'test', { expiresIn: "1h"});
         
@@ -84,7 +86,6 @@ export const resetPassword = async (req, res) => {
             host: "smtp.gmail.com",
             auth: {
               user: 'autocommunity.web@gmail.com',
-            //   bqguieeydlumwsng
               pass: 'bqguieeydlumwsng'
             },
             secure: true,
@@ -141,13 +142,17 @@ export const getLikedPosts = async (req, res) => {
         if(!req.userId) return res.json({message: "Unaithenticated"});
         const _id = req.userId;
 
-        const data = await UserModal.findById(_id).select('likedNews, likedLogbooks').populate({
+        const data = await UserModal.findById(_id).select('likedNews, likedLogbooks, likedVideo').populate({
             path: 'likedNews',
-            select: 'title description tags selectedFile createdAt',
+            select: 'title message tag selectedFile createdAt likes',
         }).populate({
             path: 'likedLogbooks',
-            select: 'title message createdAt category',
+            select: 'title message createdAt category likes',
+        }).populate({
+            path: 'likedVideo',
+            select: 'title tag videoID createdAt',
         });
+
 
         return res.json(data);
 
@@ -163,7 +168,7 @@ export const getMyPosts = async (req, res) => {
         if(!req.userId) return res.json({message: "Unaithenticated"});
         const _id = req.userId;
 
-        const logbooks = await LogbookMessage.find({"author": {$exists: true, $eq: _id}}).select('title message likes').sort('-createdAt');
+        const logbooks = await LogbookMessage.find({"author": {$exists: true, $eq: _id}}).select('title message category').sort('-createdAt');
 
         const market = await Market.find({"author": {$exists: true, $eq: _id}}).select('imgs title location cost').sort('-createdAt');
 
@@ -259,9 +264,9 @@ export const getUser = async (req, res) => {
     const { id } = req.params;
     try {
         const data = await UserModal.findById(id).select('firstname lastname country city cars subscribers subscriptions avatar');
-        const logbooks = await LogbookMessage.find({author: id}).select('title message createdAt');
+        const logbooks = await LogbookMessage.find({author: id}).select('title message createdAt category');
         const marketPosts = await Market.find({author: id}).select('title location condition cost imgs suits');
-        const antitheftPosts = await AntitheftMessage.find({author: id, status: 'approved'}).select('mark model releaseYear amount location stateNumber createdAt');
+        const antitheftPosts = await AntitheftMessage.find({author: id, status: 'approved'}).select('mark model releaseYear amount selectedFiles location stateNumber createdAt');
         
         return res.json({...data._doc, logbooks, marketPosts, antitheftPosts});
     } catch (error) {

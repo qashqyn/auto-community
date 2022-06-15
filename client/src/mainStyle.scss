@@ -37,6 +37,14 @@
         object-fit: cover;
         object-position: center;
     }
+    &.avatar-xxs{
+        width: 32px;
+        height: 32px;
+    }
+    &.avatar-xs{
+        width: 48px;
+        height: 48px;
+    }
     &.avatar-sm{
         width: 64px;
         height: 64px;

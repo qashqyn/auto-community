@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import * as actionType from '../../constants/actionTypes';
 
-import './style.css';
+import './style.scss';
 
 const NavBar = (props) => {
     const navigate = useNavigate();
@@ -43,10 +43,10 @@ const NavBar = (props) => {
     }, [location])
 
     return (
-        <Navbar collapseOnSelect className={`${isMainPage ? "mainPage" : ""}`}>
+        <Navbar collapseOnSelect className={`${isMainPage ? "mainPage" : ""}`} id="main-navbar">
             <Container>
                 <LinkContainer to="/">
-                    <Navbar.Brand>Auto Community</Navbar.Brand>
+                    <Navbar.Brand>AutoCommunity</Navbar.Brand>
                 </LinkContainer>
                 <Navbar.Toggle aria-controls="navbar" />
                 <Navbar.Collapse id="navbar">
@@ -67,7 +67,7 @@ const NavBar = (props) => {
                             <Nav.Link>Магазин</Nav.Link>
                         </LinkContainer>
                     </Nav>
-                    <Nav>
+                    <Nav className="right-icons">
                         {user?.result ? (
                             <>
                                 <LinkContainer to="">

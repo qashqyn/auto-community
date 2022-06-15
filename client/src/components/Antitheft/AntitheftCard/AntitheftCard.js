@@ -39,9 +39,9 @@ const AntitheftCard = ({ post, isAuthor=false }) => {
             <Card className="antitheft-card">
                 <LinkContainer to={`/antitheft/${post._id}`}>
                     <Card.Body>
-                        <div className="antitheft-card-img">
+                        {/* <div className="antitheft-card-img"> */}
                             <Card.Img variant="left" src={post.selectedFiles?.length > 0 ? post.selectedFiles[0] : NoImg} />
-                        </div>
+                        {/* </div> */}
                         <div className="info">
                             <Card.Title>{post.mark} {post.model} {(new Date(post.releaseYear).getFullYear())}</Card.Title>
                             <Card.Text>
@@ -49,7 +49,7 @@ const AntitheftCard = ({ post, isAuthor=false }) => {
                                 <span>Город: <span>{post.location}</span></span>
                                 <span>Гос.номер: <span>{post.stateNumber}</span></span>
                                 {isAuthor && (<span>Статус поста: <span>{(post.status === 'approved') && ('Одобрено')}{(post.status === 'dismissed') && ('Отклонено')}{(post.status === 'waiting') && ('В ожидании')}</span></span>)}
-                                {!isAuthor && (<span className="date">{moment(post.createdAt).format("DD-MM-YYYY")}</span>)}
+                                {!isAuthor && (<span className="date">{moment(post.createdAt).format("DD.MM.YYYY")}</span>)}
                             </Card.Text>
                         </div>
                     </Card.Body>

@@ -5,6 +5,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { getLiked } from '../../../actions/user';
 import LogbookCard from '../../Logbooks/LogbookCard/LogbookCard';
 import SingleNews from '../../News/SingleNews/SingleNews';
+import Video from '../../Videos/Video/Video';
 
 import './styles.scss';
 
@@ -41,7 +42,7 @@ const LikedPosts = () => {
     }, [dispatch]);
 
     return (
-        <div id='myPosts'>
+        <div id='likedPosts'>
             <Tabs defaultActiveKey="likedLogbooks" id="likedPosts">
                 <Tab eventKey="likedLogbooks" title="Бортжурнал">
                     {(isLoading || !likedPosts) ? 
@@ -49,7 +50,7 @@ const LikedPosts = () => {
                     : likedPosts.likedLogbooks.length === 0 ? 
                         nothing({'name':'Бортжурнале', 'link': '/logbook'}) 
                         : 
-                        likedPosts.likedLogbooks.map((post, key) => (<LogbookCard key={key} logbook={post} />)) 
+                        likedPosts.likedLogbooks.map((post, key) => (<LogbookCard key={key} user={user.result} logbook={post} />)) 
                     } 
                 </Tab>
                 <Tab eventKey="likedNews" title="Новости">
@@ -60,6 +61,18 @@ const LikedPosts = () => {
                             : (
                                 <Row xs={1} md={2} lg={3}>
                                     {likedPosts.likedNews.map((post, key) => (<Col key={key}><SingleNews news={post} /></Col>))}
+                                </Row>  
+                            )
+                        } 
+                </Tab>
+                <Tab eventKey="likedVideo" title="Видео">
+                        {(isLoading || !likedPosts) ? 
+                            loading()
+                            : likedPosts.likedVideo.length === 0 ? 
+                            nothing({'name':'Видео', 'link': '/video'}) 
+                            : (
+                                <Row xs={1} md={2} lg={3}>
+                                    {likedPosts.likedVideo.map((post, key) => (<Col key={key}><Video video={post} /></Col>))}
                                 </Row>  
                             )
                         } 

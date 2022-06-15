@@ -1,9 +1,12 @@
 .video-card{
+    height: 100%;
     box-shadow: none;
     border: none;
     border-radius: 0;
     .card-body{
         position: relative;
+        display: flex;
+        flex-direction: column;
         .admin-pan{
             position: absolute;
             top: 24px;
@@ -33,16 +36,13 @@
             font-size: 20px;
             line-height: 24px;
             /* or 120% */
-            
-            display: flex;
-            align-items: center;
-            font-feature-settings: 'pnum' on, 'lnum' on;
-            
-            /* black */
-            
+            white-space:initial;
+            text-overflow:initial;
+            overflow:initial;
             color: #000000;
         }
         .card-text{
+            margin-top: auto;
             font-weight: 500;
             font-size: 12px;
             line-height: 14px;

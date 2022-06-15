@@ -64,10 +64,7 @@ const Logbooks = () => {
     }
     const handleSearchSubmit = (e) => {
         e.preventDefault();
-        if(searchText && searchText.length>0){
-            console.log("search");
-            dispatch(getLogbooks(searchText));
-        }
+        dispatch(getLogbooks(searchText));
     }
 
     return (
@@ -88,7 +85,7 @@ const Logbooks = () => {
 
             <Row>
                 <Col md={3}>
-                    <div className='car-filter'>
+                    {/* <div className='car-filter'>
                         <h3>Машина</h3>
                         <Input type="select" name="mark" handleChange={handleCar} label="Все марки" options={markOptions} required={false} /> 
                         <Input type="select" name="model" handleChange={handleCar} label="Все модели" options={markOptions} required={false} /> 
@@ -96,7 +93,7 @@ const Logbooks = () => {
                         <Input type="select" name="engine" handleChange={handleCar} label="Двигатель" options={markOptions} required={false} /> 
                         <Input type="select" name="transmission" handleChange={handleCar} label="Трансмиссия" options={markOptions} required={false} /> 
                         <Input type="select" name="drive" handleChange={handleCar} label="Привод" options={markOptions} required={false} /> 
-                    </div>
+                    </div> */}
                     <div className="category-filter">
                         <h3>Категории</h3>
                         {categories.map((category, key) => (
@@ -115,7 +112,7 @@ const Logbooks = () => {
                     ) : 
                         (!!logbooks && logbooks.length > 0) ? 
                             logbooks.map((logbook) => (
-                                    <LogbookCard logbook={logbook} key={logbook._id}/>
+                                    <LogbookCard user={user?.result} logbook={logbook} key={logbook._id}/>
                             ))
                         : (
                             <h3 className="text-center p-5">Нету постов по этому запросу</h3>        

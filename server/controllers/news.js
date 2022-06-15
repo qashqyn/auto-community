@@ -12,12 +12,12 @@ export const getNews = async (req, res) => {
         const total = await NewsMessage.countDocuments({});
 
         if(tags.length>0){
-            const newsMessages = await NewsMessage.find({tag: { $in: tags.split(',')}}).select('title description tags selectedFile createdAt').sort({createdAt: -1}).limit(LIMIT).skip(startIndex);
-            res.status(200).json({data: newsMessages, currentPage:Number(page), numberOfPages: Math.ceil(total / LIMIT)});
-        }else{
-            const newsMessages = await NewsMessage.find().select('title description tags selectedFile createdAt').sort({createdAt: -1}).limit(LIMIT).skip(startIndex);
-            res.status(200).json({data: newsMessages, currentPage:Number(page), numberOfPages: Math.ceil(total / LIMIT)});
+            const newsMessages = await NewsMessage.find({tag: { $in: tags.split(',')}}).select('title message tag selectedFile createdAt').sort({createdAt: -1}).limit(LIMIT).skip(startIndex);
+            return res.status(200).json({data: newsMessages, currentPage:Number(page), numberOfPages: Math.ceil(total / LIMIT)});
         }
+        const newsMessages = await NewsMessage.find().select('title message tag selectedFile createdAt').sort({createdAt: -1}).limit(LIMIT).skip(startIndex);
+        return res.status(200).json({data: newsMessages, currentPage:Number(page), numberOfPages: Math.ceil(total / LIMIT)});
+        
     } catch (error) {
         res.status(404).json({message: error.message});      
     }
@@ -63,7 +63,7 @@ export const likeNews = async (req, res) => {
     }else{
         likes = likes.filter((id) => String(id) !== String(req.userId));
     }
-    const updatedNews = await NewsMessage.findByIdAndUpdate(_id, {likes: likes}, {new: true});
+    const updatedNews = await NewsMessage.findByIdAndUpdate(_id, {likes: likes}, {new: true}).select('likes');
     
     if(indexUser === -1){
         likedNews.push(_id);
@@ -71,7 +71,7 @@ export const likeNews = async (req, res) => {
         likedNews = likedNews.filter((id) => String(id) !== String(_id));
     }
     await UserModal.findByIdAndUpdate(req.userId, {likedNews: likedNews}, {new: true});
-    return res.json(updatedNews.likes);
+    return res.json(updatedNews);
 }
 
 export const commentNews = async (req, res) => {
@@ -88,7 +88,12 @@ export const commentNews = async (req, res) => {
         await newComment.save();
         const news = await NewsMessage.findById(_id);
         news.comments.push(newComment._id);
-        const updatedNews = await NewsMessage.findByIdAndUpdate(_id, {comments: news.comments}, {new: true});
+        const updatedNews = await NewsMessage.findByIdAndUpdate(_id, {comments: news.comments}, {new: true}).select('comments').populate({
+            path: 'comments',
+            select: '-news',
+            options:{ sort: '-date' },
+            populate: {path: 'user', select: 'firstname lastname cars avatar'}
+        });
          
         return res.json(updatedNews);
     } catch (error) {

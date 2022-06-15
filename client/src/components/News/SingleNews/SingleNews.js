@@ -35,7 +35,7 @@ const SingleNews = ({ news, isAdmin=false }) => {
                     <Button onClick={deletePost}>Удалить</Button>
                 </Modal.Footer>
             </Modal>
-            <Card>
+            <Card className="news-card">
                 <Card.Body>
                     {isAdmin && (
                         <div className="admin-pan">

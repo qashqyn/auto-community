@@ -9,27 +9,67 @@
             background: none;
             border: none;
             padding-bottom: 32px;
-            .avatar{
-                margin-right: 16px;
-            }
-            div:last-of-type{
+            &>div{
                 display: flex;
-                flex-direction: column;
-                justify-content: center;
-                .author-info{
-                    font-weight: 500;
-                    font-size: 16px;
-                    line-height: 20px;
-                    color: #000000;
+                .avatar{
+                    margin-right: 16px;
                 }
-                .author-car{
-                    margin-top: 8px;
-                    font-weight: 400;
-                    font-size: 16px;
-                    line-height: 20px;
-                    color: #636363;
-    
+                div:last-of-type{
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    .author-info{
+                        font-weight: 500;
+                        font-size: 16px;
+                        line-height: 20px;
+                        color: #000000;
+                    }
+                    .author-car{
+                        margin-top: 8px;
+                        font-weight: 400;
+                        font-size: 16px;
+                        line-height: 20px;
+                        color: #636363;
+        
+                    }
                 }
+            }
+            .subscribe-btn{
+                margin-left: auto;
+            }
+        }
+        .card-title{
+            font-weight: 500;
+            font-size: 26px;
+            line-height: 30px;
+            margin-bottom: 16px;
+        }
+        .card-text{
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            margin-bottom: 16px;
+            .category{
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 20px;
+                color: #636363;
+                span{
+                    color: #000;
+                }
+            }
+            img{
+                width: 100%;
+                display: block;
+                aspect-ratio: 4/3;
+                object-position: center;
+                object-fit: cover;
+                margin: 24px 0;
+            }
+            .readMore{
+                font-weight: 500;
+                color: #457B9D;
+                cursor: pointer;
             }
         }
         .card-footer{
@@ -44,6 +84,7 @@
             display: flex;
             gap:16px;
             height: 440px;
+            margin-bottom: 32px;
             .main-image{
                 overflow: hidden;
                 flex-grow: 1;
@@ -140,6 +181,49 @@
                 }
     
             }
+        }
+        &.author{
+            position: relative;
+            display: flex;
+            .card-img{
+                width: 295px;
+                aspect-ratio: 3/2;
+                object-fit: cover;
+                object-position: center;
+                margin-right: 24px;
+            }
+            .card-title{
+                font-weight: 500;
+                font-size: 18px;
+                line-height: 20px;
+            }
+            .admin-pan{
+                z-index: 1000;
+                position: absolute;
+                bottom: 16px;
+                right: 16px;
+                display: flex;
+                gap: 8px;
+                p{
+                    padding: 0;
+                    margin: 0;
+                    display: block;
+                    font-weight: 500;
+                    font-size: 18px;
+                    line-height: 22px;
+                    color: #636363;
+                }
+                &>div{
+                    cursor: pointer;
+                    height: 24px;
+                    width: 24px;
+                    display: flex;
+                    &>svg{
+                        margin: auto;
+                    }
+                }
+            }
+            
         }
     }
 }

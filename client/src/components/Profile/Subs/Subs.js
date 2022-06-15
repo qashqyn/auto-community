@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Image, Spinner, Tab, Tabs } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { getSubs, subscribe } from "../../../actions/user";
@@ -7,35 +7,26 @@ import {LinkContainer } from "react-router-bootstrap";
 import NoImg from '../../../images/noimg.jpg';
 
 import './styles.scss';
+import SubscribeBtn from "../../Subscribe/SubscribeBtn";
 
 
 const Subs = () => {
     const dispatch = useDispatch();
-    const { subs } = useSelector((state) => state.auth);
+    const { subs: subbs } = useSelector((state) => state.auth);
+
+    const [subs, setSubs] = useState({});
 
     useEffect(() => {
         dispatch(getSubs());
     }, [dispatch]);
 
-    const user = JSON.parse(localStorage.getItem('profile'));
-
-    const subscribeUser = (e) => {
-        e.preventDefault();
-        if(user && user.result && user.result._id){
-            dispatch(subscribe(e.target.value));
+    useEffect(()=>{
+        if(subbs){
+            setSubs(subbs);
         }
-    }
-    const isFollowed = (subId) => {
+    },[subbs])
 
-        // console.log(subs.subscriptions);
-        let ans = false;
-        subs.subscriptions.map((sub) => {
-            console.log(sub.cars);
-            if(String(sub._id) === String(subId))
-                ans = true;
-        })
-        return ans;
-    }
+    const user = JSON.parse(localStorage.getItem('profile'));
 
     return (
         <div id="subs">
@@ -65,13 +56,7 @@ const Subs = () => {
                                             {(sub.cars && sub.cars[0]) ? (`Я езжу на ${sub.cars[0].mark} ${sub.cars[0].model} ${sub.cars[0].generation}`)  : ('У меня нет машины')}
                                         </div>
                                     </div>
-                                <div className='follow-btn'>
-                                    {isFollowed(sub._id) ? (
-                                        <Button value={sub._id} onClick={subscribeUser} className="unsubscribe">Отписаться</Button>
-                                    ) : (
-                                        <Button value={sub._id} onClick={subscribeUser}>Подписаться</Button>
-                                    )}
-                                </div>
+                                <SubscribeBtn otherUserId={sub._id} user={user?.result} />
                             </div>
                         ))
                     }
@@ -102,9 +87,7 @@ const Subs = () => {
                                         {(sub.cars && sub.cars[0]) ? (`Я езжу на ${sub.cars[0].mark} ${sub.cars[0].model} ${sub.cars[0].generation}`) : ('У меня нет машины')}
                                     </div>
                                 </div>
-                                <div className='follow-btn'>
-                                    <Button value={sub._id} onClick={subscribeUser} className="unsubscribe">Отписаться</Button>
-                                </div>
+                                <SubscribeBtn otherUserId={sub._id} user={user?.result} />
                             </div>
                         ))
                     }

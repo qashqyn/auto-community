@@ -1,4 +1,4 @@
-.video{
+#video{
     #videoPlayer{
         position: relative;
         padding-bottom: 56.25%; /* 16:9 */
@@ -18,8 +18,8 @@
         line-height: 30px;
         /* or 125% */
 
-        display: flex;
-        align-items: center;
+        text-align: left;
+
         font-feature-settings: 'pnum' on, 'lnum' on;
         color: #000000;
     }

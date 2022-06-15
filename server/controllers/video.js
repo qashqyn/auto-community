@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import Video from "../models/video.js";
+import VideoComment from '../models/videoComment.js';
+import UserModal from '../models/user.js';
 
 export const getVideos = async (req, res) => {
     const { tags, page } = req.query;
@@ -23,12 +25,12 @@ export const getVideos = async (req, res) => {
 export const getVideo = async (req, res) => {
     const { id } = req.params;
     try {
-        const data = await Video.findById(id)
-            // .populate({
-            //     path: 'comments',
-            //     populate: {path: 'user'}
-            // })
-            ;
+        const data = await Video.findById(id).populate({
+            path: 'comments',
+            select: '-video',
+            options:{ sort: '-date' },
+            populate: {path: 'user', select: 'firstname lastname cars avatar'}
+        });
         res.status(200).json(data);
     } catch (error) {
         console.log(error);
@@ -55,19 +57,57 @@ export const likeVideo = async (req, res) => {
     if(!req.userId) return res.json({message: "Unaithenticated"});
 
     if(!mongoose.Types.ObjectId.isValid(_id))
-        return res.status(404).send("No news with that Id");
+        return res.status(404).send("No video with that Id");
  
     const video = await Video.findById(_id);
+    const user = await UserModal.findById(req.userId).select('likedVideo');
+
+    let likes = video.likes;
+    let likedVideo = user.likedVideo; 
   
-    const index = video.likes.findIndex((id) => id === String(req.userId));
+    const index = video.likes.findIndex((id) => String(id) === String(req.userId));
+    const indexUser = likedVideo.findIndex((id) => String(id) === String(_id));
 
     if(index === -1){
-        video.likes.push(req.userId);
+        likes.push(req.userId);
     }else{
-        video.likes = video.likes.filter((id) => id !== String(req.userId));
+        likes = likes.filter((id) => String(id) !== String(req.userId));
     }
+    const updatedVideo = await Video.findByIdAndUpdate(_id, {likes: likes}, {new: true}).select('likes');
 
-    const updatedVideo = await Video.findByIdAndUpdate(_id, video, {new: true});
+    if(indexUser === -1){
+        likedVideo.push(_id);
+    }else{
+        likedVideo = likedVideo.filter((id) => String(id) !== String(_id));
+    }
+    await UserModal.findByIdAndUpdate(req.userId, {likedVideo: likedVideo}, {new: true});
+    return res.json(updatedVideo);
+}
 
-    res.json(updatedVideo);
+export const commentVideo = async (req, res) => {
+    const { id: _id } = req.params;
+    const comment = req.body;
+
+    try {
+        if(!req.userId) return res.json({message: "Unaithenticated"});
+        
+        if(!mongoose.Types.ObjectId.isValid(_id))
+            return res.status(404).send("No video with that Id");
+
+        const videoComment = new VideoComment({...comment, video: _id, user: req.userId});
+        await videoComment.save();
+        const video = await Video.findById(_id);
+        video.comments.push(videoComment._id);
+        const updatedVideo = await Video.findByIdAndUpdate(_id, {comments: video.comments}, {new: true}).select('comments').populate({
+            path: 'comments',
+            select: '-video',
+            options:{ sort: '-date' },
+            populate: {path: 'user', select: 'firstname lastname cars avatar'}
+        });
+         
+        return res.json(updatedVideo);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({message: "Something went wrong"});
+    }
 }

@@ -10,14 +10,15 @@ import CommentsSection from '../CommentsSection/CommentsSection';
 
 import './styles.scss';
 import NoImg from '../../images/noimg.jpg';
+import LoginModal from '../Modals/LoginModal';
+import SubscribeBtn from '../Subscribe/SubscribeBtn';
+import Likes from '../Likes';
 
 const LogbookDetails = () => {
-    const {post, isLoading, postLikes} = useSelector((state) => state.posts);
+    const {post, isLoading} = useSelector((state) => state.posts);
     const dispatch = useDispatch();
     const { id } = useParams();
 
-    const [likeCount, setLikeCount] = useState(0);
-    const [ isLiked, setLiked ] = useState(false);
     const [ isFav, setFav ] = useState(false);
     const user = JSON.parse(localStorage.getItem('profile'));
 
@@ -26,46 +27,13 @@ const LogbookDetails = () => {
     },[id]);
 
     
-    useEffect(()=>{
-        if(postLikes){
-            setLikeCount(postLikes.length);
-            if(!!user && !!user.result._id){
-                setLiked(postLikes.includes(user.result._id));
-            }  
-        }
-    }, [postLikes]);
-    useEffect(()=>{
-        if(!!post){
-            setLikeCount(post.likes.length);
-            if(!!user && !!user.result._id){
-                setLiked(post.likes.includes(user.result._id));
-            } 
-        }
-    },[post]);
-    
-    const likeLogbookHandler = (e) => {
-        e.preventDefault();
-
-        setLikeCount((isLiked) ? Number(likeCount)-1 : Number(likeCount)+1);
-        setLiked(!isLiked);
-        
-        dispatch(likeLogbook(id));
-    }
     const favLogbookHandler = (e) => {
         e.preventDefault();
         setFav(!isFav);
     }
 
-    const subscribeUser = (e) => {
-        e.preventDefault();
-        if(post && post.author && post.author._id && user && user.result && user.result._id && user.result._id != post.author._id){
-            dispatch(subscribe(post.author._id));
-        }
-    }
-
     return (
-        <Container className="logbook">
-            <Breadcrumbs currentPage="Бортжурнал"/>
+        <Container id="logbook">
             {(isLoading || !post) ? (
                 <div className="text-center p-5">
                     <Spinner animation="border" role="status">
@@ -74,6 +42,7 @@ const LogbookDetails = () => {
                 </div>
             ) : (
                 <>
+                    <Breadcrumbs links={[{link: '/logbook', name: 'Бортжурнал'}]} currentPage={post.title}/>
                     <div className='author'>
                         <div className="avatar avatar-sm">
                             <Image src={post.author.avatar ? post.author.avatar : NoImg} />
@@ -86,9 +55,7 @@ const LogbookDetails = () => {
                                 {(post.author.cars && post.author.cars[0]) ? (`Я езжу на ${post.author.cars[0].mark} ${post.author.cars[0].model} ${post.author.cars[0].generation && post.author.cars[0].generation}`) : ('У меня нет машины')}
                             </div>
                         </div>
-                        <div className='follow-btn'>
-                            <Button onClick={subscribeUser}>Подписаться</Button>
-                        </div>
+                        <SubscribeBtn otherUserId={post.author._id} user={user?.result} />
                     </div>
                     <h3>{post.title}</h3>
                     <div dangerouslySetInnerHTML={{ __html: post.message }} className="message" />      
@@ -96,20 +63,7 @@ const LogbookDetails = () => {
                         {moment(post.createdAt).format('DD MMMM YYYY')}
                     </div>
                     <div className="actions">
-                        <div className="action" onClick={likeLogbookHandler}>
-                            <div className="icon-container">
-                                {isLiked ? (
-                                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M15.0003 30C-13.75 9.73607 6.14811 -6.07988 14.6702 2.28609C14.7828 2.39609 14.8934 2.51009 15.0003 2.62809C15.1061 2.5102 15.2161 2.39678 15.3303 2.28809C23.8505 -6.08388 43.7505 9.73406 15.0003 30Z" fill="#457B9D"/>
-                                    </svg>                                    
-                                ) : (
-                                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M15.0003 5.49608L13.6558 4.02208C10.5001 0.562095 4.7137 1.75609 2.62488 6.10608C1.64423 8.15207 1.42297 11.1061 3.21365 14.876C4.9387 18.506 8.52756 22.854 15.0003 27.59C21.473 22.854 25.0599 18.506 26.7869 14.876C28.5775 11.1041 28.3582 8.15207 27.3756 6.10608C25.2868 1.75609 19.5004 0.560095 16.3447 4.02008L15.0003 5.49608ZM15.0003 30C-13.75 9.73607 6.14812 -6.07988 14.6702 2.28609C14.7828 2.39609 14.8934 2.51009 15.0003 2.62809C15.1061 2.5102 15.2161 2.39678 15.3303 2.28809C23.8505 -6.08388 43.7505 9.73407 15.0003 30Z" fill="black"/>
-                                    </svg>
-                                )}
-                            </div>
-                            {likeCount}
-                        </div>
+                        <Likes likes={post.likes} user={user?.result} type="logbook" postId={post._id} />
                         <div className="action">
                             <div className="icon-container">
                                 <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -137,7 +91,7 @@ const LogbookDetails = () => {
                             </div>
                         </div>
                     </div>
-                    <CommentsSection comments={post.comments} /> 
+                    <CommentsSection comments={post.comments} type="logbook" postId={post._id} /> 
 
                 </>
             )}

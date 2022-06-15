@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import FileBase from 'react-file-base64';
-import {Form} from "react-bootstrap";
+import {Form, Image} from "react-bootstrap";
 import './input.scss';
+import ImageIcon from '../../images/addImgIcon.png';
 import moment from 'moment';
 
 const Input = ({error='', name, label, type, handleChange, value, disabled=false, required=false, options=[], keyAsValue=false, maxCharacters=0 }) => {
@@ -101,7 +102,7 @@ const Input = ({error='', name, label, type, handleChange, value, disabled=false
             return (
                 <Form.Group >
                     {options.map((option, key) => (
-                        <Form.Check className="radio-button" key={key} label={option.label} id={name+key} type="radio" value={option.value} name={name}/>
+                        <Form.Check onChange={handleChange} className="radio-button" key={key} label={option.label} id={name+key} type="radio" value={option.value} name={name}/>
                     ))}
                 </Form.Group>
             )
@@ -116,6 +117,8 @@ const Input = ({error='', name, label, type, handleChange, value, disabled=false
                             <option value={keyAsValue ? key : option} key={key}>{option}</option>
                         ))}
                     </Form.Select>
+                    <Form.Control isInvalid={error} hidden />
+                    <Form.Control.Feedback type="invalid">{error}</Form.Control.Feedback>
                 </Form.Group>
             );
         case 'year':
@@ -137,23 +140,37 @@ const Input = ({error='', name, label, type, handleChange, value, disabled=false
             return (
                 <Form.Group controlId={name} className="input">
                     <div contentEditable='true' className="editable" placeholder={label} name={name} onKeyDown={checkChar} id={`editable`}></div>
-                    <div>
+                    <Form.Control isInvalid={error} hidden />
+                    <Form.Control.Feedback type="invalid" >{error}</Form.Control.Feedback>
+                    <div className="bottom">
                         <div className="formatBtns">
                             <div onMouseDown={(e) => e.preventDefault()} onClick={(e) => {e.preventDefault();formatDoc('bold')}} className="formatBtn">
+                                <span className="bold">
                                 B
+                                </span>
                             </div>
                             <div onMouseDown={(e) => e.preventDefault()} onClick={(e) => {e.preventDefault();formatDoc('italic')}} className="formatBtn">
-                                I
+                                <span className="italic">
+                                i
+                                </span>
                             </div>
-                            <FileBase onMouseDown={(e)=>e.preventDefault()} type="file" id="paseImage" multiple={false} 
-                                onDone={(data) => pasteImage(data.base64)}
-                            />
+                            <label className="formatBtn">
+                                <FileBase onMouseDown={(e)=>e.preventDefault()} type="file" id="paseImage" className="d-none" multiple={false} 
+                                    onDone={(data) => pasteImage(data.base64)}
+                                />
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M19.5 3H4.5C3.67158 3 3 3.67158 3 4.5V19.5C3 20.3285 3.67158 21 4.5 21H19.5C20.3285 21 21 20.3285 21 19.5V4.5C21 3.67158 20.3285 3 19.5 3Z" stroke="#8E8E8E"/>
+                                    <path d="M9 11.5C10.3807 11.5 11.5 10.3807 11.5 9C11.5 7.6193 10.3807 6.5 9 6.5C7.6193 6.5 6.5 7.6193 6.5 9C6.5 10.3807 7.6193 11.5 9 11.5Z" stroke="#8E8E8E"/>
+                                    <path d="M21 18L15.5 13L10.5 17.5L7 14.5L3 17.5" stroke="#8E8E8E"/>
+                                </svg>
+                            </label>
                             {/* <div onMouseDown={(e) => e.preventDefault()} onClick={createLink} className="formatBtn">
                                 L
                             </div> */}
                         </div>
                         <div>{charCount}/{maxCharacters}</div>
                     </div>
+                    
                 </Form.Group>
             )
         case 'textarea':
